@@ -8,6 +8,7 @@
 		</style>
 
 		<?php
+		//Esta dirección es de mi local, pueden cambiarla a su conveniencia.
 		$link = "http://localhost:8080/GW/GraficasWebPIA/";
 		?>
 	</head>
@@ -138,7 +139,6 @@
 					}
 					action1.weight = 0;
 					action2.weight = 1;
-
 					flag = false;
 				}
 				else{
