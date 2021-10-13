@@ -8,7 +8,7 @@
 		</style>
 
 		<?php
-		$link = "http://localhost:8080/GW/PIA_Test/";
+		$link = "http://localhost:8080/GW/GraficasWebPIA/";
 		?>
 	</head>
 	<script src="<?php echo $link; ?>js/jquery-3.6.0.min.js"></script>
@@ -18,6 +18,7 @@
 	<script src="<?php echo $link; ?>js/MTLLoader.js"></script>
 	<script src="<?php echo $link; ?>js/OBJLoader.js"></script>
 	<script src="<?php echo $link; ?>js/fflate.min.js"></script>
+	<!-- <script src="<?php echo $link; ?>js/animation/AnimationMixer.js"></script>-->
 
 	<!--<script src="https://unpkg.com/three"></script>
 	<script scr="https://unpkg.com/three/examples/jsm/libs/fflate.min.js"></script>
@@ -82,12 +83,14 @@
 			scene.add(directional);
 
 			var loader = new THREE.FBXLoader();
-			loader.load('<?php echo $link; ?>models/GameExports/IdleWalkFixed.fbx', function (personaje){
+			loader.load('<?php echo $link; ?>models/GameExports/IdleWalk3dsMax.fbx', function (personaje){
 				personaje.mixer = new THREE.AnimationMixer(personaje);
 
 				mixers.push(personaje.mixer);
-				action1 = personaje.mixer.clipAction(personaje.animations[1]);
-				action2 = personaje.mixer.clipAction(personaje.animations[0]);
+				action1 = personaje.mixer.clipAction(personaje.animations[0]);
+				action2 = personaje.mixer.clipAction(personaje.animations[1].trim());
+
+				action2.startAt(1);
 
 				action1.play();
 				action2.play();
@@ -130,6 +133,9 @@
 					mixers[i].update(delta);
 				}
 				if(flag){
+					if(action2.time < .9999999999999){
+						action2.startAt(1);
+					}
 					action1.weight = 0;
 					action2.weight = 1;
 
