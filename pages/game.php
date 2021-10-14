@@ -37,10 +37,13 @@
 		var delta;
 
 		var mixers = [];
-		var action1, action2;
+		var action1, action2, action3, action4;
 
 		var KEYS = {};
 		var flag = false;
+
+		var punch = false;
+		var kick = false;
 
 		$(document).ready(function(){
 
@@ -60,10 +63,10 @@
 				canvasSize.height);
 
 			camera = new THREE.PerspectiveCamera(
-				75,
+				90,
 				canvasSize.width / canvasSize.height,
 				0.1,
-				100
+				200
 			);
 
 			scene = new THREE.Scene();
@@ -76,33 +79,49 @@
 
 			var directional = new THREE.DirectionalLight(
 				new THREE.Color(1,1,1),
-				0.4);
+				0.2);
 
 			directional.position.set(0,0,1);
 
 			scene.add(ambient);
 			scene.add(directional);
 
+			var mapa1 = new THREE.FBXLoader();
+			mapa1.load('<?php echo $link; ?>models/maps/mapaMine2.fbx', function(mapa1){
+				
+				mapa1.position.x = 0;
+				mapa1.position.y = -20;
+				mapa1.position.z = -60;
+				mapa1.scale.set(0.045, 0.04, 0.025);
+				scene.add(mapa1);
+			});
+
 			var loader = new THREE.FBXLoader();
-			loader.load('<?php echo $link; ?>models/GameExports/IdleWalk3dsMax.fbx', function (personaje){
+			loader.load('<?php echo $link; ?>models/GameExports/IdleWalkPunchKickMaya.fbx', function (personaje){
 				personaje.mixer = new THREE.AnimationMixer(personaje);
 
 				mixers.push(personaje.mixer);
 				action1 = personaje.mixer.clipAction(personaje.animations[0]);
-				action2 = personaje.mixer.clipAction(personaje.animations[1].trim());
+				action2 = personaje.mixer.clipAction(personaje.animations[1]);
+				action3 = personaje.mixer.clipAction(personaje.animations[2]);
+				action4 = personaje.mixer.clipAction(personaje.animations[3]);
 
-				action2.startAt(1);
+				action2.startAt(1.0666667222976685);
+				action3.startAt(2.133333444595337);
+				action4.startAt(2.933333396911621);
 
 				action1.play();
 				action2.play();
+				action3.play();
+				action4.play();
 
 				personaje.position.x = 0;
 				personaje.position.y = -15;
-				personaje.position.z = -25;
+				personaje.position.z = -20;
 
 				personaje.rotation.y = -1.5;
 
-				personaje.scale.set(0.08,0.08,0.08);
+				personaje.scale.set(0.03,0.03,0.03);
 
 				personaje.name = 'Zombie';
 
@@ -134,16 +153,41 @@
 					mixers[i].update(delta);
 				}
 				if(flag){
-					if(action2.time < .9999999999999){
-						action2.startAt(1);
+					if(action2.time < 1.0666667222976685){
+						action2.startAt(1.0666667222976685);
 					}
 					action1.weight = 0;
 					action2.weight = 1;
+					action3.weight = 0;
+					action4.weight = 0;
 					flag = false;
 				}
-				else{
+				else if(!flag){
 					action1.weight = 1;
 					action2.weight = 0;
+					action3.weight = 0;
+					action4.weight = 0;
+				}
+
+				if(punch){
+					if(action3.time < 2.133333444595337){
+						action3.startAt(2.133333444595337);
+					}
+					action1.weight = 0;
+					action2.weight = 0;
+					action3.weight = 1;
+					action4.weight = 0;
+					punch = false;
+				}
+				if(kick){
+					if(action4.time < 2.933333396911621){
+						action4.startAt(2.933333396911621);
+					}
+					action1.weight = 0;
+					action2.weight = 0;
+					action3.weight = 0;
+					action4.weight = 1;
+					kick = false;
 				}
 			}
 
@@ -165,6 +209,12 @@
 				movimiento.position.x += 15*delta;
 				movimiento.rotation.y = 1.5;
 				}
+			if(KEYS["Q"]){
+				punch = true;
+			}
+			if(KEYS["E"]){
+				kick = true;
+			}
 		}
 
 
