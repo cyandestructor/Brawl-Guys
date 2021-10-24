@@ -32,6 +32,14 @@ export default class Scene {
         this.camera = camera;
     }
 
+    getRenderer() {
+        return this.renderer;
+    }
+
+    setRenderer(renderer) {
+        this.renderer = renderer;
+    }
+
     // Agregar un objeto de una clase que extienda la clase GameObject
     add(gameObject) {
         this.gameObjects.push(gameObject);
