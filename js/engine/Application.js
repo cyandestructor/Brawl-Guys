@@ -49,6 +49,10 @@ export default class Application {
         document.addEventListener('keypress', (e) => {
             this.onKeyPressed(e.key);
         });
+
+        window.addEventListener('resize', () => {
+            this.onWindowResize(window.innerWidth, window.innerHeight);
+        });
     }
 
     onKeyDown(key) {
@@ -69,5 +73,17 @@ export default class Application {
         if (this.scene) {
             this.scene.onKeyUp(key);
         }
+    }
+
+    onWindowResize(width, height) {
+        if (!this.scene) {
+            return;
+        }
+
+        const camera = this.scene.getCamera();
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+
+        this.scene.getRenderer().setSize(width, height);
     }
 }
