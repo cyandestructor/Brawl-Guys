@@ -33,84 +33,16 @@ export default class Character extends GameObject {
             kick: "E"
         }
 
-        const original = Resources.getModelResource('Zombie');
-        const object = THREE.SkeletonUtils.clone(original);
-        object.animations = original.animations;
+        this.initModel(props);
 
-        if (props.position) {
-            object.position.copy(props.position);
+        if (props.skin) {
+            this.setSkin(props.skin);
         }
-
-        object.rotation.y = -1.5;
-        object.scale.set(0.03, 0.03, 0.03);
-        
-        object.mixer = new THREE.AnimationMixer(object);
-
-        this.action1 = object.mixer.clipAction(object.animations[0]);
-        this.action2 = object.mixer.clipAction(object.animations[1]);
-        this.action3 = object.mixer.clipAction(object.animations[2]);
-        this.action4 = object.mixer.clipAction(object.animations[3]);
-
-        this.action2.startAt(1.0666667222976685);
-        this.action3.startAt(2.133333444595337);
-        this.action4.startAt(2.933333396911621);
-
-        this.action1.play();
-        this.action2.play();
-        this.action3.play();
-        this.action4.play();
-
-        object.name = 'Zombie';
-
-        this.handler = object; // El handler nos permite tener siempre una referencia al objeto de Three.js para modificarlo
-
-        this.scene.add(this);
     }
 
     onUpdate(dt) {
         if(!this.handler) {
             return;
-        }
-
-        this.handler.mixer.update(dt);
-
-        if(this.flag){
-            if(this.action2.time < 1.0666667222976685){
-                this.action2.startAt(1.0666667222976685);
-            }
-            this.action1.weight = 0;
-            this.action2.weight = 1;
-            this.action3.weight = 0;
-            this.action4.weight = 0;
-            this.flag = false;
-        }
-        else {
-            this.action1.weight = 1;
-            this.action2.weight = 0;
-            this.action3.weight = 0;
-            this.action4.weight = 0;
-        }
-
-        if(this.punch){
-            if(this.action3.time < 2.133333444595337){
-                this.action3.startAt(2.133333444595337);
-            }
-            this.action1.weight = 0;
-            this.action2.weight = 0;
-            this.action3.weight = 1;
-            this.action4.weight = 0;
-            this.punch = false;
-        }
-
-        if(this.kick){
-            if(this.action4.time < 2.933333396911621){
-                this.action4.startAt(2.933333396911621);
-            }
-            this.action1.weight = 0;
-            this.action2.weight = 0;
-            this.action3.weight = 0;
-            this.action4.weight = 1;
-            this.kick = false;
         }
 
         this.moveCharacter(dt);
@@ -140,5 +72,32 @@ export default class Character extends GameObject {
 
     onKeyPressed(key) {
         console.log(this.speed); // Prueba
+    }
+
+    initModel(props) {
+        const original = Resources.getModelResource('PlayerBase');
+        const object = THREE.SkeletonUtils.clone(original);
+        //object.animations = original.animations;
+        if (props.position) {
+            object.position.copy(props.position);
+        }
+
+        object.rotation.y = -1.5;
+        object.scale.set(0.03, 0.03, 0.03);
+        
+        console.log(object);
+        this.handler = object; // El handler nos permite tener siempre una referencia al objeto de Three.js para modificarlo
+
+        this.scene.add(this);
+    }
+
+    setSkin(skin) {
+        const texture = Resources.getTextureResource(skin);
+        if (texture) {
+            const mesh = this.handler.getObjectByName('characterMedium');
+            mesh.material = new THREE.MeshLambertMaterial({
+                map: texture
+            });
+        }
     }
 }

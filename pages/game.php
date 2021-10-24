@@ -9,7 +9,7 @@
 
 		<?php
 		//Esta dirección es de mi local, pueden cambiarla a su conveniencia.
-		$link = "http://localhost/GW/GraficasWebPIA/";
+		$link = "http://localhost:8080/GW/GraficasWebPIA/";
 		?>
 	</head>
 	<script src="<?php echo $link; ?>js/lib/jquery-3.6.0.min.js"></script>
@@ -36,8 +36,6 @@
 		$(document).ready(() => {
 			// Ahora se pueden registrar las direcciones de los recursos en un almacén
 			// de recursos y obtenerlos después a través de la llave (primer parámetro)
-			//Resources.setModelPath('Zombie', '<?php echo $link; ?>models/GameExports/IdleWalkPunchKickMaya.fbx');
-			//Resources.setModelPath('MapTwo', '<?php echo $link; ?>models/maps/mapaMine2.fbx');
 			const resources = [
 				{
 					name: 'MapTwo',
@@ -45,9 +43,19 @@
 					path: '<?php echo $link; ?>models/maps/mapaMine2.fbx'
 				},
 				{
-					name: 'Zombie',
+					name: 'PlayerBase',
 					type: 'model',
-					path: '<?php echo $link; ?>models/GameExports/IdleWalkPunchKickMaya.fbx'
+					path: '<?php echo $link; ?>models/characters/characterMedium.fbx'
+				},
+				{
+					name: 'ZombieA',
+					type: 'texture',
+					path: '<?php echo $link; ?>models/characters/skins/zombieA.png'
+				},
+				{
+					name: 'AlienA',
+					type: 'texture',
+					path: '<?php echo $link; ?>models/characters/skins/alienA.png'
 				}
 			];
 

@@ -63,7 +63,8 @@ export default class FightScene extends Scene {
         // que envuelve un objeto nativo de Three.js y le agrega cierta lógica
         // Consulta los archivos js/game/gameObjects/Character.js y js/engine/GameObject.js
         this.player1 = new Character(this, {
-            position: new THREE.Vector3(0, -15, -20)
+            position: new THREE.Vector3(0, -15, -20),
+            skin: 'ZombieA'
         });
 
         this.player2 = new Character(this, {
@@ -75,7 +76,8 @@ export default class FightScene extends Scene {
                 down: "",
                 punch: "7",
                 kick: "9"
-            }
+            },
+            skin: 'AlienA'
         });
     }
 }
