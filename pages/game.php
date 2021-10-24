@@ -9,12 +9,13 @@
 
 		<?php
 		//Esta dirección es de mi local, pueden cambiarla a su conveniencia.
-		$link = "http://localhost:8080/GW/GraficasWebPIA/";
+		$link = "http://localhost/GW/GraficasWebPIA/";
 		?>
 	</head>
 	<script src="<?php echo $link; ?>js/lib/jquery-3.6.0.min.js"></script>
 	<script src="<?php echo $link; ?>js/lib/three.js"></script>
 	<script src="<?php echo $link; ?>js/lib/FBXLoader.js"></script>
+	<script src="<?php echo $link; ?>js/lib/SkeletonUtils.js"></script>
 	<script src="<?php echo $link; ?>js/lib/GLTFLoader.js"></script>
 	<script src="<?php echo $link; ?>js/lib/MTLLoader.js"></script>
 	<script src="<?php echo $link; ?>js/lib/OBJLoader.js"></script>
@@ -35,13 +36,18 @@
 		$(document).ready(() => {
 			// Ahora se pueden registrar las direcciones de los recursos en un almacén
 			// de recursos y obtenerlos después a través de la llave (primer parámetro)
-			Resources.setModelPath('Zombie', '<?php echo $link; ?>models/GameExports/IdleWalkPunchKickMaya.fbx');
+			//Resources.setModelPath('Zombie', '<?php echo $link; ?>models/GameExports/IdleWalkPunchKickMaya.fbx');
 			//Resources.setModelPath('MapTwo', '<?php echo $link; ?>models/maps/mapaMine2.fbx');
 			const resources = [
 				{
 					name: 'MapTwo',
 					type: 'model',
 					path: '<?php echo $link; ?>models/maps/mapaMine2.fbx'
+				},
+				{
+					name: 'Zombie',
+					type: 'model',
+					path: '<?php echo $link; ?>models/GameExports/IdleWalkPunchKickMaya.fbx'
 				}
 			];
 

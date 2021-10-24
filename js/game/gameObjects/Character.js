@@ -33,37 +33,38 @@ export default class Character extends GameObject {
             kick: "E"
         }
 
-        var loader = new THREE.FBXLoader();
-        loader.load(Resources.getModelPath('Zombie'), (object) => {
-            if (props.position) {
-                object.position.copy(props.position);
-            }
+        const original = Resources.getModelResource('Zombie');
+        const object = THREE.SkeletonUtils.clone(original);
+        object.animations = original.animations;
 
-            object.rotation.y = -1.5;
-            object.scale.set(0.03, 0.03, 0.03);
-            
-            object.mixer = new THREE.AnimationMixer(object);
+        if (props.position) {
+            object.position.copy(props.position);
+        }
 
-            this.action1 = object.mixer.clipAction(object.animations[0]);
-            this.action2 = object.mixer.clipAction(object.animations[1]);
-            this.action3 = object.mixer.clipAction(object.animations[2]);
-            this.action4 = object.mixer.clipAction(object.animations[3]);
+        object.rotation.y = -1.5;
+        object.scale.set(0.03, 0.03, 0.03);
+        
+        object.mixer = new THREE.AnimationMixer(object);
 
-            this.action2.startAt(1.0666667222976685);
-            this.action3.startAt(2.133333444595337);
-            this.action4.startAt(2.933333396911621);
+        this.action1 = object.mixer.clipAction(object.animations[0]);
+        this.action2 = object.mixer.clipAction(object.animations[1]);
+        this.action3 = object.mixer.clipAction(object.animations[2]);
+        this.action4 = object.mixer.clipAction(object.animations[3]);
 
-            this.action1.play();
-            this.action2.play();
-            this.action3.play();
-            this.action4.play();
+        this.action2.startAt(1.0666667222976685);
+        this.action3.startAt(2.133333444595337);
+        this.action4.startAt(2.933333396911621);
 
-            object.name = 'Zombie';
+        this.action1.play();
+        this.action2.play();
+        this.action3.play();
+        this.action4.play();
 
-            this.handler = object; // El handler nos permite tener siempre una referencia al objeto de Three.js para modificarlo
+        object.name = 'Zombie';
 
-            this.scene.add(this);
-        });
+        this.handler = object; // El handler nos permite tener siempre una referencia al objeto de Three.js para modificarlo
+
+        this.scene.add(this);
     }
 
     onUpdate(dt) {
