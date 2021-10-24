@@ -4,9 +4,16 @@ const fbxLoader = (path) => {
     });
 };
 
+const textureLoader = (path) => {
+    return new Promise((resolve) => {
+        (new THREE.TextureLoader()).load(path, resolve);
+    });
+}
+
 export default class Resources {
     static loaders = {
-        fbx: fbxLoader
+        fbx: fbxLoader,
+        png: textureLoader
     };
 
     static resourcePaths = {
@@ -16,7 +23,8 @@ export default class Resources {
 
     static resources = {
         model: {},
-        texture: {}
+        texture: {},
+        animation: {}
     };
 
     static setModelPath(key, path) {
@@ -49,6 +57,14 @@ export default class Resources {
 
     static setTextureResource(key, value) {
         Resources.resources.texture[key.toLowerCase()] = value;
+    }
+
+    static getAnimationResource(key, defVal = null) {
+        return Resources.resources.animation[key.toLowerCase()] ?? defVal;
+    }
+
+    static setAnimationResouce(key, value) {
+        Resources.resources.animation[key.toLowerCase()] = value;
     }
 
     static loadResources(resources) {
