@@ -44,14 +44,20 @@ export default class FightScene extends Scene {
         this.addNative(ambient);
         this.addNative(directional);
 
-        let mapa1 = new THREE.FBXLoader();
-        mapa1.load(Resources.getModelPath('MapTwo'), (object) => {
-            object.position.x = 0;
-            object.position.y = -20;
-            object.position.z = -60;
-            object.scale.set(0.045, 0.04, 0.025);
-            this.addNative(object);
-        });
+        // let mapa1 = new THREE.FBXLoader();
+        // mapa1.load(Resources.getModelPath('MapTwo'), (object) => {
+        //     object.position.x = 0;
+        //     object.position.y = -20;
+        //     object.position.z = -60;
+        //     object.scale.set(0.045, 0.04, 0.025);
+        //     this.addNative(object);
+        // });
+        const mapa = Resources.getModelResource('MapTwo').clone();
+        mapa.position.x = 0;
+        mapa.position.y = -20;
+        mapa.position.z = -60;
+        mapa.scale.set(0.045, 0.04, 0.025);
+        this.addNative(mapa);
 
         // La clase Character extiende una clase base llamada GameObject
         // que envuelve un objeto nativo de Three.js y le agrega cierta lógica

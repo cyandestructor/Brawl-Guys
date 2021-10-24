@@ -36,27 +36,36 @@
 			// Ahora se pueden registrar las direcciones de los recursos en un almacén
 			// de recursos y obtenerlos después a través de la llave (primer parámetro)
 			Resources.setModelPath('Zombie', '<?php echo $link; ?>models/GameExports/IdleWalkPunchKickMaya.fbx');
-			Resources.setModelPath('MapTwo', '<?php echo $link; ?>models/maps/mapaMine2.fbx');
+			//Resources.setModelPath('MapTwo', '<?php echo $link; ?>models/maps/mapaMine2.fbx');
+			const resources = [
+				{
+					name: 'MapTwo',
+					type: 'model',
+					path: '<?php echo $link; ?>models/maps/mapaMine2.fbx'
+				}
+			];
 
-			// La clase Application controla todo el flujo de la aplicación
-			const app = new Application();
+			Resources.loadResources(resources).then(() => {
+				// La clase Application controla todo el flujo de la aplicación
+				const app = new Application();
 
-			// Se pueden crear escenas independientes. Todo el código relacionado a una escena
-			// se ubica únicamente en su propio archivo. Ver el archivo js/game/scenes/FightScene.js
-			const fightScene = new FightScene({
-				id: "scene-section",
-				width: window.innerWidth,
-				height: window.innerHeight
+				// Se pueden crear escenas independientes. Todo el código relacionado a una escena
+				// se ubica únicamente en su propio archivo. Ver el archivo js/game/scenes/FightScene.js
+				const fightScene = new FightScene({
+					id: "scene-section",
+					width: window.innerWidth,
+					height: window.innerHeight
+				});
+
+				// Se prepara la aplicación
+				app.prepare();
+
+				// Se especifica la escena principal de la aplicación (la que se va a renderizar y actualizar)
+				app.setScene(fightScene);
+
+				// Se inicia la aplicación. Esto inicia la escena y comienza el game loop.
+				app.run();
 			});
-
-			// Se prepara la aplicación
-			app.prepare();
-
-			// Se especifica la escena principal de la aplicación (la que se va a renderizar y actualizar)
-			app.setScene(fightScene);
-
-			// Se inicia la aplicación. Esto inicia la escena y comienza el game loop.
-			app.run();
 		});
 	</script>
 
