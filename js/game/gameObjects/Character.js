@@ -73,6 +73,8 @@ export default class Character extends GameObject {
 
         this.updateGravity(dt);
 
+        this.updateBoundingBoxes(dt);
+
         this.updateStateMachine(dt);
     }
 
@@ -114,10 +116,12 @@ export default class Character extends GameObject {
     initModel(props) {
         const original = Resources.getModelResource('PlayerBase');
         const object = THREE.SkeletonUtils.clone(original);
-        //object.animations = original.animations;
+
         if (props.position) {
             object.position.copy(props.position);
         }
+
+        this.attachElementsToBones(object);
 
         object.rotation.y = -1.5;
         object.scale.set(0.03, 0.03, 0.03);
@@ -125,6 +129,40 @@ export default class Character extends GameObject {
         this.handler = object; // El handler nos permite tener siempre una referencia al objeto de Three.js para modificarlo
 
         this.scene.add(this);
+    }
+
+    attachElementsToBones(handler) {
+        const rightHand = handler.getObjectByName('RightHandIndex1');
+        const rightFoot = handler.getObjectByName('RightToes');
+        const chest = handler.getObjectByName('Chest');
+
+        console.log(handler);
+        // console.log(rightHand);
+        // console.log(rightFoot);
+
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x00ff00,
+            transparent: true,
+            opacity: 0.5
+        });
+        const cube = new THREE.Mesh( geometry, material );
+        cube.geometry.computeBoundingBox();
+        //cube.visible = false;
+        
+        const cubeA = cube.clone();
+        cubeA.scale.multiplyScalar(0.5);
+
+        const cubeB = cube.clone();
+        cubeB.scale.multiplyScalar(0.5);
+
+        const cubeC = cube.clone();
+        cubeC.scale.set(0.75, 2.75, 0.75);
+        cubeC.position.y = 0.3;
+
+        rightHand.add(cubeA);
+        rightFoot.add(cubeB);
+        chest.add(cubeC);
     }
 
     loadAnimations() {
@@ -191,5 +229,9 @@ export default class Character extends GameObject {
             this.velocityY = this.jumpSpeed;
             this.onGround = false;
         }
+    }
+
+    updateBoundingBoxes(dt) {
+        
     }
 }
