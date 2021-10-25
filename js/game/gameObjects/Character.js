@@ -11,13 +11,24 @@ export default class Character extends GameObject {
     actions = {};
 
     speed;
+    jumpSpeed;
+    
+    gravityFactor;
+    velocityY = 0;
+    gravity = -9.8;
+
+    // temp
+    floorY;
+    onGround = true;
+
     controlMap;
 
     static State = {
         Idle: 'idle',
         Walk: 'walk',
         Punch: 'punch',
-        Kick: 'kick'
+        Kick: 'kick',
+        Jump: 'jump'
     };
 
     lastState = Character.State.Idle;
@@ -27,6 +38,9 @@ export default class Character extends GameObject {
     constructor(scene, props) {
         super(scene); // Importante para inicializar el GameObject correctamente
         this.speed = props.speed ?? 15;
+        this.jumpSpeed = props.jumpSpeed ?? 30;
+        this.gravityFactor = props.gravityFactor ?? 4;
+        this.gravity *= this.gravityFactor;
 
         this.controlMap = props.controlMap ?? {
             right: "D",
@@ -34,7 +48,8 @@ export default class Character extends GameObject {
             up: "",
             down: "",
             punch: "Q",
-            kick: "E"
+            kick: "E",
+            jump: " "
         }
 
         this.initModel(props);
@@ -42,6 +57,9 @@ export default class Character extends GameObject {
         if (props.skin) {
             this.setSkin(props.skin);
         }
+
+        // temp
+        this.floorY = this.handler.position.y;
 
         this.loadAnimations();
     }
@@ -53,6 +71,8 @@ export default class Character extends GameObject {
 
         this.moveCharacter(dt);
 
+        this.updateGravity(dt);
+
         this.updateStateMachine(dt);
     }
 
@@ -60,14 +80,16 @@ export default class Character extends GameObject {
         let canMove = true;
         this.currentState = Character.State.Idle;
 
-        if(Input.keyIsDown(this.controlMap.punch)){
-            this.currentState = Character.State.Punch;
-            canMove = false;
-        }
-
-        if(Input.keyIsDown(this.controlMap.kick)){
-            this.currentState = Character.State.Kick;
-            canMove = false;
+        if (this.onGround) {
+            if(Input.keyIsDown(this.controlMap.punch)){
+                this.currentState = Character.State.Punch;
+                canMove = false;
+            }
+    
+            if(Input.keyIsDown(this.controlMap.kick)){
+                this.currentState = Character.State.Kick;
+                canMove = false;
+            }
         }
 
         if (canMove) {
@@ -82,6 +104,10 @@ export default class Character extends GameObject {
                 this.handler.rotation.y = 1.5;
                 this.currentState = Character.State.Walk;
             }
+        }
+
+        if (!this.onGround) {
+            this.currentState = Character.State.Jump;
         }
     }
 
@@ -146,6 +172,24 @@ export default class Character extends GameObject {
             lastAction.crossFadeTo(currentAction, fadeTime).play();
 
             this.lastState = this.currentState;
+        }
+    }
+
+    updateGravity(dt) {
+        this.velocityY += this.gravity * dt;
+        this.handler.position.y += this.velocityY * dt;
+
+        if (this.handler.position.y <= this.floorY) {
+            this.handler.position.y = this.floorY;
+            this.onGround = true;
+            this.velocityY = 0;
+        }
+    }
+
+    onKeyPressed(key) {
+        if (key == this.controlMap.jump && this.onGround) {
+            this.velocityY = this.jumpSpeed;
+            this.onGround = false;
         }
     }
 }

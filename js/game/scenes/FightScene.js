@@ -75,7 +75,8 @@ export default class FightScene extends Scene {
                 up: "",
                 down: "",
                 punch: "7",
-                kick: "9"
+                kick: "9",
+                jump: "0"
             },
             skin: 'AlienA'
         });
