@@ -56,6 +56,31 @@
 					name: 'AlienA',
 					type: 'texture',
 					path: '<?php echo $link; ?>models/characters/skins/alienA.png'
+				},
+				{
+					name: 'CharacterIdle',
+					type: 'animation',
+					path: '<?php echo $link; ?>models/animations/idle.fbx'
+				},
+				{
+					name: 'CharacterWalk',
+					type: 'animation',
+					path: '<?php echo $link; ?>models/animations/walk.fbx'
+				},
+				{
+					name: 'CharacterPunch',
+					type: 'animation',
+					path: '<?php echo $link; ?>models/animations/punch.fbx'
+				},
+				{
+					name: 'CharacterKick',
+					type: 'animation',
+					path: '<?php echo $link; ?>models/animations/kick.fbx'
+				},
+				{
+					name: 'CharacterJump',
+					type: 'animation',
+					path: '<?php echo $link; ?>models/animations/jump.fbx'
 				}
 			];
 

@@ -7,18 +7,22 @@ import Resources from "../../engine/Resources.js";
 // de esta forma aislamos el código de cada objeto en su propio
 // archivo y además podemos crear tantas instancias como necesitemos en la escena
 export default class Character extends GameObject {
-    action1;
-    action2;
-    action3;
-    action4;
-
-    flag = false;
-    punch = false;
-    kick = false;
+    mixer;
+    actions = {};
 
     speed;
     controlMap;
-    
+
+    static State = {
+        Idle: 'idle',
+        Walk: 'walk',
+        Punch: 'punch',
+        Kick: 'kick'
+    };
+
+    lastState = Character.State.Idle;
+    currentState = Character.State.Idle;
+
     // Los GameObject reciben una referencia a la escena a la que pertenecen (scene)
     constructor(scene, props) {
         super(scene); // Importante para inicializar el GameObject correctamente
@@ -38,6 +42,8 @@ export default class Character extends GameObject {
         if (props.skin) {
             this.setSkin(props.skin);
         }
+
+        this.loadAnimations();
     }
 
     onUpdate(dt) {
@@ -46,32 +52,37 @@ export default class Character extends GameObject {
         }
 
         this.moveCharacter(dt);
+
+        this.updateStateMachine(dt);
     }
 
     moveCharacter(dt) {
-        if(Input.keyIsDown(this.controlMap.left)){
-            this.flag = true;
-            this.handler.position.x -= this.speed * dt;
-            this.handler.rotation.y = -1.5;
-        }
-
-        if(Input.keyIsDown(this.controlMap.right)){
-            this.flag = true;
-            this.handler.position.x += this.speed * dt;
-            this.handler.rotation.y = 1.5;
-        }
+        let canMove = true;
+        this.currentState = Character.State.Idle;
 
         if(Input.keyIsDown(this.controlMap.punch)){
-            this.punch = true;
+            this.currentState = Character.State.Punch;
+            canMove = false;
         }
 
         if(Input.keyIsDown(this.controlMap.kick)){
-            this.kick = true;
+            this.currentState = Character.State.Kick;
+            canMove = false;
         }
-    }
 
-    onKeyPressed(key) {
-        console.log(this.speed); // Prueba
+        if (canMove) {
+            if(Input.keyIsDown(this.controlMap.left)){
+                this.handler.position.x -= this.speed * dt;
+                this.handler.rotation.y = -1.5;
+                this.currentState = Character.State.Walk;
+            }
+    
+            if(Input.keyIsDown(this.controlMap.right)){
+                this.handler.position.x += this.speed * dt;
+                this.handler.rotation.y = 1.5;
+                this.currentState = Character.State.Walk;
+            }
+        }
     }
 
     initModel(props) {
@@ -85,10 +96,30 @@ export default class Character extends GameObject {
         object.rotation.y = -1.5;
         object.scale.set(0.03, 0.03, 0.03);
         
-        console.log(object);
         this.handler = object; // El handler nos permite tener siempre una referencia al objeto de Three.js para modificarlo
 
         this.scene.add(this);
+    }
+
+    loadAnimations() {
+        this.mixer = new THREE.AnimationMixer(this.handler);
+
+        const idle = Resources.getAnimationResource('CharacterIdle');
+        this.actions['idle'] = this.mixer.clipAction(idle.animations[0]);
+        
+        const walk = Resources.getAnimationResource('CharacterWalk');
+        this.actions['walk'] = this.mixer.clipAction(walk.animations[0]);
+        
+        const kick = Resources.getAnimationResource('CharacterKick');
+        this.actions['kick'] = this.mixer.clipAction(kick.animations[1]);
+
+        const punch = Resources.getAnimationResource('CharacterPunch');
+        this.actions['punch'] = this.mixer.clipAction(punch.animations[0]);
+
+        const jump = Resources.getAnimationResource('CharacterJump');
+        this.actions['jump'] = this.mixer.clipAction(jump.animations[0]);
+
+        this.actions[this.currentState].play();
     }
 
     setSkin(skin) {
@@ -98,6 +129,23 @@ export default class Character extends GameObject {
             mesh.material = new THREE.MeshLambertMaterial({
                 map: texture
             });
+        }
+    }
+
+    updateStateMachine(dt) {
+        this.mixer.update(dt);
+
+        if (this.lastState != this.currentState) {
+            const fadeTime = 0.2;
+            const lastAction = this.actions[this.lastState];
+            const currentAction = this.actions[this.currentState];
+
+            lastAction.reset();
+            currentAction.reset();
+
+            lastAction.crossFadeTo(currentAction, fadeTime).play();
+
+            this.lastState = this.currentState;
         }
     }
 }
