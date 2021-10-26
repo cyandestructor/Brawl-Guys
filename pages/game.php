@@ -82,6 +82,11 @@
 					name: 'CharacterJump',
 					type: 'animation',
 					path: '<?php echo $link; ?>models/animations/jump.fbx'
+				},
+				{
+					name: 'CharacterDeath',
+					type: 'animation',
+					path: '<?php echo $link; ?>models/animations/death.fbx'
 				}
 			];
 
