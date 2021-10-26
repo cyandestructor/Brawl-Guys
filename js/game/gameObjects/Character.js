@@ -24,7 +24,7 @@ export default class Character extends GameObject {
     controlMap;
 
     hurtBox;
-    hitBoxes = [];
+    hitBoxes = {};
 
     playerIndex;
 
@@ -96,16 +96,16 @@ export default class Character extends GameObject {
 
     moveCharacter(dt) {
         let canMove = true;
-        this.currentState = Character.State.Idle;
+        this.resetCharacterState();
 
         if (this.onGround) {
             if(Input.keyIsDown(this.controlMap.punch)){
-                this.currentState = Character.State.Punch;
+                this.punch();
                 canMove = false;
             }
     
             if(Input.keyIsDown(this.controlMap.kick)){
-                this.currentState = Character.State.Kick;
+                this.kick();
                 canMove = false;
             }
         }
@@ -164,7 +164,7 @@ export default class Character extends GameObject {
         });
         const collisionBoxHelper = new THREE.Mesh( geometry, material );
         collisionBoxHelper.geometry.computeBoundingBox();
-        //collisionBoxHelper.visible = false;
+        collisionBoxHelper.visible = false;
         
         const punchBoxMesh = collisionBoxHelper.clone();
         punchBoxMesh.scale.multiplyScalar(0.5);
@@ -180,8 +180,8 @@ export default class Character extends GameObject {
         rightFoot.add(kickBoxMesh);
         chest.add(hurtBoxMesh);
 
-        this.addHitBox(punchBoxMesh);
-        this.addHitBox(kickBoxMesh);
+        this.addHitBox('punch', punchBoxMesh);
+        this.addHitBox('kick', kickBoxMesh);
         
         this.hurtBox = {
             mesh: hurtBoxMesh,
@@ -263,30 +263,53 @@ export default class Character extends GameObject {
         // Update collisions with other players
         for (const player of Character.totalPlayers) {
             if (player.playerIndex != this.playerIndex) {
-                for (const hitbox of this.hitBoxes) {
-                    if (hitbox.box.intersectsOBB(player.hurtBox.box)) {
+                Object.keys(this.hitBoxes).forEach((key) => {
+                    const hitbox = this.hitBoxes[key];
+                    if (hitbox.active && hitbox.box.intersectsOBB(player.hurtBox.box)) {
                         player.onDamage();
                         // break; // Maybe needed
                     }
-                }
+                });
             }
         }
     }
 
     updateBoundingBoxes() {
-        for (const hitbox of this.hitBoxes) {
+        Object.keys(this.hitBoxes).forEach((key) => {
+            const hitbox = this.hitBoxes[key];
             hitbox.box.fromBox3(hitbox.mesh.geometry.boundingBox);
             hitbox.box.applyMatrix4(hitbox.mesh.matrixWorld);
-        }
+        });
 
         this.hurtBox.box.fromBox3(this.hurtBox.mesh.geometry.boundingBox);
         this.hurtBox.box.applyMatrix4(this.hurtBox.mesh.matrixWorld);
     }
 
-    addHitBox(hitBoxMesh) {
-        this.hitBoxes.push({
+    addHitBox(key, hitBoxMesh) {
+        this.hitBoxes[key] = {
             mesh: hitBoxMesh,
-            box: new THREE.OBB()
-        });
+            box: new THREE.OBB(),
+            active: false
+        };
+    }
+
+    resetCharacterState() {
+        this.currentState = Character.State.Idle;
+        this.hitBoxes['punch'].active = false;
+        this.hitBoxes['kick'].active = false;
+        // this.hitBoxes['punch'].mesh.visible = false;
+        // this.hitBoxes['kick'].mesh.visible = false;
+    }
+
+    punch() {
+        this.currentState = Character.State.Punch;
+        this.hitBoxes['punch'].active = true;
+        // this.hitBoxes['punch'].mesh.visible = true;
+    }
+
+    kick() {
+        this.currentState = Character.State.Kick;
+        this.hitBoxes['kick'].active = true;
+        // this.hitBoxes['kick'].mesh.visible = true;
     }
 }
