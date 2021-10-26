@@ -86,7 +86,7 @@ export default class Character extends GameObject {
             return;
         }
 
-        this.moveCharacter(dt);
+        this.controlCharacter(dt);
 
         this.updateGravity(dt);
 
@@ -97,7 +97,7 @@ export default class Character extends GameObject {
         this.updateStateMachine(dt);
     }
 
-    moveCharacter(dt) {
+    controlCharacter(dt) {
         let canMove = true;
         let canAttack = !this.isHit && this.onGround;
         this.resetCharacterState();
