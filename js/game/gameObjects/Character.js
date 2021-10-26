@@ -10,6 +10,9 @@ export default class Character extends GameObject {
     mixer;
     actions = {};
 
+    hp;
+    attackPower;
+
     speed;
     jumpSpeed;
     
@@ -50,6 +53,9 @@ export default class Character extends GameObject {
         super(scene); // Importante para inicializar el GameObject correctamente
         this.speed = props.speed ?? 15;
         this.jumpSpeed = props.jumpSpeed ?? 30;
+        this.hp = props.hp ?? 50;
+        this.attackPower = props.attackPower ?? 5;
+
         this.gravityFactor = props.gravityFactor ?? 4;
         this.gravity *= this.gravityFactor;
 
@@ -269,10 +275,11 @@ export default class Character extends GameObject {
         }
     }
 
-    onDamage(damage) {
-        // console.log('Player ' + this.playerIndex + ' received a hit');
+    onDamage(damage = 0) {
+        console.log('Player ' + this.playerIndex + ' received a hit. Player HP: ' + this.hp);
         this.currentState = Character.State.Damage;
         this.isHit = true;
+        this.hp -= damage;
     }
 
     updateCollisions(dt) {
@@ -282,7 +289,7 @@ export default class Character extends GameObject {
                 Object.keys(this.hitBoxes).forEach((key) => {
                     const hitbox = this.hitBoxes[key];
                     if (hitbox.active && hitbox.box.intersectsOBB(player.hurtBox.box)) {
-                        player.onDamage();
+                        player.onDamage(this.attackPower * dt);
                         // break; // Maybe needed
                     }
                 });
