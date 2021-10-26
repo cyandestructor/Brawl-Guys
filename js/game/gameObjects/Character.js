@@ -29,6 +29,7 @@ export default class Character extends GameObject {
     hurtBox;
     hitBoxes = {};
     isHit = false;
+    isDeath = false;
 
     playerIndex;
 
@@ -91,14 +92,22 @@ export default class Character extends GameObject {
         if(!this.handler) {
             return;
         }
-
-        this.controlCharacter(dt);
-
+        
         this.updateGravity(dt);
+        
+        if (!this.isDeath) {
+            this.controlCharacter(dt);
 
-        this.updateBoundingBoxes();
+            this.updateBoundingBoxes();
 
-        this.updateCollisions(dt);
+            this.updateCollisions(dt);
+        }
+
+        if (this.hp <= 0) {
+            this.hp = 0;
+            this.currentState = Character.State.Death;
+            this.isDeath = true;
+        }
 
         this.updateStateMachine(dt);
     }
@@ -219,6 +228,8 @@ export default class Character extends GameObject {
 
         const death = Resources.getAnimationResource('CharacterDeath');
         this.actions['death'] = this.mixer.clipAction(death.animations[0]);
+        this.actions['death'].loop = THREE.LoopOnce;
+        this.actions['death'].clampWhenFinished = true;
 
         const damageAnimationClip = death.animations[0].clone();
         damageAnimationClip.duration = 0.3;
@@ -285,7 +296,7 @@ export default class Character extends GameObject {
     updateCollisions(dt) {
         // Update collisions with other players
         for (const player of Character.totalPlayers) {
-            if (player.playerIndex != this.playerIndex) {
+            if (player.playerIndex != this.playerIndex && !player.isDeath) {
                 Object.keys(this.hitBoxes).forEach((key) => {
                     const hitbox = this.hitBoxes[key];
                     if (hitbox.active && hitbox.box.intersectsOBB(player.hurtBox.box)) {
