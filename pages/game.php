@@ -20,6 +20,7 @@
 	<script src="<?php echo $link; ?>js/lib/MTLLoader.js"></script>
 	<script src="<?php echo $link; ?>js/lib/OBJLoader.js"></script>
 	<script src="<?php echo $link; ?>js/lib/fflate.min.js"></script>
+	<script src="<?php echo $link; ?>js/lib/OBB.js"></script>
 	<!-- <script src="<?php echo $link; ?>js/animation/AnimationMixer.js"></script>-->
 
 	<!--<script src="https://unpkg.com/three"></script>

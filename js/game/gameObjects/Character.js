@@ -23,6 +23,14 @@ export default class Character extends GameObject {
 
     controlMap;
 
+    hurtBox;
+    hitBoxes = [];
+
+    playerIndex;
+
+    // Reference to all the characters in the game
+    static totalPlayers = [];
+
     static State = {
         Idle: 'idle',
         Walk: 'walk',
@@ -52,6 +60,9 @@ export default class Character extends GameObject {
             jump: " "
         }
 
+        // Assign an index to this player based on the current total players
+        this.playerIndex = Character.totalPlayers.length;
+
         this.initModel(props);
 
         if (props.skin) {
@@ -62,6 +73,9 @@ export default class Character extends GameObject {
         this.floorY = this.handler.position.y;
 
         this.loadAnimations();
+
+        // Add this character to the list
+        Character.totalPlayers.push(this);
     }
 
     onUpdate(dt) {
@@ -73,7 +87,9 @@ export default class Character extends GameObject {
 
         this.updateGravity(dt);
 
-        this.updateBoundingBoxes(dt);
+        this.updateBoundingBoxes();
+
+        this.updateCollisions(dt);
 
         this.updateStateMachine(dt);
     }
@@ -136,7 +152,7 @@ export default class Character extends GameObject {
         const rightFoot = handler.getObjectByName('RightToes');
         const chest = handler.getObjectByName('Chest');
 
-        console.log(handler);
+        // console.log(handler);
         // console.log(rightHand);
         // console.log(rightFoot);
 
@@ -146,23 +162,31 @@ export default class Character extends GameObject {
             transparent: true,
             opacity: 0.5
         });
-        const cube = new THREE.Mesh( geometry, material );
-        cube.geometry.computeBoundingBox();
-        //cube.visible = false;
+        const collisionBoxHelper = new THREE.Mesh( geometry, material );
+        collisionBoxHelper.geometry.computeBoundingBox();
+        //collisionBoxHelper.visible = false;
         
-        const cubeA = cube.clone();
-        cubeA.scale.multiplyScalar(0.5);
+        const punchBoxMesh = collisionBoxHelper.clone();
+        punchBoxMesh.scale.multiplyScalar(0.5);
 
-        const cubeB = cube.clone();
-        cubeB.scale.multiplyScalar(0.5);
+        const kickBoxMesh = collisionBoxHelper.clone();
+        kickBoxMesh.scale.multiplyScalar(0.5);
 
-        const cubeC = cube.clone();
-        cubeC.scale.set(0.75, 2.75, 0.75);
-        cubeC.position.y = 0.3;
+        const hurtBoxMesh = collisionBoxHelper.clone();
+        hurtBoxMesh.scale.set(0.75, 2.75, 0.75);
+        hurtBoxMesh.position.y = 0.3;
 
-        rightHand.add(cubeA);
-        rightFoot.add(cubeB);
-        chest.add(cubeC);
+        rightHand.add(punchBoxMesh);
+        rightFoot.add(kickBoxMesh);
+        chest.add(hurtBoxMesh);
+
+        this.addHitBox(punchBoxMesh);
+        this.addHitBox(kickBoxMesh);
+        
+        this.hurtBox = {
+            mesh: hurtBoxMesh,
+            box: new THREE.OBB()
+        }
     }
 
     loadAnimations() {
@@ -231,7 +255,38 @@ export default class Character extends GameObject {
         }
     }
 
-    updateBoundingBoxes(dt) {
-        
+    onDamage() {
+        console.log('Player ' + this.playerIndex + ' received a hit');
+    }
+
+    updateCollisions(dt) {
+        // Update collisions with other players
+        for (const player of Character.totalPlayers) {
+            if (player.playerIndex != this.playerIndex) {
+                for (const hitbox of this.hitBoxes) {
+                    if (hitbox.box.intersectsOBB(player.hurtBox.box)) {
+                        player.onDamage();
+                        // break; // Maybe needed
+                    }
+                }
+            }
+        }
+    }
+
+    updateBoundingBoxes() {
+        for (const hitbox of this.hitBoxes) {
+            hitbox.box.fromBox3(hitbox.mesh.geometry.boundingBox);
+            hitbox.box.applyMatrix4(hitbox.mesh.matrixWorld);
+        }
+
+        this.hurtBox.box.fromBox3(this.hurtBox.mesh.geometry.boundingBox);
+        this.hurtBox.box.applyMatrix4(this.hurtBox.mesh.matrixWorld);
+    }
+
+    addHitBox(hitBoxMesh) {
+        this.hitBoxes.push({
+            mesh: hitBoxMesh,
+            box: new THREE.OBB()
+        });
     }
 }
