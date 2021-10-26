@@ -73,8 +73,8 @@ export default class FightScene extends Scene {
             controlMap: {
                 right: "6",
                 left: "4",
-                up: "",
-                down: "",
+                up: "8",
+                down: "5",
                 punch: "7",
                 kick: "9",
                 jump: "0"

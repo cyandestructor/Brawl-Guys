@@ -87,6 +87,11 @@
 					name: 'CharacterDeath',
 					type: 'animation',
 					path: '<?php echo $link; ?>models/animations/death.fbx'
+				},
+				{
+					name: 'CharacterBlock',
+					type: 'animation',
+					path: '<?php echo $link; ?>models/animations/block.fbx'
 				}
 			];
 

@@ -29,6 +29,7 @@ export default class Character extends GameObject {
     hurtBox;
     hitBoxes = {};
     isHit = false;
+    isBlock = false;
     isDeath = false;
 
     playerIndex;
@@ -43,7 +44,8 @@ export default class Character extends GameObject {
         Kick: 'kick',
         Jump: 'jump',
         Death: 'death',
-        Damage: 'damage'
+        Damage: 'damage',
+        Block: 'block'
     };
 
     lastState = Character.State.Idle;
@@ -63,8 +65,8 @@ export default class Character extends GameObject {
         this.controlMap = props.controlMap ?? {
             right: "D",
             left: "A",
-            up: "",
-            down: "",
+            up: "W",
+            down: "S",
             punch: "Q",
             kick: "E",
             jump: " "
@@ -127,6 +129,12 @@ export default class Character extends GameObject {
                 this.kick();
                 canMove = false;
             }
+        }
+
+        if (this.onGround && Input.keyIsDown(this.controlMap.down)) {
+            this.currentState = Character.State.Block;
+            this.isBlock = true;
+            canMove = false;
         }
 
         if (canMove) {
@@ -221,6 +229,9 @@ export default class Character extends GameObject {
         const punch = Resources.getAnimationResource('CharacterPunch');
         this.actions['punch'] = this.mixer.clipAction(punch.animations[0]);
 
+        const block = Resources.getAnimationResource('CharacterBlock');
+        this.actions['block'] = this.mixer.clipAction(block.animations[0]);
+
         const jump = Resources.getAnimationResource('CharacterJump');
         this.actions['jump'] = this.mixer.clipAction(jump.animations[0]);
 
@@ -284,11 +295,19 @@ export default class Character extends GameObject {
         }
     }
 
-    onDamage(damage = 0) {
-        console.log('Player ' + this.playerIndex + ' received a hit. Player HP: ' + this.hp);
-        this.currentState = Character.State.Damage;
-        this.isHit = true;
-        this.hp -= damage;
+    onDamage(dt, damage = 0) {
+        let totalDamage = damage;
+        if (!this.isBlock) {
+            this.currentState = Character.State.Damage;
+            this.isHit = true;
+        }
+        else {
+            totalDamage *= 0.3; // Damage reduction
+            this.handler.translateZ(-2 * dt); // Knockback
+        }
+        
+        this.hp -= totalDamage * dt;
+        // console.log('Player ' + this.playerIndex + ' received a hit. Player HP: ' + this.hp);
     }
 
     updateCollisions(dt) {
@@ -298,7 +317,7 @@ export default class Character extends GameObject {
                 Object.keys(this.hitBoxes).forEach((key) => {
                     const hitbox = this.hitBoxes[key];
                     if (hitbox.active && hitbox.box.intersectsOBB(player.hurtBox.box)) {
-                        player.onDamage(this.attackPower * dt);
+                        player.onDamage(dt, this.attackPower);
                         // break; // Maybe needed
                     }
                 });
@@ -330,6 +349,7 @@ export default class Character extends GameObject {
             this.currentState = Character.State.Idle;
         }
         this.isHit = false;
+        this.isBlock = false;
         this.hitBoxes['punch'].active = false;
         this.hitBoxes['kick'].active = false;
         // this.hitBoxes['punch'].mesh.visible = false;
