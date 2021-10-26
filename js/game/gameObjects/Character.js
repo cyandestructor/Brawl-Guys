@@ -25,6 +25,7 @@ export default class Character extends GameObject {
 
     hurtBox;
     hitBoxes = {};
+    isHit = false;
 
     playerIndex;
 
@@ -36,7 +37,9 @@ export default class Character extends GameObject {
         Walk: 'walk',
         Punch: 'punch',
         Kick: 'kick',
-        Jump: 'jump'
+        Jump: 'jump',
+        Death: 'death',
+        Damage: 'damage'
     };
 
     lastState = Character.State.Idle;
@@ -96,9 +99,10 @@ export default class Character extends GameObject {
 
     moveCharacter(dt) {
         let canMove = true;
+        let canAttack = !this.isHit && this.onGround;
         this.resetCharacterState();
 
-        if (this.onGround) {
+        if (canAttack) {
             if(Input.keyIsDown(this.controlMap.punch)){
                 this.punch();
                 canMove = false;
@@ -207,6 +211,16 @@ export default class Character extends GameObject {
         const jump = Resources.getAnimationResource('CharacterJump');
         this.actions['jump'] = this.mixer.clipAction(jump.animations[0]);
 
+        const death = Resources.getAnimationResource('CharacterDeath');
+        this.actions['death'] = this.mixer.clipAction(death.animations[0]);
+
+        const damageAnimationClip = death.animations[0].clone();
+        damageAnimationClip.duration = 0.3;
+        damageAnimationClip.trim();
+        this.actions['damage'] = this.mixer.clipAction(damageAnimationClip);
+        this.actions['damage'].timeScale = 0.9;
+        this.actions['damage'].loop = THREE.LoopPingPong;
+
         this.actions[this.currentState].play();
     }
 
@@ -255,8 +269,10 @@ export default class Character extends GameObject {
         }
     }
 
-    onDamage() {
-        console.log('Player ' + this.playerIndex + ' received a hit');
+    onDamage(damage) {
+        // console.log('Player ' + this.playerIndex + ' received a hit');
+        this.currentState = Character.State.Damage;
+        this.isHit = true;
     }
 
     updateCollisions(dt) {
@@ -294,7 +310,10 @@ export default class Character extends GameObject {
     }
 
     resetCharacterState() {
-        this.currentState = Character.State.Idle;
+        if (!this.isHit) {
+            this.currentState = Character.State.Idle;
+        }
+        this.isHit = false;
         this.hitBoxes['punch'].active = false;
         this.hitBoxes['kick'].active = false;
         // this.hitBoxes['punch'].mesh.visible = false;
