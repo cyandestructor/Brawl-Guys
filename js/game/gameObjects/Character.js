@@ -162,8 +162,6 @@ export default class Character extends GameObject {
         object.scale.set(0.03, 0.03, 0.03);
         
         this.handler = object; // El handler nos permite tener siempre una referencia al objeto de Three.js para modificarlo
-
-        this.scene.add(this);
     }
 
     attachElementsToBones(handler) {

@@ -66,6 +66,7 @@ export default class FightScene extends Scene {
             position: new THREE.Vector3(0, -15, -20),
             skin: 'ZombieA'
         });
+        this.add(this.player1);
 
         this.player2 = new Character(this, {
             position: new THREE.Vector3(20, -15, -20),
@@ -80,5 +81,6 @@ export default class FightScene extends Scene {
             },
             skin: 'AlienA'
         });
+        this.add(this.player2);
     }
 }
