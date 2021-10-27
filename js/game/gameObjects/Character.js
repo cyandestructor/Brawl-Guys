@@ -33,6 +33,7 @@ export default class Character extends GameObject {
     isDeath = false;
 
     rightHandPivot;
+    leftForeArmPivot;
 
     playerIndex;
 
@@ -49,7 +50,8 @@ export default class Character extends GameObject {
         Damage: 'damage',
         Block: 'block',
         Shoot: 'shoot',
-        Attack: 'attack'
+        Attack: 'attack',
+        Shield: 'shield'
     };
 
     lastState = Character.State.Idle;
@@ -180,10 +182,7 @@ export default class Character extends GameObject {
         const rightHand = handler.getObjectByName('RightHandIndex1');
         const rightFoot = handler.getObjectByName('RightToes');
         const chest = handler.getObjectByName('Chest');
-
-        // console.log(handler);
-        // console.log(rightHand);
-        // console.log(rightFoot);
+        const leftForeArm = handler.getObjectByName('LeftForeArm');
 
         // Preparing the right hand pivot to handle a weapon
         this.rightHandPivot = new THREE.Group();
@@ -194,6 +193,15 @@ export default class Character extends GameObject {
         this.rightHandPivot.translateY(0.1);
         this.rightHandPivot.translateZ(0.1);
         rightHand.add(this.rightHandPivot);
+
+        this.leftForeArmPivot = new THREE.Group();
+        this.leftForeArmPivot.scale.set(0.3, 0.3, 0.3);
+        this.leftForeArmPivot.rotateY(THREE.Math.degToRad(-90));
+        this.leftForeArmPivot.rotateZ(THREE.Math.degToRad(-90));
+        this.leftForeArmPivot.translateX(-0.15);
+        this.leftForeArmPivot.translateY(0.1);
+        this.leftForeArmPivot.translateZ(0.15);
+        leftForeArm.add(this.leftForeArmPivot);
 
         const geometry = new THREE.BoxGeometry();
         const material = new THREE.MeshBasicMaterial({
@@ -252,6 +260,9 @@ export default class Character extends GameObject {
         const jump = Resources.getAnimationResource('CharacterJump');
         this.actions['jump'] = this.mixer.clipAction(jump.animations[0]);
 
+        const shield = Resources.getAnimationResource('CharacterShield');
+        this.actions['shield'] = this.mixer.clipAction(shield.animations[0]);
+
         const attack = Resources.getAnimationResource('CharacterAttack');
         this.actions['attack'] = this.mixer.clipAction(attack.animations[1]);
 
@@ -282,8 +293,6 @@ export default class Character extends GameObject {
 
     updateStateMachine(dt) {
         this.mixer.update(dt);
-
-        //return;
 
         if (this.lastState != this.currentState) {
             const fadeTime = 0.2;
