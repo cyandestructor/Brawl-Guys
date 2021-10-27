@@ -48,7 +48,8 @@ export default class Character extends GameObject {
         Death: 'death',
         Damage: 'damage',
         Block: 'block',
-        Shoot: 'shoot'
+        Shoot: 'shoot',
+        Attack: 'attack'
     };
 
     lastState = Character.State.Idle;
@@ -250,6 +251,9 @@ export default class Character extends GameObject {
 
         const jump = Resources.getAnimationResource('CharacterJump');
         this.actions['jump'] = this.mixer.clipAction(jump.animations[0]);
+
+        const attack = Resources.getAnimationResource('CharacterAttack');
+        this.actions['attack'] = this.mixer.clipAction(attack.animations[1]);
 
         const death = Resources.getAnimationResource('CharacterDeath');
         this.actions['death'] = this.mixer.clipAction(death.animations[0]);

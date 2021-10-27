@@ -54,6 +54,11 @@
 					path: '<?php echo $link; ?>models/items/astroGun.fbx'
 				},
 				{
+					name: 'Sword',
+					type: 'model',
+					path: '<?php echo $link; ?>models/items/sword.fbx'
+				},
+				{
 					name: 'ZombieA',
 					type: 'texture',
 					path: '<?php echo $link; ?>models/characters/skins/zombieA.png'
@@ -102,6 +107,11 @@
 					name: 'CharacterShoot',
 					type: 'animation',
 					path: '<?php echo $link; ?>models/animations/shoot.fbx'
+				},
+				{
+					name: 'CharacterAttack',
+					type: 'animation',
+					path: '<?php echo $link; ?>models/animations/attack.fbx'
 				}
 			];
 
