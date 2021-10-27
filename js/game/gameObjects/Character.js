@@ -319,10 +319,16 @@ export default class Character extends GameObject {
         }
     }
 
-    onKeyPressed(key) {
+    onKeyDown(key) {
         if (key == this.controlMap.jump && this.onGround) {
             this.velocityY = this.jumpSpeed;
             this.onGround = false;
+        }
+    }
+
+    onKeyUp(key) {
+        if (key == this.controlMap.jump && this.velocityY > this.jumpSpeed / 2) {
+            this.velocityY = this.jumpSpeed / 2;
         }
     }
 
