@@ -1,7 +1,8 @@
-import GameObject from "../../engine/GameObject.js";
+import Item from "./Item.js";
 import Resources from "../../engine/Resources.js";
+import Character from "./Character.js";
 
-export default class Sword extends GameObject {
+export default class Sword extends Item {
     
     constructor(scene, props = {}) {
         super(scene);
@@ -25,6 +26,14 @@ export default class Sword extends GameObject {
         this.handler = pivot;
     }
     
+    getActionCharacterState() {
+        return Character.State.Attack;
+    }
+
+    getType() {
+        return Item.Type.Attack;
+    }
+
     onUpdate(dt) {
 
     }
