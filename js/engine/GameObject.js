@@ -6,6 +6,10 @@ export default class GameObject {
         this.scene = scene;
     }
 
+    getNative() {
+        return this.handler;
+    }
+
     // Se ejecuta una vez cuando la aplicación empieza a correr
     onStart() {}
 
