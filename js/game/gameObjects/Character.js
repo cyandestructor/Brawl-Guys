@@ -1,6 +1,10 @@
 import GameObject from "../../engine/GameObject.js";
 import Input from "../../engine/Input.js";
 import Resources from "../../engine/Resources.js";
+import Item from "./Item.js";
+// import AstroGun from "./AstroGun.js";
+// import Shield from "./Shield.js";
+// import Sword from "./Sword.js";
 
 // Todos los objetos extienen la clase GameObject
 // Este diseño permite tener objetos que manejen su propia lógica
@@ -31,6 +35,9 @@ export default class Character extends GameObject {
     isHit = false;
     isBlock = false;
     isDeath = false;
+    hasItem = false;
+
+    currentItem;
 
     rightHandPivot;
     leftForeArmPivot;
@@ -92,6 +99,9 @@ export default class Character extends GameObject {
 
         this.loadAnimations();
 
+        //this.setCurrentItem(new Sword(scene));
+        //this.setCurrentItem(new Shield(scene), 'lFArm');
+
         // Add this character to the list
         Character.totalPlayers.push(this);
     }
@@ -127,7 +137,12 @@ export default class Character extends GameObject {
 
         if (canAttack) {
             if(Input.keyIsDown(this.controlMap.punch)){
-                this.punch();
+                if (this.hasItem && this.currentItem.getType() == Item.Type.Attack) {
+                    this.useCurrentItem();
+                }
+                else {
+                    this.punch();
+                }
                 canMove = false;
             }
     
@@ -138,7 +153,12 @@ export default class Character extends GameObject {
         }
 
         if (this.onGround && Input.keyIsDown(this.controlMap.down)) {
-            this.currentState = Character.State.Block;
+            if (this.hasItem && this.currentItem.getType() == Item.Type.Defense) {
+                this.currentState = this.currentItem.getActionCharacterState();
+            }
+            else {
+                this.currentState = Character.State.Block;
+            }
             this.isBlock = true;
             canMove = false;
         }
@@ -391,6 +411,20 @@ export default class Character extends GameObject {
         this.hitBoxes['kick'].active = false;
         // this.hitBoxes['punch'].mesh.visible = false;
         // this.hitBoxes['kick'].mesh.visible = false;
+    }
+
+    setCurrentItem(item, socket = 'rHand') {
+        this.currentItem = item;
+        const sockets = {
+            rHand: this.rightHandPivot,
+            lFArm: this.leftForeArmPivot
+        }
+        sockets[socket].add(this.currentItem.getNative());
+        this.hasItem = true;
+    }
+
+    useCurrentItem() {
+        this.currentState = this.currentItem.getActionCharacterState();
     }
 
     punch() {
