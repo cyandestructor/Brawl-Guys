@@ -59,6 +59,11 @@
 					path: '<?php echo $link; ?>models/items/sword.fbx'
 				},
 				{
+					name: 'Shield',
+					type: 'model',
+					path: '<?php echo $link; ?>models/items/shield.fbx'
+				},
+				{
 					name: 'ZombieA',
 					type: 'texture',
 					path: '<?php echo $link; ?>models/characters/skins/zombieA.png'
@@ -112,6 +117,11 @@
 					name: 'CharacterAttack',
 					type: 'animation',
 					path: '<?php echo $link; ?>models/animations/attack.fbx'
+				},
+				{
+					name: 'CharacterShield',
+					type: 'animation',
+					path: '<?php echo $link; ?>models/animations/shield.fbx'
 				}
 			];
 
