@@ -32,6 +32,8 @@ export default class Character extends GameObject {
     isBlock = false;
     isDeath = false;
 
+    rightHandPivot;
+
     playerIndex;
 
     // Reference to all the characters in the game
@@ -45,7 +47,8 @@ export default class Character extends GameObject {
         Jump: 'jump',
         Death: 'death',
         Damage: 'damage',
-        Block: 'block'
+        Block: 'block',
+        Shoot: 'shoot'
     };
 
     lastState = Character.State.Idle;
@@ -181,6 +184,16 @@ export default class Character extends GameObject {
         // console.log(rightHand);
         // console.log(rightFoot);
 
+        // Preparing the right hand pivot to handle a weapon
+        this.rightHandPivot = new THREE.Group();
+        this.rightHandPivot.scale.set(0.3, 0.3, 0.3);
+        this.rightHandPivot.rotateY(THREE.Math.degToRad(90));
+        this.rightHandPivot.rotateX(THREE.Math.degToRad(-90));
+        this.rightHandPivot.translateX(0.12);
+        this.rightHandPivot.translateY(0.1);
+        this.rightHandPivot.translateZ(0.1);
+        rightHand.add(this.rightHandPivot);
+
         const geometry = new THREE.BoxGeometry();
         const material = new THREE.MeshBasicMaterial({
             color: 0x00ff00,
@@ -232,6 +245,9 @@ export default class Character extends GameObject {
         const block = Resources.getAnimationResource('CharacterBlock');
         this.actions['block'] = this.mixer.clipAction(block.animations[0]);
 
+        const shoot = Resources.getAnimationResource('CharacterShoot');
+        this.actions['shoot'] = this.mixer.clipAction(shoot.animations[0]);
+
         const jump = Resources.getAnimationResource('CharacterJump');
         this.actions['jump'] = this.mixer.clipAction(jump.animations[0]);
 
@@ -262,6 +278,8 @@ export default class Character extends GameObject {
 
     updateStateMachine(dt) {
         this.mixer.update(dt);
+
+        //return;
 
         if (this.lastState != this.currentState) {
             const fadeTime = 0.2;
