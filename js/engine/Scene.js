@@ -3,6 +3,7 @@ export default class Scene {
     camera;
     renderer;
 
+    nativeSolidObjects = [];
     gameObjects = [];
 
     constructor(camera, renderer) {
@@ -44,11 +45,25 @@ export default class Scene {
     add(gameObject) {
         this.gameObjects.push(gameObject);
         this.scene.add(gameObject.handler);
+        if ((gameObject.handler.userData.solid ?? false)) {
+            gameObject.handler.traverse((object) => {
+                if (object instanceof THREE.Mesh && !this.nativeSolidObjects.includes(object)) {
+                    this.nativeSolidObjects.push(object);
+                }
+            });
+        }
     }
 
     // Agregar un objeto nativo de Three.js
     addNative(handler) {
         this.scene.add(handler);
+        if ((handler.userData.solid ?? false)) {
+            handler.traverse((object) => {
+                if (object instanceof THREE.Mesh && !this.nativeSolidObjects.includes(object)) {
+                    this.nativeSolidObjects.push(object);
+                }
+            });
+        }
     }
 
     // Se ejecuta una vez al iniciar la aplicación
