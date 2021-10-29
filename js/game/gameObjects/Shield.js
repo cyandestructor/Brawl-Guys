@@ -18,6 +18,7 @@ export default class Shield extends PickableItem {
         const pivot = new THREE.Group();
         pivot.scale.set(0.03, 0.03, 0.03);
         pivot.add(object);
+        object.position.y = 80;
 
         if (props.position) {
             pivot.position.copy(props.position);
@@ -47,6 +48,7 @@ export default class Shield extends PickableItem {
     onInteraction(triggerObject) {
         this.pickedUp = true;
         this.handler.position.set(0, 0, 0);
+        this.handler.children[0].position.set(0, 0, 0);
         triggerObject.setCurrentItem(this, 'lFArm');
         super.onInteraction(triggerObject);
     }
@@ -54,6 +56,7 @@ export default class Shield extends PickableItem {
     onDrop(position) {
         this.scene.addNative(this.handler);
         this.handler.position.copy(position);
+        this.handler.children[0].position.y = 80;
         super.onDrop(position);
     }
 }

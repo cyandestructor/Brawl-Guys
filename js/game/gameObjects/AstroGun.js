@@ -20,6 +20,7 @@ export default class AstroGun extends PickableItem {
         pivot.rotation.y = THREE.Math.degToRad(90);
         pivot.scale.set(0.03, 0.03, 0.03);
         pivot.add(object);
+        object.position.y = 20;
 
         if (props.position) {
             pivot.position.copy(props.position);
@@ -48,6 +49,7 @@ export default class AstroGun extends PickableItem {
 
     onInteraction(triggerObject) {
         this.handler.position.set(0, 0, 0);
+        this.handler.children[0].position.set(0, 0, 0);
         this.handler.rotation.set(0, 0, 0);
         triggerObject.setCurrentItem(this);
         super.onInteraction();
@@ -57,6 +59,7 @@ export default class AstroGun extends PickableItem {
         this.scene.addNative(this.handler);
         this.handler.rotation.y = THREE.Math.degToRad(90);
         this.handler.position.copy(position);
+        this.handler.children[0].position.y = 20;
         super.onDrop(position);
     }
 }
