@@ -9,6 +9,7 @@ export default class AstroGun extends PickableItem {
         super(scene, props.pickedUp ?? false);
 
         this.initModel(props);
+        this.updateFloorY();
     }
 
     initModel(props) {
@@ -36,8 +37,11 @@ export default class AstroGun extends PickableItem {
     }
     
     onUpdate(dt) {
-        if (!this.pickedUp && this.pickUpCooldown <= 0) {
-            this.checkForInteraction();
+        if (!this.pickedUp) {
+            this.updateGravity(dt);
+            if (this.pickUpCooldown <= 0) {
+                this.checkForInteraction();
+            }
         }
         super.onUpdate(dt);
     }

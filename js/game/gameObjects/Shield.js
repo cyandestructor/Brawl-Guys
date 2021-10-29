@@ -35,10 +35,12 @@ export default class Shield extends PickableItem {
     }
     
     onUpdate(dt) {
-        if (!this.pickedUp && this.pickUpCooldown <= 0) {
-            this.checkForInteraction();
+        if (!this.pickedUp) {
+            this.updateGravity(dt);
+            if (this.pickUpCooldown <= 0) {
+                this.checkForInteraction();
+            }
         }
-
         super.onUpdate(dt);
     }
 

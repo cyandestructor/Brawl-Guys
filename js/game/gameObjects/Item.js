@@ -1,8 +1,8 @@
-import GameObject from "../../engine/GameObject.js";
 import Input from "../../engine/Input.js";
 import Character from "./Character.js";
+import SimpleRigidBody from "./SimpleRigidBody.js";
 
-export default class Item extends GameObject {
+export default class Item extends SimpleRigidBody {
     
     static Type = {
         None: 0,

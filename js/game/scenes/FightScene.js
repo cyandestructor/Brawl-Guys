@@ -60,6 +60,7 @@ export default class FightScene extends Scene {
         mapa.position.y = -20;
         mapa.position.z = -60;
         mapa.scale.set(0.045, 0.04, 0.025);
+        mapa.userData.solid = true;
         this.addNative(mapa);
 
         // La clase Character extiende una clase base llamada GameObject
@@ -88,7 +89,7 @@ export default class FightScene extends Scene {
         this.add(this.player2);
 
         this.add(new AstroGun(this, {
-            position: new THREE.Vector3(0, -15, -20)
+            position: new THREE.Vector3(0, 0, -20)
         }));
 
         this.add(new Sword(this, {
@@ -96,7 +97,7 @@ export default class FightScene extends Scene {
         }));
 
         this.add(new Shield(this, {
-            position: new THREE.Vector3(20, -15, -20)
+            position: new THREE.Vector3(20, -10, -20)
         }));
     }
 }
