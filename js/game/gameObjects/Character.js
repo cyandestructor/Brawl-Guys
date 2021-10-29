@@ -140,6 +140,7 @@ export default class Character extends GameObject {
     controlCharacter(dt) {
         let canMove = true;
         let canAttack = !(this.isHit || this.isBlock) && this.onGround;
+        let canBlock = !this.isHit && this.onGround;
         this.resetCharacterState();
 
         if (canAttack) {
@@ -159,14 +160,8 @@ export default class Character extends GameObject {
             }
         }
 
-        if (this.onGround && Input.keyIsDown(this.controlMap.down)) {
-            if (this.hasItem && this.currentItem.getType() == Item.Type.Defense) {
-                this.currentState = this.currentItem.getActionCharacterState();
-            }
-            else {
-                this.currentState = Character.State.Block;
-            }
-            this.isBlock = true;
+        if (canBlock && Input.keyIsDown(this.controlMap.down)) {
+            this.block();
             canMove = false;
         }
 
@@ -364,13 +359,13 @@ export default class Character extends GameObject {
     onDamage(dt, direction, damage = 0) {
         let totalDamage = damage;
         let knockback = damage * 1.5;
-        if (!this.isBlock) {
-            this.currentState = Character.State.Damage;
-            this.isHit = true;
-        }
-        else {
+        if (this.isBlock && direction != this.direction) {
             totalDamage *= 0.3; // Damage reduction
             knockback = 2;
+        }
+        else {
+            this.currentState = Character.State.Damage;
+            this.isHit = true;
         }
         
         this.handler.position.x += knockback * dt * direction; // Knockback
@@ -448,5 +443,15 @@ export default class Character extends GameObject {
         this.currentState = Character.State.Kick;
         this.hitBoxes['kick'].active = true;
         // this.hitBoxes['kick'].mesh.visible = true;
+    }
+
+    block() {
+        if (this.hasItem && this.currentItem.getType() == Item.Type.Defense) {
+            this.currentState = this.currentItem.getActionCharacterState();
+        }
+        else {
+            this.currentState = Character.State.Block;
+        }
+        this.isBlock = true;
     }
 }
