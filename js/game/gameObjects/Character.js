@@ -132,7 +132,7 @@ export default class Character extends GameObject {
 
     controlCharacter(dt) {
         let canMove = true;
-        let canAttack = !this.isHit && this.onGround;
+        let canAttack = !(this.isHit || this.isBlock) && this.onGround;
         this.resetCharacterState();
 
         if (canAttack) {
