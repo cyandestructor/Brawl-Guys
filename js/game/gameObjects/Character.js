@@ -61,6 +61,12 @@ export default class Character extends GameObject {
         Shield: 'shield'
     };
 
+    static Direction = {
+        Left: -1,
+        Right: 1
+    }
+
+    direction;
     lastState = Character.State.Idle;
     currentState = Character.State.Idle;
 
@@ -71,6 +77,7 @@ export default class Character extends GameObject {
         this.jumpSpeed = props.jumpSpeed ?? 30;
         this.hp = props.hp ?? 50;
         this.attackPower = props.attackPower ?? 5;
+        this.direction = props.direction ?? Character.Direction.Right;
 
         this.gravityFactor = props.gravityFactor ?? 4;
         this.gravity *= this.gravityFactor;
@@ -168,12 +175,14 @@ export default class Character extends GameObject {
                 this.handler.position.x -= this.speed * dt;
                 this.handler.rotation.y = -1.5;
                 this.currentState = Character.State.Walk;
+                this.direction = Character.Direction.Left;
             }
     
             if(Input.keyIsDown(this.controlMap.right)){
                 this.handler.position.x += this.speed * dt;
                 this.handler.rotation.y = 1.5;
                 this.currentState = Character.State.Walk;
+                this.direction = Character.Direction.Right;
             }
         }
 
@@ -192,7 +201,7 @@ export default class Character extends GameObject {
 
         this.attachElementsToBones(object);
 
-        object.rotation.y = -1.5;
+        object.rotation.y = 1.5 * this.direction;
         object.scale.set(0.03, 0.03, 0.03);
         
         this.handler = object; // El handler nos permite tener siempre una referencia al objeto de Three.js para modificarlo
@@ -352,17 +361,19 @@ export default class Character extends GameObject {
         }
     }
 
-    onDamage(dt, damage = 0) {
+    onDamage(dt, direction, damage = 0) {
         let totalDamage = damage;
+        let knockback = damage * 1.5;
         if (!this.isBlock) {
             this.currentState = Character.State.Damage;
             this.isHit = true;
         }
         else {
             totalDamage *= 0.3; // Damage reduction
-            this.handler.translateZ(-2 * dt); // Knockback
+            knockback = 2;
         }
         
+        this.handler.position.x += knockback * dt * direction; // Knockback
         this.hp -= totalDamage * dt;
         // console.log('Player ' + this.playerIndex + ' received a hit. Player HP: ' + this.hp);
     }
@@ -374,7 +385,7 @@ export default class Character extends GameObject {
                 Object.keys(this.hitBoxes).forEach((key) => {
                     const hitbox = this.hitBoxes[key];
                     if (hitbox.active && hitbox.box.intersectsOBB(player.hurtBox.box)) {
-                        player.onDamage(dt, this.attackPower);
+                        player.onDamage(dt, this.direction, this.attackPower);
                         // break; // Maybe needed
                     }
                 });
