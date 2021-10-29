@@ -1,4 +1,4 @@
-import GameObject from "../../engine/GameObject.js";
+import SimpleRigidBody from "./SimpleRigidBody.js";
 import Input from "../../engine/Input.js";
 import Resources from "../../engine/Resources.js";
 import Item from "./Item.js";
@@ -7,7 +7,7 @@ import Item from "./Item.js";
 // Este diseño permite tener objetos que manejen su propia lógica
 // de esta forma aislamos el código de cada objeto en su propio
 // archivo y además podemos crear tantas instancias como necesitemos en la escena
-export default class Character extends GameObject {
+export default class Character extends SimpleRigidBody {
     mixer;
     actions = {};
 
@@ -17,14 +17,6 @@ export default class Character extends GameObject {
     speed;
     jumpSpeed;
     
-    gravityFactor;
-    velocityY = 0;
-    gravity = -9.8;
-
-    // temp
-    floorY;
-    onGround = true;
-
     controlMap;
 
     hurtBox;
@@ -69,15 +61,15 @@ export default class Character extends GameObject {
 
     // Los GameObject reciben una referencia a la escena a la que pertenecen (scene)
     constructor(scene, props) {
-        super(scene); // Importante para inicializar el GameObject correctamente
+        super(scene, {
+            gravityFactor: props.gravityFactor ?? 4
+        }); // Importante para inicializar el GameObject correctamente
+        
         this.speed = props.speed ?? 15;
         this.jumpSpeed = props.jumpSpeed ?? 30;
         this.hp = props.hp ?? 50;
         this.attackPower = props.attackPower ?? 5;
         this.direction = props.direction ?? Character.Direction.Right;
-
-        this.gravityFactor = props.gravityFactor ?? 4;
-        this.gravity *= this.gravityFactor;
 
         this.controlMap = props.controlMap ?? {
             right: "D",
@@ -98,9 +90,6 @@ export default class Character extends GameObject {
         if (props.skin) {
             this.setSkin(props.skin);
         }
-
-        // temp
-        this.floorY = this.handler.position.y;
 
         this.loadAnimations();
 
@@ -327,21 +316,9 @@ export default class Character extends GameObject {
         }
     }
 
-    updateGravity(dt) {
-        this.velocityY += this.gravity * dt;
-        this.handler.position.y += this.velocityY * dt;
-
-        if (this.handler.position.y <= this.floorY) {
-            this.handler.position.y = this.floorY;
-            this.onGround = true;
-            this.velocityY = 0;
-        }
-    }
-
     onKeyDown(key) {
         if (key == this.controlMap.jump && this.onGround) {
             this.velocityY = this.jumpSpeed;
-            this.onGround = false;
         }
     }
 

@@ -17,6 +17,7 @@ export default class FightScene extends Scene {
             0.1,
             200
         );
+        camera.position.set(0, -3, -1);
         
         const renderer = new THREE.WebGLRenderer();
 		renderer.setClearColor( new THREE.Color(1 , 1, 1));
@@ -47,14 +48,6 @@ export default class FightScene extends Scene {
         this.addNative(ambient);
         this.addNative(directional);
 
-        // let mapa1 = new THREE.FBXLoader();
-        // mapa1.load(Resources.getModelPath('MapTwo'), (object) => {
-        //     object.position.x = 0;
-        //     object.position.y = -20;
-        //     object.position.z = -60;
-        //     object.scale.set(0.045, 0.04, 0.025);
-        //     this.addNative(object);
-        // });
         const mapa = Resources.getModelResource('MapTwo').clone();
         mapa.position.x = 0;
         mapa.position.y = -20;
