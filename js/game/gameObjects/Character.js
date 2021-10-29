@@ -358,17 +358,19 @@ export default class Character extends GameObject {
 
     onDamage(dt, direction, damage = 0) {
         let totalDamage = damage;
-        let knockback = damage * 1.5;
+        let knockbackMultiplier = 1.5;
         if (this.isBlock && direction != this.direction) {
             totalDamage *= 0.3; // Damage reduction
-            knockback = 2;
+            knockbackMultiplier = 0.4;
         }
         else {
             this.currentState = Character.State.Damage;
             this.isHit = true;
         }
         
-        this.handler.position.x += knockback * dt * direction; // Knockback
+        // Knockback
+        const knockback = damage * knockbackMultiplier;
+        this.handler.position.x += knockback * dt * direction;
         this.hp -= totalDamage * dt;
         // console.log('Player ' + this.playerIndex + ' received a hit. Player HP: ' + this.hp);
     }
