@@ -1,6 +1,9 @@
 import Scene from "../../engine/Scene.js";
 import Character from "../gameObjects/Character.js";
 import Resources from "../../engine/Resources.js";
+import AstroGun from "../gameObjects/AstroGun.js";
+import Sword from "../gameObjects/Sword.js";
+import Shield from "../gameObjects/Shield.js";
 
 // Todas las escenas extienden la clase base Scene
 export default class FightScene extends Scene {
@@ -77,10 +80,23 @@ export default class FightScene extends Scene {
                 down: "5",
                 punch: "7",
                 kick: "9",
-                jump: "0"
+                jump: "0",
+                interact: "7"
             },
             skin: 'AlienA'
         });
         this.add(this.player2);
+
+        this.add(new AstroGun(this, {
+            position: new THREE.Vector3(0, -15, -20)
+        }));
+
+        this.add(new Sword(this, {
+            position: new THREE.Vector3(-20, -15, -20)
+        }));
+
+        this.add(new Shield(this, {
+            position: new THREE.Vector3(20, -15, -20)
+        }));
     }
 }

@@ -2,9 +2,6 @@ import GameObject from "../../engine/GameObject.js";
 import Input from "../../engine/Input.js";
 import Resources from "../../engine/Resources.js";
 import Item from "./Item.js";
-// import AstroGun from "./AstroGun.js";
-// import Shield from "./Shield.js";
-// import Sword from "./Sword.js";
 
 // Todos los objetos extienen la clase GameObject
 // Este diseño permite tener objetos que manejen su propia lógica
@@ -89,7 +86,8 @@ export default class Character extends GameObject {
             down: "S",
             punch: "Q",
             kick: "E",
-            jump: " "
+            jump: " ",
+            interact: "Q"
         }
 
         // Assign an index to this player based on the current total players
@@ -105,9 +103,6 @@ export default class Character extends GameObject {
         this.floorY = this.handler.position.y;
 
         this.loadAnimations();
-
-        //this.setCurrentItem(new Sword(scene));
-        //this.setCurrentItem(new Shield(scene), 'lFArm');
 
         // Add this character to the list
         Character.totalPlayers.push(this);
@@ -422,6 +417,10 @@ export default class Character extends GameObject {
     }
 
     setCurrentItem(item, socket = 'rHand') {
+        if (this.currentItem) {
+            this.currentItem.onDrop(this.handler.position);
+        }
+        
         this.currentItem = item;
         const sockets = {
             rHand: this.rightHandPivot,

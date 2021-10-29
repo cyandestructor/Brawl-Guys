@@ -1,11 +1,12 @@
 import Item from "./Item.js";
 import Resources from "../../engine/Resources.js";
 import Character from "./Character.js";
+import PickableItem from "./PickableItem.js";
 
-export default class Shield extends Item {
+export default class Shield extends PickableItem {
     
     constructor(scene, props = {}) {
-        super(scene);
+        super(scene, props.pickedUp ?? false);
 
         this.initModel(props);
     }
@@ -34,6 +35,23 @@ export default class Shield extends Item {
     }
     
     onUpdate(dt) {
+        if (!this.pickedUp && this.pickUpCooldown <= 0) {
+            this.checkForInteraction();
+        }
 
+        super.onUpdate(dt);
+    }
+
+    onInteraction(triggerObject) {
+        this.pickedUp = true;
+        this.handler.position.set(0, 0, 0);
+        triggerObject.setCurrentItem(this, 'lFArm');
+        super.onInteraction(triggerObject);
+    }
+
+    onDrop(position) {
+        this.scene.addNative(this.handler);
+        this.handler.position.copy(position);
+        super.onDrop(position);
     }
 }

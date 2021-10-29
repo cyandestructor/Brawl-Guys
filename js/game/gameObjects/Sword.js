@@ -1,11 +1,12 @@
 import Item from "./Item.js";
 import Resources from "../../engine/Resources.js";
 import Character from "./Character.js";
+import PickableItem from "./PickableItem.js";
 
-export default class Sword extends Item {
-    
+export default class Sword extends PickableItem {
+
     constructor(scene, props = {}) {
-        super(scene);
+        super(scene, props.pickedUp ?? false);
 
         this.initModel(props);
     }
@@ -16,7 +17,6 @@ export default class Sword extends Item {
         
         const pivot = new THREE.Group();
         pivot.scale.set(0.03, 0.03, 0.03);
-        pivot.rotation.y = THREE.Math.degToRad(90);
         pivot.add(object);
 
         if (props.position) {
@@ -35,6 +35,24 @@ export default class Sword extends Item {
     }
 
     onUpdate(dt) {
+        if (!this.pickedUp && this.pickUpCooldown <= 0) {
+            this.checkForInteraction();
+        }
 
+        super.onUpdate(dt);
+    }
+
+    onInteraction(triggerObject) {
+        this.handler.position.set(0, 0, 0);
+        this.handler.rotation.y = THREE.Math.degToRad(90);
+        triggerObject.setCurrentItem(this);
+        super.onInteraction(triggerObject);
+    }
+
+    onDrop(position) {
+        this.scene.addNative(this.handler);
+        this.handler.position.copy(position);
+        this.handler.rotation.y = 0;
+        super.onDrop(position);
     }
 }
