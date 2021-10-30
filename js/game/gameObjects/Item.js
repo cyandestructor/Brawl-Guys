@@ -41,6 +41,10 @@ export default class Item extends SimpleRigidBody {
     
     onInteraction(triggerObject) {}
 
+    onUse(triggerObject, beginUse = true) {
+        return this.getActionCharacterState();
+    }
+
     checkForInteraction() {
         for (const player of Character.totalPlayers) {
             const playerPosition = player.getNative().position;

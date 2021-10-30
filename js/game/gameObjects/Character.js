@@ -13,6 +13,7 @@ export default class Character extends SimpleRigidBody {
 
     hp;
     attackPower;
+    attackCooldown = 0;
 
     speed;
     jumpSpeed;
@@ -68,7 +69,7 @@ export default class Character extends SimpleRigidBody {
         this.speed = props.speed ?? 15;
         this.jumpSpeed = props.jumpSpeed ?? 30;
         this.hp = props.hp ?? 50;
-        this.attackPower = props.attackPower ?? 5;
+        this.attackPower = props.attackPower ?? 80;
         this.direction = props.direction ?? Character.Direction.Right;
 
         this.controlMap = props.controlMap ?? {
@@ -117,6 +118,9 @@ export default class Character extends SimpleRigidBody {
             this.currentState = Character.State.Death;
             this.isDeath = true;
         }
+
+        this.attackCooldown -= dt;
+        this.attackCooldown = Math.max(this.attackCooldown, 0);
 
         this.updateStateMachine(dt);
     }
@@ -222,13 +226,13 @@ export default class Character extends SimpleRigidBody {
         collisionBoxHelper.visible = false;
         
         const punchBoxMesh = collisionBoxHelper.clone();
-        punchBoxMesh.scale.multiplyScalar(0.5);
+        punchBoxMesh.scale.multiplyScalar(0.25);
 
         const kickBoxMesh = collisionBoxHelper.clone();
-        kickBoxMesh.scale.multiplyScalar(0.5);
+        kickBoxMesh.scale.multiplyScalar(0.3);
 
         const hurtBoxMesh = collisionBoxHelper.clone();
-        hurtBoxMesh.scale.set(0.75, 2.75, 0.75);
+        hurtBoxMesh.scale.set(0.75, 2.75, 0.5);
         hurtBoxMesh.position.y = 0.3;
 
         rightHand.add(punchBoxMesh);
@@ -330,10 +334,10 @@ export default class Character extends SimpleRigidBody {
 
     onDamage(dt, direction, damage = 0) {
         let totalDamage = damage;
-        let knockbackMultiplier = 1.5;
+        let knockbackMultiplier = 0.6;
         if (this.isBlock && direction != this.direction) {
-            totalDamage *= 0.3; // Damage reduction
-            knockbackMultiplier = 0.4;
+            totalDamage *= 0.2; // Damage reduction
+            knockbackMultiplier = 0.2;
         }
         else {
             this.currentState = Character.State.Damage;
@@ -353,7 +357,11 @@ export default class Character extends SimpleRigidBody {
             if (player.playerIndex != this.playerIndex && !player.isDeath) {
                 Object.keys(this.hitBoxes).forEach((key) => {
                     const hitbox = this.hitBoxes[key];
-                    if (hitbox.active && hitbox.box.intersectsOBB(player.hurtBox.box)) {
+                    if (hitbox.active
+                            && this.attackCooldown <= 0
+                            && hitbox.box.intersectsOBB(player.hurtBox.box)
+                        ) {
+                        this.attackCooldown = 0.5;
                         player.onDamage(dt, this.direction, this.attackPower);
                         // break; // Maybe needed
                     }
@@ -385,6 +393,9 @@ export default class Character extends SimpleRigidBody {
         if (!this.isHit) {
             this.currentState = Character.State.Idle;
         }
+        if (this.currentItem) {
+            this.currentItem.onUse(this, false);
+        }
         this.isHit = false;
         this.isBlock = false;
         this.hitBoxes['punch'].active = false;
@@ -408,7 +419,7 @@ export default class Character extends SimpleRigidBody {
     }
 
     useCurrentItem() {
-        this.currentState = this.currentItem.getActionCharacterState();
+        this.currentState = this.currentItem.onUse(this);
     }
 
     punch() {
