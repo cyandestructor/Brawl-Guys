@@ -458,4 +458,8 @@ export default class Character extends SimpleRigidBody {
             }
         }
     }
+
+    interact() {
+        return Input.keyIsDown(this.controlMap.interact);
+    }
 }

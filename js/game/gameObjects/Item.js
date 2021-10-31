@@ -1,4 +1,3 @@
-import Input from "../../engine/Input.js";
 import Character from "./Character.js";
 import SimpleRigidBody from "./SimpleRigidBody.js";
 
@@ -49,7 +48,7 @@ export default class Item extends SimpleRigidBody {
         for (const player of Character.totalPlayers) {
             const playerPosition = player.getNative().position;
             const distance = this.handler.position.distanceToSquared(playerPosition);
-            if (distance <= this.interactionRadius && Input.keyIsDown(player.controlMap.interact)) {
+            if (distance <= this.interactionRadius && player.interact()) {
                 // console.log('Player ' + player.playerIndex + ' can interact');
                 this.onInteraction(player);
                 break;
