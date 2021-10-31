@@ -26,6 +26,7 @@ export default class Character extends SimpleRigidBody {
     isBlock = false;
     isDeath = false;
     hasItem = false;
+    canMove = true;
 
     currentItem;
 
@@ -126,46 +127,31 @@ export default class Character extends SimpleRigidBody {
     }
 
     controlCharacter(dt) {
-        let canMove = true;
         let canAttack = !(this.isHit || this.isBlock) && this.onGround;
         let canBlock = !this.isHit && this.onGround;
         this.resetCharacterState();
 
         if (canAttack) {
             if(Input.keyIsDown(this.controlMap.punch)){
-                if (this.hasItem && this.currentItem.getType() == Item.Type.Attack) {
-                    this.useCurrentItem();
-                }
-                else {
-                    this.punch();
-                }
-                canMove = false;
+                this.punch();
             }
     
             if(Input.keyIsDown(this.controlMap.kick)){
                 this.kick();
-                canMove = false;
             }
         }
 
         if (canBlock && Input.keyIsDown(this.controlMap.down)) {
             this.block();
-            canMove = false;
         }
 
-        if (canMove) {
+        if (this.canMove) {
             if(Input.keyIsDown(this.controlMap.left)){
-                this.handler.position.x -= this.speed * dt;
-                this.handler.rotation.y = -1.5;
-                this.currentState = Character.State.Walk;
-                this.direction = Character.Direction.Left;
+                this.move(dt, Character.Direction.Left);
             }
     
             if(Input.keyIsDown(this.controlMap.right)){
-                this.handler.position.x += this.speed * dt;
-                this.handler.rotation.y = 1.5;
-                this.currentState = Character.State.Walk;
-                this.direction = Character.Direction.Right;
+                this.move(dt, Character.Direction.Right);
             }
         }
 
@@ -321,14 +307,14 @@ export default class Character extends SimpleRigidBody {
     }
 
     onKeyDown(key) {
-        if (key == this.controlMap.jump && this.onGround) {
-            this.velocityY = this.jumpSpeed;
+        if (key == this.controlMap.jump) {
+            this.jump();
         }
     }
 
     onKeyUp(key) {
-        if (key == this.controlMap.jump && this.velocityY > this.jumpSpeed / 2) {
-            this.velocityY = this.jumpSpeed / 2;
+        if (key == this.controlMap.jump) {
+            this.jump(false);
         }
     }
 
@@ -400,6 +386,7 @@ export default class Character extends SimpleRigidBody {
         this.isBlock = false;
         this.hitBoxes['punch'].active = false;
         this.hitBoxes['kick'].active = false;
+        this.canMove = true;
         // this.hitBoxes['punch'].mesh.visible = false;
         // this.hitBoxes['kick'].mesh.visible = false;
     }
@@ -423,15 +410,22 @@ export default class Character extends SimpleRigidBody {
     }
 
     punch() {
-        this.currentState = Character.State.Punch;
-        this.hitBoxes['punch'].active = true;
-        // this.hitBoxes['punch'].mesh.visible = true;
+        if (this.hasItem && this.currentItem.getType() == Item.Type.Attack) {
+            this.useCurrentItem();
+        }
+        else {
+            this.currentState = Character.State.Punch;
+            this.hitBoxes['punch'].active = true;
+            // this.hitBoxes['punch'].mesh.visible = true;
+        }
+        this.canMove = false;
     }
 
     kick() {
         this.currentState = Character.State.Kick;
         this.hitBoxes['kick'].active = true;
         // this.hitBoxes['kick'].mesh.visible = true;
+        this.canMove = false;
     }
 
     block() {
@@ -442,5 +436,26 @@ export default class Character extends SimpleRigidBody {
             this.currentState = Character.State.Block;
         }
         this.isBlock = true;
+        this.canMove = false;
+    }
+    
+    move(dt, direction) {
+        this.handler.position.x += this.speed * direction * dt;
+        this.handler.rotation.y = 1.5 * direction;
+        this.currentState = Character.State.Walk;
+        this.direction = direction;
+    }
+
+    jump(begin = true) {
+        if (begin) {
+            if (this.onGround) {
+                this.velocityY = this.jumpSpeed;
+            }
+        }
+        else {
+            if (this.velocityY > this.jumpSpeed / 2) {
+                this.velocityY = this.jumpSpeed / 2;
+            }
+        }
     }
 }
