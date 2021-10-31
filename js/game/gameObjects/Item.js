@@ -9,7 +9,7 @@ export default class Item extends SimpleRigidBody {
         Attack: 2
     };
 
-    interactionRadius = 5;
+    interactionRadius = 2;
 
     constructor(scene) {
         super(scene);
@@ -48,7 +48,7 @@ export default class Item extends SimpleRigidBody {
         for (const player of Character.totalPlayers) {
             const playerPosition = player.getNative().position;
             const distance = this.handler.position.distanceToSquared(playerPosition);
-            if (distance <= this.interactionRadius && player.interact()) {
+            if (distance <= (this.interactionRadius * this.interactionRadius) && player.interact()) {
                 // console.log('Player ' + player.playerIndex + ' can interact');
                 this.onInteraction(player);
                 break;
