@@ -4,11 +4,13 @@ import Resources from "../../engine/Resources.js";
 import AstroGun from "../gameObjects/AstroGun.js";
 import Sword from "../gameObjects/Sword.js";
 import Shield from "../gameObjects/Shield.js";
+import CharacterAi from "../gameObjects/CharacterAi.js";
 
 // Todas las escenas extienden la clase base Scene
 export default class FightScene extends Scene {
     player1;
     player2;
+    player3;
     
     constructor(canvas) {
         const camera = new THREE.PerspectiveCamera (
@@ -80,7 +82,13 @@ export default class FightScene extends Scene {
             skin: 'AlienA'
         });
         this.add(this.player2);
-
+        
+        this.player3 = new CharacterAi(this, {
+            position: new THREE.Vector3(-20, -15, -20),
+            skin: 'RobotA'
+        });
+        this.add(this.player3);
+                
         this.add(new AstroGun(this, {
             position: new THREE.Vector3(0, 0, -20)
         }));
