@@ -3,6 +3,9 @@ import Character from "./Character.js";
 export default class CharacterAi extends Character {
     attackRadius = 6;
     defenseRadius = 15;
+
+    preferedAttack;
+    changePreferedAttackTimer = 0;
     
     targetPlayer;
     lastTargetDirection = 0;
@@ -40,6 +43,18 @@ export default class CharacterAi extends Character {
             }
         }
         this.targetPlayer = target;
+    }
+
+    updatePreferedAttack(dt) {
+        if (this.changePreferedAttackTimer <= 0) {
+            const attacks = ['punch', 'kick'];
+            const randomIndex = THREE.Math.randInt(0, attacks.length - 1);
+            this.preferedAttack = attacks[randomIndex];
+            this.changePreferedAttackTimer = 3;
+        }
+
+        this.changePreferedAttackTimer -= dt;
+        this.changePreferedAttackTimer = Math.max(this.changePreferedAttackTimer, 0);
     }
 
     updateAiState() {
@@ -135,11 +150,17 @@ export default class CharacterAi extends Character {
         let canBlock = !this.isHit && this.onGround;
         this.resetCharacterState();
 
+        this.updatePreferedAttack(dt);
         this.updateAiState();
 
         if (canAttack) {
             if (this.aiAttack) {
-                this.punch();
+                if (this.preferedAttack === 'punch') {
+                    this.punch();
+                }
+                else if (this.preferedAttack === 'kick') {
+                    this.kick();
+                }
             }
         }
 
