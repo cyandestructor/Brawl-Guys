@@ -22,6 +22,7 @@ export default class Character extends SimpleRigidBody {
 
     hurtBox;
     hitBoxes = {};
+    isAttack = false;
     isHit = false;
     isBlock = false;
     isDeath = false;
@@ -383,6 +384,7 @@ export default class Character extends SimpleRigidBody {
             this.currentItem.onUse(this, false);
         }
         this.isHit = false;
+        this.isAttack = false;
         this.isBlock = false;
         this.hitBoxes['punch'].active = false;
         this.hitBoxes['kick'].active = false;
@@ -418,6 +420,7 @@ export default class Character extends SimpleRigidBody {
             this.hitBoxes['punch'].active = true;
             // this.hitBoxes['punch'].mesh.visible = true;
         }
+        this.isAttack = true;
         this.canMove = false;
     }
 
@@ -425,6 +428,7 @@ export default class Character extends SimpleRigidBody {
         this.currentState = Character.State.Kick;
         this.hitBoxes['kick'].active = true;
         // this.hitBoxes['kick'].mesh.visible = true;
+        this.isAttack = true;
         this.canMove = false;
     }
 
