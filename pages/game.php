@@ -69,6 +69,11 @@
 					path: '<?php echo $link; ?>models/characters/skins/zombieA.png'
 				},
 				{
+					name: 'RobotA',
+					type: 'texture',
+					path: '<?php echo $link; ?>models/characters/skins/robot.png'
+				},
+				{
 					name: 'AlienA',
 					type: 'texture',
 					path: '<?php echo $link; ?>models/characters/skins/alienA.png'
