@@ -79,6 +79,11 @@
 					path: '<?php echo $link; ?>models/characters/skins/alienA.png'
 				},
 				{
+					name: 'Particle',
+					type: 'texture',
+					path: '<?php echo $link; ?>media/images/particle.png'
+				},
+				{
 					name: 'CharacterIdle',
 					type: 'animation',
 					path: '<?php echo $link; ?>models/animations/idle.fbx'
