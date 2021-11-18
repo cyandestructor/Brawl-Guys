@@ -10,10 +10,17 @@ const textureLoader = (path) => {
     });
 }
 
+const audioLoader = (path) => {
+    return new Promise((resolve) => {
+        (new THREE.AudioLoader()).load(path, resolve);
+    });
+}
+
 export default class Resources {
     static loaders = {
         fbx: fbxLoader,
-        png: textureLoader
+        png: textureLoader,
+        wav: audioLoader
     };
 
     static resourcePaths = {
@@ -24,7 +31,8 @@ export default class Resources {
     static resources = {
         model: {},
         texture: {},
-        animation: {}
+        animation: {},
+        audio: {}
     };
 
     static setModelPath(key, path) {
@@ -65,6 +73,14 @@ export default class Resources {
 
     static setAnimationResouce(key, value) {
         Resources.resources.animation[key.toLowerCase()] = value;
+    }
+
+    static getAudioResource(key, defVal = null) {
+        return Resources.resources.audio[key.toLowerCase()] ?? defVal;
+    }
+
+    static setAudioResource(key, value) {
+        Resources.resources.audio[key.toLowerCase()] = value;
     }
 
     static loadResources(resources) {

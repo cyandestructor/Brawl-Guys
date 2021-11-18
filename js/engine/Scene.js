@@ -2,6 +2,7 @@ export default class Scene {
     scene;
     camera;
     renderer;
+    listener;
 
     nativeSolidObjects = [];
     gameObjects = [];
@@ -15,6 +16,9 @@ export default class Scene {
             0.1,
             200
         );
+
+        this.listener = new THREE.AudioListener();
+        this.camera.add(this.listener);
 
         this.renderer = renderer ?? new THREE.WebGLRenderer();
     }
