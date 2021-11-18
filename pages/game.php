@@ -142,6 +142,11 @@
 					name: 'CharacterSpecialKick',
 					type: 'animation',
 					path: '<?php echo $link; ?>models/animations/special-kick.fbx'
+				},
+				{
+					name: 'Laser',
+					type: 'audio',
+					path: '<?php echo $link; ?>media/sounds/laser.wav'
 				}
 			];
 

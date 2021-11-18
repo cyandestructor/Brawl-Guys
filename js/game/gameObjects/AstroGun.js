@@ -7,12 +7,20 @@ import Bullet from "./Bullet.js";
 export default class AstroGun extends PickableItem {
 
     muzzle;
+    shootAudio;
 
     constructor(scene, props = {}) {
         super(scene, props.pickedUp ?? false);
 
+        this.initAudio();
         this.initModel(props);
         this.updateFloorY();
+    }
+
+    initAudio() {
+        this.shootAudio = new THREE.Audio(this.scene.listener);
+        const audioBuffer = Resources.getAudioResource('Laser');
+        this.shootAudio.setBuffer(audioBuffer);
     }
 
     initModel(props) {
@@ -56,6 +64,7 @@ export default class AstroGun extends PickableItem {
     }
 
     shoot(direction = 1) {
+        this.shootAudio.play();
         const muzzlePosition = new THREE.Vector3();
         this.muzzle.getWorldPosition(muzzlePosition);
         this.scene.add(new Bullet(this.scene, muzzlePosition, direction));
