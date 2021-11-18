@@ -15,6 +15,7 @@ export default class Character extends SimpleRigidBody {
     hp;
     attackPower;
     attackCooldown = 0;
+    damageReduction = 0.2;
 
     speed;
     jumpSpeed;
@@ -326,7 +327,7 @@ export default class Character extends SimpleRigidBody {
         let totalDamage = damage;
         let knockbackMultiplier = 0.6;
         if (this.isBlock && direction != this.direction) {
-            totalDamage *= 0.2; // Damage reduction
+            totalDamage *= this.damageReduction; // Damage reduction
             knockbackMultiplier = 0.2;
         }
         else {
@@ -338,7 +339,7 @@ export default class Character extends SimpleRigidBody {
         const knockback = damage * knockbackMultiplier;
         this.handler.position.x += knockback * dt * direction;
         this.hp -= totalDamage * dt;
-        // console.log('Player ' + this.playerIndex + ' received a hit. Player HP: ' + this.hp);
+        // console.log('Player ' + this.playerIndex + ' received a hit. Damage: ' + totalDamage);
     }
 
     updateCollisions(dt) {
@@ -450,9 +451,11 @@ export default class Character extends SimpleRigidBody {
     block() {
         if (this.hasItem && this.currentItem.getType() == Item.Type.Defense) {
             this.currentState = this.currentItem.getActionCharacterState();
+            this.damageReduction = 0.1;
         }
         else {
             this.currentState = Character.State.Block;
+            this.damageReduction = 0.2;
         }
         this.isBlock = true;
         this.canMove = false;
