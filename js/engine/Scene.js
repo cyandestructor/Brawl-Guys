@@ -67,6 +67,7 @@ export default class Scene {
     }
 
     remove(gameObject) {
+        gameObject.onDestroy();
         const index = this.gameObjects.indexOf(gameObject);
         this.gameObjects.splice(index, 1);
         this.removeNative(gameObject.handler);
