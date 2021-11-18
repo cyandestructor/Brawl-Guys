@@ -3,6 +3,7 @@ import Input from "../../engine/Input.js";
 import Resources from "../../engine/Resources.js";
 import Item from "./Item.js";
 import AstroGun from "./AstroGun.js";
+import ComboManager from "./ComboManager.js";
 
 // Todos los objetos extienen la clase GameObject
 // Este diseño permite tener objetos que manejen su propia lógica
@@ -11,16 +12,19 @@ import AstroGun from "./AstroGun.js";
 export default class Character extends SimpleRigidBody {
     mixer;
     actions = {};
-
+    
     hp;
     attackPower;
     attackCooldown = 0;
+    attackBonus = 1;
     damageReduction = 0.2;
-
+    
     speed;
     jumpSpeed;
     
     controlMap;
+
+    comboManager;
 
     hurtBox;
     hitBoxes = {};
@@ -52,7 +56,9 @@ export default class Character extends SimpleRigidBody {
         Block: 'block',
         Shoot: 'shoot',
         Attack: 'attack',
-        Shield: 'shield'
+        Shield: 'shield',
+        SpecialPunch: 'specialPunch',
+        SpecialKick: 'specialKick'
     };
 
     static Direction = {
@@ -87,6 +93,8 @@ export default class Character extends SimpleRigidBody {
             interact: "Q"
         }
 
+        this.comboManager = new ComboManager(this);
+
         // Assign an index to this player based on the current total players
         this.playerIndex = Character.totalPlayers.length;
 
@@ -107,6 +115,8 @@ export default class Character extends SimpleRigidBody {
             return;
         }
         
+        this.comboManager.onUpdate(dt);
+
         this.updateGravity(dt);
         
         if (!this.isDeath) {
@@ -251,8 +261,14 @@ export default class Character extends SimpleRigidBody {
         const kick = Resources.getAnimationResource('CharacterKick');
         this.actions['kick'] = this.mixer.clipAction(kick.animations[1]);
 
+        const specialKick = Resources.getAnimationResource('CharacterSpecialKick');
+        this.actions['specialKick'] = this.mixer.clipAction(specialKick.animations[0]);
+
         const punch = Resources.getAnimationResource('CharacterPunch');
         this.actions['punch'] = this.mixer.clipAction(punch.animations[0]);
+
+        const specialPunch = Resources.getAnimationResource('CharacterSpecialPunch');
+        this.actions['specialPunch'] = this.mixer.clipAction(specialPunch.animations[0]);
 
         const block = Resources.getAnimationResource('CharacterBlock');
         this.actions['block'] = this.mixer.clipAction(block.animations[0]);
@@ -311,9 +327,13 @@ export default class Character extends SimpleRigidBody {
         }
     }
 
-    onKeyDown(key) {
+    onKeyDown(key, repeat) {
         if (key == this.controlMap.jump) {
             this.jump();
+        }
+        
+        if (!this.currentItem) {
+            this.comboManager.onKeyDown(key, repeat);
         }
     }
 
@@ -321,6 +341,8 @@ export default class Character extends SimpleRigidBody {
         if (key == this.controlMap.jump) {
             this.jump(false);
         }
+
+        this.comboManager.onKeyUp(key);
     }
 
     onDamage(dt, direction, damage = 0) {
@@ -339,7 +361,7 @@ export default class Character extends SimpleRigidBody {
         const knockback = damage * knockbackMultiplier;
         this.handler.position.x += knockback * dt * direction;
         this.hp -= totalDamage * dt;
-        // console.log('Player ' + this.playerIndex + ' received a hit. Damage: ' + totalDamage);
+        console.log('Player ' + this.playerIndex + ' received a hit. Damage: ' + totalDamage);
     }
 
     updateCollisions(dt) {
@@ -353,7 +375,7 @@ export default class Character extends SimpleRigidBody {
                             && hitbox.box.intersectsOBB(player.hurtBox.box)
                         ) {
                         this.attackCooldown = 0.5;
-                        player.onDamage(dt, this.direction, this.attackPower);
+                        player.onDamage(dt, this.direction, this.attackPower * this.attackBonus);
                         // break; // Maybe needed
                     }
                 });
@@ -432,7 +454,15 @@ export default class Character extends SimpleRigidBody {
             this.useCurrentItem();
         }
         else {
-            this.currentState = Character.State.Punch;
+            const currentCombo = this.comboManager.getCurrentCombo();
+            if (currentCombo !== '') {
+                this.currentState = currentCombo;
+                this.attackBonus = 1.1;
+            }
+            else {
+                this.currentState = Character.State.Punch;
+                this.attackBonus = 1;
+            }
             this.hitBoxes['punch'].active = true;
             // this.hitBoxes['punch'].mesh.visible = true;
         }
@@ -441,7 +471,15 @@ export default class Character extends SimpleRigidBody {
     }
 
     kick() {
-        this.currentState = Character.State.Kick;
+        const currentCombo = this.comboManager.getCurrentCombo();
+        if (currentCombo !== '') {
+            this.currentState = currentCombo;
+            this.attackBonus = 1.1;
+        }
+        else {
+            this.currentState = Character.State.Kick;
+            this.attackBonus = 1;
+        }
         this.hitBoxes['kick'].active = true;
         // this.hitBoxes['kick'].mesh.visible = true;
         this.isAttack = true;
