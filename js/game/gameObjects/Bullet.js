@@ -1,9 +1,12 @@
 import GameObject from "../../engine/GameObject.js";
 import Character from "./Character.js";
+import SimpleParticleSystem from "./SimpleParticleSystem.js";
 
 export default class Bullet extends GameObject {
 
     static baseBullet;
+
+    particleSystem;
 
     direction;
     speed;
@@ -19,6 +22,13 @@ export default class Bullet extends GameObject {
         this.direction = direction;
         this.sphere = new THREE.Sphere();
 
+        this.particleSystem = new SimpleParticleSystem(scene, {
+            width: 2,
+            height: 2,
+            depth: 2,
+            particleCount: 10
+        });
+
         if (!Bullet.baseBullet) {
             const geometry = new THREE.SphereGeometry( this.radius, 8, 8 );
             const material = new THREE.MeshBasicMaterial( { color: 0xFFDA00 } );
@@ -27,9 +37,11 @@ export default class Bullet extends GameObject {
 
         this.handler = Bullet.baseBullet.clone();
         this.handler.position.copy(position);
+        this.handler.add(this.particleSystem.getNative());
     }
 
     onUpdate(dt) {
+        this.particleSystem.onUpdate(dt);
         this.handler.position.x += this.speed * this.direction * dt;
         this.updateCollisions(dt);
     }
