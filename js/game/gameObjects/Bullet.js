@@ -49,9 +49,8 @@ export default class Bullet extends GameObject {
     updateCollisions(dt) {
         for (const player of Character.totalPlayers) {
             this.sphere.set(this.handler.position, this.radius);
-            if (player.hurtBox.box.intersectsSphere(this.sphere)) {
+            if (!player.isDeath && player.hurtBox.box.intersectsSphere(this.sphere)) {
                 // colission with player
-                console.log('collision');
                 player.onDamage(dt, this.direction, this.attackPower);
                 this.scene.remove(this);
             }
