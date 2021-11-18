@@ -66,6 +66,16 @@ export default class Scene {
         }
     }
 
+    remove(gameObject) {
+        const index = this.gameObjects.indexOf(gameObject);
+        this.gameObjects.splice(index, 1);
+        this.removeNative(gameObject.handler);
+    }
+
+    removeNative(handler) {
+        this.scene.remove(handler);
+    }
+
     // Se ejecuta una vez al iniciar la aplicación
     onStart() {
         for (const gameObject of this.gameObjects) {
