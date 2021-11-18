@@ -418,7 +418,7 @@ export default class Character extends SimpleRigidBody {
         // Shoot animation triggers
         if (this.actions['shoot'].isRunning()) {
             const progress = this.actions['shoot'].time / this.actions['shoot'].getClip().duration;
-            if (progress >= 0.5 && progress < 0.51) {
+            if (progress >= 0.49 && progress < 0.51) {
                 if (this.currentItem instanceof AstroGun) {
                     this.currentItem.shoot(this.direction);
                 }
