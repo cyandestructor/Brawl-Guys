@@ -2,6 +2,7 @@ import SimpleRigidBody from "./SimpleRigidBody.js";
 import Input from "../../engine/Input.js";
 import Resources from "../../engine/Resources.js";
 import Item from "./Item.js";
+import AstroGun from "./AstroGun.js";
 
 // Todos los objetos extienen la clase GameObject
 // Este diseño permite tener objetos que manejen su propia lógica
@@ -113,6 +114,8 @@ export default class Character extends SimpleRigidBody {
             this.updateBoundingBoxes();
 
             this.updateCollisions(dt);
+
+            this.updateAnimationTriggers();
         }
 
         if (this.hp <= 0) {
@@ -409,6 +412,18 @@ export default class Character extends SimpleRigidBody {
 
     useCurrentItem() {
         this.currentState = this.currentItem.onUse(this);
+    }
+
+    updateAnimationTriggers() {
+        // Shoot animation triggers
+        if (this.actions['shoot'].isRunning()) {
+            const progress = this.actions['shoot'].time / this.actions['shoot'].getClip().duration;
+            if (progress >= 0.5 && progress < 0.51) {
+                if (this.currentItem instanceof AstroGun) {
+                    this.currentItem.shoot(this.direction);
+                }
+            }
+        }
     }
 
     punch() {

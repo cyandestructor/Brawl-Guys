@@ -2,8 +2,11 @@ import Item from "./Item.js";
 import Resources from "../../engine/Resources.js";
 import Character from "./Character.js";
 import PickableItem from "./PickableItem.js";
+import Bullet from "./Bullet.js";
 
 export default class AstroGun extends PickableItem {
+
+    muzzle;
 
     constructor(scene, props = {}) {
         super(scene, props.pickedUp ?? false);
@@ -15,6 +18,11 @@ export default class AstroGun extends PickableItem {
     initModel(props) {
         const original = Resources.getModelResource('AstroGun');
         const object = original.clone();
+
+        this.muzzle = new THREE.Object3D();
+        this.muzzle.position.y = 10;
+        this.muzzle.position.z = 100;
+        object.add(this.muzzle);
         
         const pivot = new THREE.Group();
         pivot.rotation.y = THREE.Math.degToRad(90);
@@ -45,6 +53,12 @@ export default class AstroGun extends PickableItem {
             }
         }
         super.onUpdate(dt);
+    }
+
+    shoot(direction = 1) {
+        const muzzlePosition = new THREE.Vector3();
+        this.muzzle.getWorldPosition(muzzlePosition);
+        this.scene.add(new Bullet(this.scene, muzzlePosition, direction));
     }
 
     onInteraction(triggerObject) {
