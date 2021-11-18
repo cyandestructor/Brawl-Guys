@@ -8,6 +8,8 @@ export default class Bullet extends GameObject {
 
     particleSystem;
 
+    lifetime = 10;
+
     direction;
     speed;
     radius;
@@ -43,6 +45,14 @@ export default class Bullet extends GameObject {
     onUpdate(dt) {
         this.particleSystem.onUpdate(dt);
         this.handler.position.x += this.speed * this.direction * dt;
+
+        this.lifetime -= dt;
+        if (this.lifetime <= 0) {
+            this.lifetime = 0;
+            this.scene.remove(this);
+            return;
+        }
+
         this.updateCollisions(dt);
     }
 
