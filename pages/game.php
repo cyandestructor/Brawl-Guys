@@ -132,6 +132,16 @@
 					name: 'CharacterShield',
 					type: 'animation',
 					path: '<?php echo $link; ?>models/animations/shield.fbx'
+				},
+				{
+					name: 'CharacterSpecialPunch',
+					type: 'animation',
+					path: '<?php echo $link; ?>models/animations/special-punch.fbx'
+				},
+				{
+					name: 'CharacterSpecialKick',
+					type: 'animation',
+					path: '<?php echo $link; ?>models/animations/special-kick.fbx'
 				}
 			];
 
