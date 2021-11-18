@@ -39,15 +39,15 @@ export default class Application {
 
     bindEvents() {
         document.addEventListener('keydown', (e) => {
-            this.onKeyDown(e.key);
+            this.onKeyDown(e.key, e.repeat);
         });
 
         document.addEventListener('keyup', (e) => {
-            this.onKeyUp(e.key);
+            this.onKeyUp(e.key, e.repeat);
         });
 
         document.addEventListener('keypress', (e) => {
-            this.onKeyPressed(e.key);
+            this.onKeyPressed(e.key, e.repeat);
         });
 
         window.addEventListener('resize', () => {
@@ -55,23 +55,23 @@ export default class Application {
         });
     }
 
-    onKeyDown(key) {
+    onKeyDown(key, repeat) {
         Input.onKeyDown(key);
         if (this.scene) {
-            this.scene.onKeyDown(key);
+            this.scene.onKeyDown(key, repeat);
         }
     }
 
-    onKeyPressed(key) {
+    onKeyPressed(key, repeat) {
         if (this.scene) {
-            this.scene.onKeyPressed(key);
+            this.scene.onKeyPressed(key, repeat);
         }
     }
 
-    onKeyUp(key) {
+    onKeyUp(key, repeat) {
         Input.onKeyUp(key);
         if (this.scene) {
-            this.scene.onKeyUp(key);
+            this.scene.onKeyUp(key, repeat);
         }
     }
 

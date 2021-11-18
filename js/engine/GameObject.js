@@ -22,9 +22,9 @@ export default class GameObject {
 
     // Estos son manejadores de eventos que se pueden sobreescribir para tener lógica
     // cuando estos eventos se disparen
-    onKeyDown(key) {}
+    onKeyDown(key, repeat) {}
 
-    onKeyPressed(key) {}
+    onKeyPressed(key, repeat) {}
 
-    onKeyUp(key) {}
+    onKeyUp(key, repeat) {}
 }

@@ -96,21 +96,21 @@ export default class Scene {
     }
 
     // Estos son manejadores de eventos de teclas.
-    onKeyDown(key) {
+    onKeyDown(key, repeat) {
         for (const gameObject of this.gameObjects) {
-            gameObject.onKeyDown(key);
+            gameObject.onKeyDown(key, repeat);
         }
     }
 
-    onKeyPressed(key) {
+    onKeyPressed(key, repeat) {
         for (const gameObject of this.gameObjects) {
-            gameObject.onKeyPressed(key);
+            gameObject.onKeyPressed(key, repeat);
         }
     }
 
-    onKeyUp(key) {
+    onKeyUp(key, repeat) {
         for (const gameObject of this.gameObjects) {
-            gameObject.onKeyUp(key);
+            gameObject.onKeyUp(key, repeat);
         }
     }
 }
