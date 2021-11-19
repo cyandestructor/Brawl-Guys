@@ -19,6 +19,8 @@ export default class Character extends SimpleRigidBody {
     attackBonus = 1;
     damageReduction = 0.2;
     
+    punchSounds = [];
+
     speed;
     jumpSpeed;
     
@@ -98,6 +100,7 @@ export default class Character extends SimpleRigidBody {
         // Assign an index to this player based on the current total players
         this.playerIndex = Character.totalPlayers.length;
 
+        this.initSounds();
         this.initModel(props);
 
         if (props.skin) {
@@ -173,6 +176,14 @@ export default class Character extends SimpleRigidBody {
         if (!this.onGround) {
             this.currentState = Character.State.Jump;
         }
+    }
+
+    initSounds() {
+        this.punchSounds.push(new THREE.Audio(this.scene.listener));
+        this.punchSounds.push(new THREE.Audio(this.scene.listener));
+
+        this.punchSounds[0].setBuffer(Resources.getAudioResource('PunchA'));
+        this.punchSounds[1].setBuffer(Resources.getAudioResource('PunchB'));
     }
 
     initModel(props) {
@@ -375,6 +386,7 @@ export default class Character extends SimpleRigidBody {
                             && hitbox.box.intersectsOBB(player.hurtBox.box)
                         ) {
                         this.attackCooldown = 0.5;
+                        this.playRandomSound();
                         player.onDamage(dt, this.direction, this.attackPower * this.attackBonus);
                         // break; // Maybe needed
                     }
@@ -468,6 +480,11 @@ export default class Character extends SimpleRigidBody {
         }
         this.isAttack = true;
         this.canMove = false;
+    }
+
+    playRandomSound() {
+        const randomIndex = THREE.Math.randInt(0, this.punchSounds.length - 1);
+        this.punchSounds[randomIndex].play();
     }
 
     kick() {

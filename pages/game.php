@@ -147,6 +147,16 @@
 					name: 'Laser',
 					type: 'audio',
 					path: '<?php echo $link; ?>media/sounds/laser.wav'
+				},
+				{
+					name: 'PunchA',
+					type: 'audio',
+					path: '<?php echo $link; ?>media/sounds/punch-a.wav'
+				},
+				{
+					name: 'PunchB',
+					type: 'audio',
+					path: '<?php echo $link; ?>media/sounds/punch-b.wav'
 				}
 			];
 
