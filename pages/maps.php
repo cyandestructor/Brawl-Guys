@@ -2,7 +2,7 @@
 <html>
 <head>
 	<?php
-		$link = "http://localhost:8080/GW/GraficasWebPIA/";
+		$link = "http://localhost/GraficasWebPIA-bryan/";
 	?>
 
 	<link rel="shortcut icon" type="image" href="<?php echo $link; ?>media/images/icon.png"/>
@@ -25,7 +25,7 @@ $(document).ready(function() {
 		if(counter>4){
 			counter=1;
 		}
-		$("#map").attr("src","http://localhost:8080/GW/GraficasWebPIA/media/images/mapas/"+counter+".jpg");
+		$("#map").attr("src","http://localhost/GraficasWebPIA-bryan/media/images/mapas/"+counter+".jpg");
 
 		
 	});
@@ -35,7 +35,7 @@ $(document).ready(function() {
 		if(counter<1){
 			counter=4;
 		}
-		$("#map").attr("src","http://localhost:8080/GW/GraficasWebPIA/media/images/mapas/"+counter+".jpg");
+		$("#map").attr("src","http://localhost/GraficasWebPIA-bryan/media/images/mapas/"+counter+".jpg");
 		
 		
 	});

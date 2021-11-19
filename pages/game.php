@@ -9,7 +9,7 @@
 
 		<?php
 		//Esta dirección es de mi local, pueden cambiarla a su conveniencia.
-		$link = "http://localhost:8080/GW/GraficasWebPIA/";
+		$link = "http://localhost/GraficasWebPIA-bryan/";
 		?>
 	</head>
 	<script src="<?php echo $link; ?>js/lib/jquery-3.6.0.min.js"></script>
@@ -79,11 +79,6 @@
 					path: '<?php echo $link; ?>models/characters/skins/alienA.png'
 				},
 				{
-					name: 'Particle',
-					type: 'texture',
-					path: '<?php echo $link; ?>media/images/particle.png'
-				},
-				{
 					name: 'CharacterIdle',
 					type: 'animation',
 					path: '<?php echo $link; ?>models/animations/idle.fbx'
@@ -132,51 +127,6 @@
 					name: 'CharacterShield',
 					type: 'animation',
 					path: '<?php echo $link; ?>models/animations/shield.fbx'
-				},
-				{
-					name: 'CharacterSpecialPunch',
-					type: 'animation',
-					path: '<?php echo $link; ?>models/animations/special-punch.fbx'
-				},
-				{
-					name: 'CharacterSpecialKick',
-					type: 'animation',
-					path: '<?php echo $link; ?>models/animations/special-kick.fbx'
-				},
-				{
-					name: 'Laser',
-					type: 'audio',
-					path: '<?php echo $link; ?>media/sounds/laser.wav'
-				},
-				{
-					name: 'PunchA',
-					type: 'audio',
-					path: '<?php echo $link; ?>media/sounds/punch-a.wav'
-				},
-				{
-					name: 'PunchB',
-					type: 'audio',
-					path: '<?php echo $link; ?>media/sounds/punch-b.wav'
-				},
-				{
-					name: 'SwordA',
-					type: 'audio',
-					path: '<?php echo $link; ?>media/sounds/sword-a.wav'
-				},
-				{
-					name: 'SwordB',
-					type: 'audio',
-					path: '<?php echo $link; ?>media/sounds/sword-b.wav'
-				},
-				{
-					name: 'PickUp',
-					type: 'audio',
-					path: '<?php echo $link; ?>media/sounds/pickup.wav'
-				},
-				{
-					name: 'Spark',
-					type: 'audio',
-					path: '<?php echo $link; ?>media/sounds/spark.wav'
 				}
 			];
 
@@ -205,7 +155,7 @@
 	</script>
 
 	<body>
-		<?php //session_start(); ?>
+		<?php session_start(); ?>
 		<div id="scene-section"></div>
 	</body>
 </html>
