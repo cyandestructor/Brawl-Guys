@@ -8,6 +8,8 @@ export default class Sword extends PickableItem {
     holder = null;
     hitbox = {};
 
+    sounds = [];
+
     attackBonus;
     attackCooldown = 0;
 
@@ -16,7 +18,16 @@ export default class Sword extends PickableItem {
 
         this.attackBonus = props.attackBonus ?? 2;
 
+        this.initSounds();
         this.initModel(props);
+    }
+
+    initSounds() {
+        this.sounds.push(new THREE.Audio(this.scene.listener));
+        this.sounds.push(new THREE.Audio(this.scene.listener));
+
+        this.sounds[0].setBuffer(Resources.getAudioResource('SwordA'));
+        this.sounds[1].setBuffer(Resources.getAudioResource('SwordB'));
     }
 
     initModel(props) {
@@ -98,6 +109,11 @@ export default class Sword extends PickableItem {
     onUse(triggerObject, beginUse = true) {
         this.hitbox.active = beginUse;
         return this.getActionCharacterState();
+    }
+
+    playRandomSound() {
+        const randomIndex = THREE.Math.randInt(0, this.sounds.length - 1);
+        this.sounds[randomIndex].play();
     }
 
     onDrop(position) {

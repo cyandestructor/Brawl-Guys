@@ -4,6 +4,7 @@ import Resources from "../../engine/Resources.js";
 import Item from "./Item.js";
 import AstroGun from "./AstroGun.js";
 import ComboManager from "./ComboManager.js";
+import Sword from "./Sword.js";
 
 // Todos los objetos extienen la clase GameObject
 // Este diseño permite tener objetos que manejen su propia lógica
@@ -456,6 +457,16 @@ export default class Character extends SimpleRigidBody {
             if (progress >= 0.49 && progress < 0.51) {
                 if (this.currentItem instanceof AstroGun) {
                     this.currentItem.shoot(this.direction);
+                }
+            }
+        }
+
+        // Sword animation triggers
+        if (this.actions['attack'].isRunning()) {
+            const progress = this.actions['attack'].time / this.actions['attack'].getClip().duration;
+            if (progress >= 0.3 && progress < 0.31) {
+                if (this.currentItem instanceof Sword) {
+                    this.currentItem.playRandomSound();
                 }
             }
         }

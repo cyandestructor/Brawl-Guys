@@ -157,6 +157,16 @@
 					name: 'PunchB',
 					type: 'audio',
 					path: '<?php echo $link; ?>media/sounds/punch-b.wav'
+				},
+				{
+					name: 'SwordA',
+					type: 'audio',
+					path: '<?php echo $link; ?>media/sounds/sword-a.wav'
+				},
+				{
+					name: 'SwordB',
+					type: 'audio',
+					path: '<?php echo $link; ?>media/sounds/sword-b.wav'
 				}
 			];
 
