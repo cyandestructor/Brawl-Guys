@@ -36,7 +36,11 @@ export default class ComboManager {
     }
 
     onKeyUp(key) {
-        this.currentCombo = '';
+        const upperKey = key.toUpperCase();
+
+        if (upperKey === this.controlMap.punch || upperKey === this.controlMap.kick) {
+            this.currentCombo = '';
+        }
     }
 
     getCurrentCombo() {
