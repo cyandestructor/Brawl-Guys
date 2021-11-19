@@ -30,6 +30,8 @@ export default class GameManager {
     }
 
     static onGameOver(winnerPlayer) {
-        console.log(winnerPlayer);
+        if (winnerPlayer.userId) {
+            console.log(winnerPlayer.userId);
+        }
     }
 }

@@ -22,6 +22,8 @@ export default class Character extends SimpleRigidBody {
     
     punchSounds = [];
 
+    userId;
+
     speed;
     jumpSpeed;
     
@@ -84,6 +86,8 @@ export default class Character extends SimpleRigidBody {
         this.hp = props.hp ?? 50;
         this.attackPower = props.attackPower ?? 80;
         this.direction = props.direction ?? Character.Direction.Right;
+
+        this.userId = props.userId ?? null;
 
         this.controlMap = props.controlMap ?? {
             right: "D",
