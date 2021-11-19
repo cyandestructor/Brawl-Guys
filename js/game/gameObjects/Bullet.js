@@ -1,4 +1,5 @@
 import GameObject from "../../engine/GameObject.js";
+import Resources from "../../engine/Resources.js";
 import Character from "./Character.js";
 import SimpleParticleSystem from "./SimpleParticleSystem.js";
 
@@ -16,6 +17,8 @@ export default class Bullet extends GameObject {
     sphere;
     attackPower;
 
+    sparkSound;
+
     constructor(scene, position, direction, props = {}) {
         super(scene);
         this.speed = props['speed'] ?? 30;
@@ -30,6 +33,9 @@ export default class Bullet extends GameObject {
             depth: 2,
             particleCount: 10
         });
+
+        this.sparkSound = new THREE.Audio(this.scene.listener);
+        this.sparkSound.setBuffer(Resources.getAudioResource('Spark'));
 
         if (!Bullet.baseBullet) {
             const geometry = new THREE.SphereGeometry( this.radius, 8, 8 );
@@ -61,6 +67,7 @@ export default class Bullet extends GameObject {
             this.sphere.set(this.handler.position, this.radius);
             if (!player.isDeath && player.hurtBox.box.intersectsSphere(this.sphere)) {
                 // colission with player
+                this.sparkSound.play();
                 player.onDamage(dt, this.direction, this.attackPower);
                 this.scene.remove(this);
             }

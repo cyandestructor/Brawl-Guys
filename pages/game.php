@@ -172,6 +172,11 @@
 					name: 'PickUp',
 					type: 'audio',
 					path: '<?php echo $link; ?>media/sounds/pickup.wav'
+				},
+				{
+					name: 'Spark',
+					type: 'audio',
+					path: '<?php echo $link; ?>media/sounds/spark.wav'
 				}
 			];
 
