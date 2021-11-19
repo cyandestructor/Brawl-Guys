@@ -1,12 +1,17 @@
+import Resources from "../../engine/Resources.js";
 import Item from "./Item.js";
 
 export default class PickableItem extends Item {
     pickedUp;
     pickUpCooldown = 0;
+    pickUpSound;
     
     constructor(scene, pickedUp) {
         super(scene);
         this.pickedUp = pickedUp;
+
+        this.pickUpSound = new THREE.Audio(this.scene.listener);
+        this.pickUpSound.setBuffer(Resources.getAudioResource('PickUp'));
     }
 
     onDrop(position) {
@@ -15,6 +20,7 @@ export default class PickableItem extends Item {
     }
 
     onInteraction(triggerObject) {
+        this.pickUpSound.play();
         this.pickedUp = true;
     }
 

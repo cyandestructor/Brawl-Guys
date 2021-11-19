@@ -167,6 +167,11 @@
 					name: 'SwordB',
 					type: 'audio',
 					path: '<?php echo $link; ?>media/sounds/sword-b.wav'
+				},
+				{
+					name: 'PickUp',
+					type: 'audio',
+					path: '<?php echo $link; ?>media/sounds/pickup.wav'
 				}
 			];
 
