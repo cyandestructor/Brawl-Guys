@@ -10,19 +10,18 @@ export default class GameManager {
         for (const player of Character.totalPlayers) {
             if (player.isDeath) {
                 deathPlayers += 1;
+                console.log(deathPlayers);
             }
         }
 
         if (deathPlayers == playerCount - 1) {
             if (!GameManager.gameOver) {
-                
                 let winner = null;
                 for (const player of Character.totalPlayers) {
                     if (!player.isDeath) {
                         winner = player;
                     }
                 }
-
                 GameManager.onGameOver(winner);
                 GameManager.gameOver = true;
             }

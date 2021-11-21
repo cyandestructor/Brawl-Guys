@@ -11,6 +11,8 @@ export default class FightScene extends Scene {
     player1;
     player2;
     player3;
+
+    gameManager;
     
     constructor(canvas) {
         const camera = new THREE.PerspectiveCamera (
@@ -100,5 +102,6 @@ export default class FightScene extends Scene {
         this.add(new Shield(this, {
             position: new THREE.Vector3(20, -10, -20)
         }));
+
     }
 }

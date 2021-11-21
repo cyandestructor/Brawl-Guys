@@ -2,7 +2,7 @@
 <html>
 <head>
 	<?php
-		$link = "http://localhost/GraficasWebPIA-bryan/";
+		$link = "http://localhost:8080/GW/GraficasWebPIA/";
 	?>
 
 	<link rel="shortcut icon" type="image" href="<?php echo $link; ?>media/images/icon.png"/>
@@ -25,7 +25,7 @@ $(document).ready(function() {
 		if(counter>4){
 			counter=1;
 		}
-		$("#personaje").attr("src","http://localhost/GraficasWebPIA-bryan/media/images/characters/"+counter+".png");
+		$("#personaje").attr("src","http://localhost:8080/GW/GraficasWebPIA/media/images/characters/"+counter+".png");
 
 		
 	});
@@ -35,7 +35,7 @@ $(document).ready(function() {
 		if(counter<1){
 			counter=4;
 		}
-		$("#personaje").attr("src","http://localhost/GraficasWebPIA-bryan/media/images/characters/"+counter+".png");
+		$("#personaje").attr("src","http://localhost:8080/GW/GraficasWebPIA/media/images/characters/"+counter+".png");
 		
 		
 	});
@@ -62,7 +62,7 @@ $(document).ready(function() {
 				<img src="<?php  echo $link; ?>media/images/select_char/GAME UI-51.png" alt="Italian Trulli" id="btnAtras">
 
 
-				<img src="http://localhost/GraficasWebPIA-bryan/media/images/characters/1.png" alt="Italian Trulli" id="personaje">
+				<img src="http://localhost:8080/GW/GraficasWebPIA/media/images/characters/1.png" alt="Italian Trulli" id="personaje">
 				
 
 

@@ -83,7 +83,7 @@ export default class Character extends SimpleRigidBody {
         
         this.speed = props.speed ?? 15;
         this.jumpSpeed = props.jumpSpeed ?? 30;
-        this.hp = props.hp ?? 50;
+        this.hp = props.hp ?? 3;//50;
         this.attackPower = props.attackPower ?? 80;
         this.direction = props.direction ?? Character.Direction.Right;
 
