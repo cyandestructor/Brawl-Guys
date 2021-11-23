@@ -10,7 +10,6 @@ export default class GameManager {
         for (const player of Character.totalPlayers) {
             if (player.isDeath) {
                 deathPlayers += 1;
-                console.log(deathPlayers);
             }
         }
 

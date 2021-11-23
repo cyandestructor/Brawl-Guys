@@ -18,7 +18,9 @@
 
 	<body>
 		<?php session_start(); ?>
-		<h1><?php echo $_SESSION['username'] ?></h1>
+		<h1><?php 
+		if(isset($_SESSION['username']))
+			echo $_SESSION['username'] ?></h1>
 		<audio autoplay>
 			<source src="<?php echo $link; ?>media/sounds/menum.mp3" type="audio/mp3">
 		</audio>

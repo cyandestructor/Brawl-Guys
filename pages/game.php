@@ -39,9 +39,19 @@
 			// de recursos y obtenerlos después a través de la llave (primer parámetro)
 			const resources = [
 				{
+					name: 'MapOne',
+					type: 'model',
+					path: '<?php echo $link; ?>models/maps/espacio.fbx'
+				},
+				{
 					name: 'MapTwo',
 					type: 'model',
 					path: '<?php echo $link; ?>models/maps/mapaMine2.fbx'
+				},
+				{
+					name: 'MapThree',
+					type: 'model',
+					path: '<?php echo $link; ?>models/maps/minecraft.fbx'
 				},
 				{
 					name: 'PlayerBase',
@@ -206,6 +216,7 @@
 
 	<body>
 		<?php //session_start(); ?>
+		<p class="userIdClassP" value="500"></p>
 		<div id="scene-section"></div>
 	</body>
 </html>
