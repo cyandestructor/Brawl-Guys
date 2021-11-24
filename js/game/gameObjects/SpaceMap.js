@@ -18,5 +18,11 @@ export default class SpaceMap extends GameObject {
 
     onStart() {
         this.scene.getNativeScene().background = Resources.getCubeMapResource('SunsetSkybox');
+
+        this.music = new THREE.Audio(this.scene.listener);
+        this.music.setBuffer(Resources.getAudioResource('SpaceMusic'));
+        this.music.setLoop(true);
+        this.music.setVolume(0.5);
+        this.music.play();
     }
 }

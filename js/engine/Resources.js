@@ -27,6 +27,7 @@ export default class Resources {
         fbx: fbxLoader,
         png: textureLoader,
         wav: audioLoader,
+        mp3: audioLoader,
         cubemap: cubeMapLoader
     };
 

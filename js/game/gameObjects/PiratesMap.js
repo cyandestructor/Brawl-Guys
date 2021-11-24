@@ -18,5 +18,11 @@ export default class PiratesMap extends GameObject {
 
     onStart() {
         this.scene.getNativeScene().background = Resources.getCubeMapResource('DaySkybox');
+
+        this.music = new THREE.Audio(this.scene.listener);
+        this.music.setBuffer(Resources.getAudioResource('PiratesMusic'));
+        this.music.setLoop(true);
+        this.music.setVolume(0.5);
+        this.music.play();
     }
 }

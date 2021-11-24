@@ -189,6 +189,26 @@
                     path: '<?php echo $link; ?>media/sounds/spark.wav'
 				},
 				{
+                    name: 'SnowMusic',
+                    type: 'audio',
+                    path: '<?php echo $link; ?>media/sounds/music/snow.mp3'
+				},
+				{
+                    name: 'MinecraftMusic',
+                    type: 'audio',
+                    path: '<?php echo $link; ?>media/sounds/music/minecraft.mp3'
+				},
+				{
+                    name: 'PiratesMusic',
+                    type: 'audio',
+                    path: '<?php echo $link; ?>media/sounds/music/pirates.mp3'
+				},
+				{
+                    name: 'SpaceMusic',
+                    type: 'audio',
+                    path: '<?php echo $link; ?>media/sounds/music/space.mp3'
+				},
+				{
                     name: 'Particle',
                     type: 'texture',
                     path: '<?php echo $link; ?>media/images/particle.png'
