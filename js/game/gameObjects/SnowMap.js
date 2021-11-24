@@ -16,4 +16,7 @@ export default class SnowMap extends GameObject {
         this.handler = mapa;
     }
 
+    onStart() {
+        this.scene.getNativeScene().background = Resources.getCubeMapResource('EveningSkybox');
+    }
 }

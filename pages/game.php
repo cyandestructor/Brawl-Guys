@@ -192,6 +192,45 @@
                     name: 'Particle',
                     type: 'texture',
                     path: '<?php echo $link; ?>media/images/particle.png'
+                },
+				{
+                    name: 'DaySkybox',
+                    type: 'cubemap',
+                    path: '<?php echo $link; ?>models/maps/skyboxes/day/',
+					images: [
+						'px.png',
+						'nx.png',
+						'py.png',
+						'ny.png',
+						'pz.png',
+						'nz.png'
+					]
+                },
+				{
+                    name: 'EveningSkybox',
+                    type: 'cubemap',
+                    path: '<?php echo $link; ?>models/maps/skyboxes/evening/',
+					images: [
+						'px.png',
+						'nx.png',
+						'py.png',
+						'ny.png',
+						'pz.png',
+						'nz.png'
+					]
+                },
+				{
+                    name: 'SunsetSkybox',
+                    type: 'cubemap',
+                    path: '<?php echo $link; ?>models/maps/skyboxes/sunset/',
+					images: [
+						'px.png',
+						'nx.png',
+						'py.png',
+						'ny.png',
+						'pz.png',
+						'nz.png'
+					]
                 }
 			];
 
