@@ -96,14 +96,14 @@ export default class FightScene extends Scene {
             this.player2 = new Character(this, {
                 position: new THREE.Vector3(10, -15, -20),
                 controlMap: {
-                    right: "l",
-                    left: "j",
-                    up: "i",
-                    down: "k",
-                    punch: "u",
-                    kick: "o",
-                    jump: "m",
-                    interact: "u"
+                    right: "L",
+                    left: "J",
+                    up: "I",
+                    down: "K",
+                    punch: "U",
+                    kick: "O",
+                    jump: "M",
+                    interact: "U"
                 },
                 skin: playerChar['skin'],
                 userId: playerChar['idUser']
