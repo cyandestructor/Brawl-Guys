@@ -5,6 +5,7 @@ import AstroGun from "../gameObjects/AstroGun.js";
 import Sword from "../gameObjects/Sword.js";
 import Shield from "../gameObjects/Shield.js";
 import CharacterAi from "../gameObjects/CharacterAi.js";
+import MapFactory from "../MapFactory.js";
 
 
 // Todas las escenas extienden la clase base Scene
@@ -19,12 +20,12 @@ export default class FightScene extends Scene {
     
     constructor(canvas) {
         const camera = new THREE.PerspectiveCamera (
-            90,
+            45,
             canvas.width / canvas.height,
             0.1,
-            200
+            1000
         );
-        camera.position.set(0, -3, -1);
+        camera.position.set(0, -5, 30);
         
         const renderer = new THREE.WebGLRenderer();
 		renderer.setClearColor( new THREE.Color(1 , 1, 1));
@@ -56,13 +57,8 @@ export default class FightScene extends Scene {
         this.addNative(directional);
         
         var mapita = localStorage.getItem('map');
-        const mapa = Resources.getModelResource(mapita).clone();
-        mapa.position.x = 0;
-        mapa.position.y = -20;
-        mapa.position.z = -60;
-        mapa.scale.set(0.045, 0.04, 0.025);
-        mapa.userData.solid = true;
-        this.addNative(mapa);
+        const mapa = MapFactory.create(this, mapita);
+        this.add(mapa);
 
         // La clase Character extiende una clase base llamada GameObject
         // que envuelve un objeto nativo de Three.js y le agrega cierta lógica
@@ -159,6 +155,5 @@ export default class FightScene extends Scene {
         this.add(new Shield(this, {
             position: new THREE.Vector3(20, -10, -20)
         }));
-
     }
 }
