@@ -37,7 +37,12 @@ export default class FightScene extends Scene {
         // Esto es importante para especificar la cámara y el renderer de la escena
         super(camera, renderer);
 
-        this.itemSpawner = new ItemSpawner(this);
+        const activeItems = localStorage.getItem('items') ?? 'false';
+        const activeItemsFlag = (activeItems.toLowerCase() === 'true');
+        
+        this.itemSpawner = new ItemSpawner(this, {
+            active: activeItemsFlag
+        });
 
         this.prepare();
     }
@@ -59,8 +64,8 @@ export default class FightScene extends Scene {
         this.addNative(ambient);
         this.addNative(directional);
         
-        var mapita = localStorage.getItem('map');
-        const mapa = MapFactory.create(this, mapita);
+        var mapName = localStorage.getItem('map');
+        const mapa = MapFactory.create(this, mapName);
         this.add(mapa);
 
         const geometry = new THREE.PlaneGeometry( 200, 50 );
@@ -126,12 +131,22 @@ export default class FightScene extends Scene {
             this.add(this.player3);
         }
 
+        // Preparar las IA
+        const difficulty = localStorage.getItem('difficulty') ?? 'normal';
+        const hpLevels = {
+            'easy': 40,
+            'normal': 50,
+            'hard': 60
+        };
+        const aiHp = hpLevels[difficulty];
+
         if(localStorage.getItem('IA1') != null){
             var IAChar = JSON.parse(localStorage.getItem('IA1'));
             this.ia1 = new CharacterAi(this,{
                 position: new THREE.Vector3(5, -15, -20),
                 skin: IAChar['skin'],
-                userId: IAChar['idUser']
+                userId: IAChar['idUser'],
+                hp: aiHp
             });
             this.add(this.ia1);
         }
@@ -141,7 +156,8 @@ export default class FightScene extends Scene {
             this.ia2 = new CharacterAi(this,{
                 position: new THREE.Vector3(-15, -15, -20),
                 skin: IAChar['skin'],
-                userId: IAChar['idUser']
+                userId: IAChar['idUser'],
+                hp: aiHp
             });
             this.add(this.ia2);
         }
@@ -151,7 +167,8 @@ export default class FightScene extends Scene {
             this.ia3 = new CharacterAi(this,{
                 position: new THREE.Vector3(25, -15, -20),
                 skin: IAChar['skin'],
-                userId: IAChar['idUser']
+                userId: IAChar['idUser'],
+                hp: aiHp
             });
             this.add(this.ia3);
         }
