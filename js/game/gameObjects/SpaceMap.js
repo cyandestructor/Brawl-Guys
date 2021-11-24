@@ -10,8 +10,8 @@ export default class SpaceMap extends GameObject {
 
         mapa.position.x = 20;
         mapa.position.y = -25;
-        mapa.position.z = -100;
-        mapa.scale.multiplyScalar(0.15);
+        mapa.position.z = -150;
+        mapa.scale.multiplyScalar(0.25);
 
         this.handler = mapa;
     }

@@ -9,7 +9,7 @@ export default class PiratesMap extends GameObject {
         const mapa = Resources.getModelResource('MapOne').clone();
 
         mapa.position.x = 0;
-        mapa.position.y = -20;
+        mapa.position.y = -22;
         mapa.position.z = -65;
         mapa.scale.multiplyScalar(0.08);
 

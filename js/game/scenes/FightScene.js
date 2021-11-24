@@ -60,6 +60,15 @@ export default class FightScene extends Scene {
         const mapa = MapFactory.create(this, mapita);
         this.add(mapa);
 
+        const geometry = new THREE.PlaneGeometry( 200, 50 );
+        const material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+        const plane = new THREE.Mesh( geometry, material );
+        plane.visible = false;
+        plane.rotation.x = THREE.Math.degToRad(-90);
+        plane.position.y = -19.6;
+        plane.userData.solid = true;
+        this.addNative(plane);
+
         // La clase Character extiende una clase base llamada GameObject
         // que envuelve un objeto nativo de Three.js y le agrega cierta lógica
         // Consulta los archivos js/game/gameObjects/Character.js y js/engine/GameObject.js

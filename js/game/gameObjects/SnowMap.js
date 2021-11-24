@@ -8,10 +8,10 @@ export default class SnowMap extends GameObject {
 
         const mapa = Resources.getModelResource('MapTwo').clone();
 
-        mapa.position.x = 20;
+        mapa.position.x = 30;
         mapa.position.y = -25;
         mapa.position.z = -60;
-        mapa.scale.multiplyScalar(0.15);
+        mapa.scale.multiplyScalar(0.25);
 
         this.handler = mapa;
     }
