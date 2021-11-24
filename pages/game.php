@@ -7,6 +7,7 @@
 			body { margin: 0; }
 		</style>
 
+		<link rel="stylesheet" href="../css/game.css">
 		<?php
 		//Esta dirección es de mi local, pueden cambiarla a su conveniencia.
 		$link = "http://localhost:8080/GW/GraficasWebPIA/";
@@ -255,6 +256,7 @@
 			];
 
 			Resources.loadResources(resources).then(() => {
+				$('#loader').hide();
 				// La clase Application controla todo el flujo de la aplicación
 				const app = new Application();
 
@@ -281,6 +283,9 @@
 	<body>
 		<?php //session_start(); ?>
 		<p style="display: none;" class="userIdClassP" value="500"></p>
+		<div class="center">
+			<img id="loader" class="loader" alt="loading" src="<?php echo $link; ?>media/images/icon.png">
+		</div>
 		<div id="scene-section"></div>
 	</body>
 </html>

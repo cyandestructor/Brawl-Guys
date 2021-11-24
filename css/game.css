@@ -1,0 +1,22 @@
+.loader{
+    transform-origin: center;
+    animation: scale 2000ms ease-in-out forwards;
+    animation-iteration-count: infinite;
+}
+    @keyframes scale {
+    0% {
+        transform: scale(0.3);
+    }
+    50% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(0.3);
+    }
+}
+
+.center {
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
+}
