@@ -7,8 +7,8 @@
 
 	<link rel="shortcut icon" type="image" href="<?php echo $link; ?>media/images/icon.png"/>
 
-	<link rel="stylesheet" href="<?php echo $link; ?>css/design.css"/>
-	<link rel="stylesheet" href="<?php echo $link; ?>css/mapscss.css"/>
+	<link rel="stylesheet" href="<?php echo $link; ?>css/design2.css"/>
+	<link rel="stylesheet" href="<?php echo $link; ?>css/mapscss2.css"/>
 
 	<title>Maps</title>
 
@@ -16,45 +16,7 @@
 
 <script type="text/javascript">
 
-var counter = 1;
 
-$(document).ready(function() {
-
-	$("#btnAdelante").click(function(){
-		counter++;
-		if(counter>4){
-			counter=1;
-		}
-		$("#map").attr("src","http://localhost:8080/GW/GraficasWebPIA/media/images/mapas/"+counter+".jpg");
-	});
-
-	$("#btnAtras").click(function(){
-		counter--;
-		if(counter<1){
-			counter=4;
-		}
-		$("#map").attr("src","http://localhost:8080/GW/GraficasWebPIA/media/images/mapas/"+counter+".jpg");		
-	});
-
-	$("#btnAceptar2").click(function(){
-		console.log(counter);
-		counter=counter;
-		switch (counter) {
-			case 1:
-				localStorage.setItem('map', 'MapOne');
-				break;
-			case 2:
-				localStorage.setItem('map', 'MapTwo');
-				break;
-			case 3:
-				localStorage.setItem('map', 'MapThree');
-				break;
-			case 4:
-				localStorage.setItem('map', 'MapOne');
-				break;
-		}
-	});
-});
 </script> 
 </head>
 

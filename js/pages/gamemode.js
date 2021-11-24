@@ -4,11 +4,27 @@ $(document).ready(function(){
         testInput();
     });
 
-    function testInput(){
+    $("#txtIADif").on('change', function(){
+        var dificultad = $(this).find('option:selected').text();
+        console.log(dificultad);
+        if(dificultad == 'Fácil'){
+            localStorage.setItem('difficulty', 'easy');
+        }else if(dificultad == 'Media'){
+            localStorage.setItem('difficulty', 'normal');
+        }else if(dificultad == 'Difícil'){
+            localStorage.setItem('difficulty', 'hard');
+        }
+    });
+
+    function testInput(){   
         var playerCount = $("#txtPlayers").val();
         var aiCount = $("#txtIA").val();
-        var flag = false;
+        var flag = true;
         var map = localStorage.getItem('map');
+        var session = localStorage.getItem('isLoged');
+        var sessionId = localStorage.getItem('sessionId');
+        var difficulty = localStorage.getItem('difficulty');
+
         localStorage.clear();
         for (let index = 1; index <= playerCount; index++) {
             var usrId = $(".inputUserId").attr('value');
@@ -28,6 +44,9 @@ $(document).ready(function(){
         }
         
         localStorage.setItem('map', map);
+        localStorage.setItem('isLoged', session);
+        localStorage.setItem('sessionId', sessionId);
+        localStorage.setItem('difficulty', difficulty);
         location.href = "http://localhost:8080/GW/GraficasWebPIA/pages/personaje.php";
     }
 });

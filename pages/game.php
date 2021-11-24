@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<?php session_start(); ?>
 	<head>
 		<meta charset="utf-8">
 		<title>My first three.js app</title>
@@ -12,7 +13,18 @@
 		//Esta dirección es de mi local, pueden cambiarla a su conveniencia.
 		$link = "http://localhost:8080/GW/GraficasWebPIA/";
 		?>
+
+
+<script type="text/javascript" src="../js/pages/facebook.js"></script>
+	 <script type="text/javascript">
+		 
+		 function shareFB(){
+			 var score= 0;
+			 shareScore(score);
+		 }
+	 </script>
 	</head>
+
 	<script src="<?php echo $link; ?>js/lib/jquery-3.6.0.min.js"></script>
 	<script src="<?php echo $link; ?>js/lib/three.js"></script>
 	<script src="<?php echo $link; ?>js/lib/FBXLoader.js"></script>
@@ -281,27 +293,33 @@
 	</script>
 
 	<body>
-		<?php //session_start(); ?>
 		<p style="display: none;" class="userIdClassP" value="500"></p>
 		<div class="center">
 			<img id="loader" class="loader" alt="loading" src="<?php echo $link; ?>media/images/icon.png">
 		</div>
 		<div id="scene-section"></div>
+
+		<div id="winMenu" class="win">
+			<img src="<?php echo $link; ?>media/images/victory/GAME UI-04.png" alt="Italian Trulli">
+			<img src="<?php  echo $link; ?>media/images/victory/GAME UI-49.png" alt="Italian Trulli" id="btnShare"  onclick="shareFB();">
+		</div>
+
+		
+		<div id="gameOverMenu" class="gO">
+			<img src="<?php echo $link; ?>media/images/game_over/GAME UI-07.png" alt="Italian Trulli">
+			<img src="<?php  echo $link; ?>media/images/game_over/GAME UI-54.png" alt="Italian Trulli" id="btnPA">
+			<a href="<?php echo $link; ?>index.php"><img src="<?php  echo $link; ?>media/images/game_over/GAME UI-55.png" alt="Italian Trulli" id="btnExit"></a>
+		</div>
+
+
 		<div id="pauseMenu" class="pausa">
 			<img src="<?php echo $link; ?>media/images/pausa/GAME UI-02.png" alt="Italian Trulli">
-
-			<a href="<?php echo $link; ?>pages/maps.php"><img src="<?php  echo $link; ?>media/images/pausa/GAME UI-38.png" alt="Italian Trulli" id="btnResume"></a>
-
+			<img src="<?php  echo $link; ?>media/images/pausa/GAME UI-38.png" alt="Italian Trulli" id="btnResume">
 			<!--<a href="scoreboards.html"><button id="btn2">Button2</button></a>-->
-
-			<a href="<?php echo $link; ?>pages/register.php"><img src="<?php  echo $link; ?>media/images/pausa/GAME UI-39.png" alt="Italian Trulli" id="btnRestart"></a>
-
-			<a href="<?php echo $link; ?>pages/scoreboards.php"><img src="<?php  echo $link; ?>media/images/pausa/GAME UI-40.png" alt="Italian Trulli" id="btnOptions"></a>
-
-
-			<a href="<?php echo $link; ?>pages/scoreboards.php"><img src="<?php  echo $link; ?>media/images/pausa/GAME UI-41.png" alt="Italian Trulli" id="btnHelp"></a>
-
-			<a href="<?php echo $link; ?>pages/creditos.php"><img src="<?php  echo $link; ?>media/images/pausa/GAME UI-42.png" alt="Italian Trulli" id="btnExit"></a>
+			<img src="<?php  echo $link; ?>media/images/pausa/GAME UI-39.png" alt="Italian Trulli" id="btnRestart">
+			<img src="<?php  echo $link; ?>media/images/pausa/GAME UI-40.png" alt="Italian Trulli" id="btnOptions">
+			<img src="<?php  echo $link; ?>media/images/pausa/GAME UI-41.png" alt="Italian Trulli" id="btnHelp">
+			<a href="<?php echo $link; ?>index.php"><img src="<?php  echo $link; ?>media/images/pausa/GAME UI-42.png" alt="Italian Trulli" id="btnExit"></a>
 		</div>
 	</body>
 </html>

@@ -145,7 +145,7 @@ export default class FightScene extends Scene {
             this.ia1 = new CharacterAi(this,{
                 position: new THREE.Vector3(5, -15, -20),
                 skin: IAChar['skin'],
-                userId: IAChar['idUser'],
+                userId: IAChar['idIA'],
                 hp: aiHp
             });
             this.add(this.ia1);
@@ -156,7 +156,7 @@ export default class FightScene extends Scene {
             this.ia2 = new CharacterAi(this,{
                 position: new THREE.Vector3(-15, -15, -20),
                 skin: IAChar['skin'],
-                userId: IAChar['idUser'],
+                userId: IAChar['idIA'],
                 hp: aiHp
             });
             this.add(this.ia2);
@@ -167,7 +167,7 @@ export default class FightScene extends Scene {
             this.ia3 = new CharacterAi(this,{
                 position: new THREE.Vector3(25, -15, -20),
                 skin: IAChar['skin'],
-                userId: IAChar['idUser'],
+                userId: IAChar['idIA'],
                 hp: aiHp
             });
             this.add(this.ia3);

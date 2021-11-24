@@ -1,5 +1,30 @@
 $(document).ready(function(){
 
+    var counter = 1;
+
+	$("#btnAdelante").click(function(){
+		counter++;
+		if(counter>4){
+			counter=1;
+		}
+		$(".personajeSkinSelect").attr("src","http://localhost:8080/GW/GraficasWebPIA/media/images/characters/"+counter+".png");
+		$(".personajeSkinSelect").attr("id", counter);
+	});
+
+	$("#btnAtras").click(function(){
+		counter--;
+		if(counter<1){
+			counter=4;
+		}
+		$(".personajeSkinSelect").attr("src","http://localhost:8080/GW/GraficasWebPIA/media/images/characters/"+counter+".png");
+		$(".personajeSkinSelect").attr("id", counter);
+	});
+
+	$("#btnAceptar").click(function(){
+		console.log(counter);
+		counter=counter; // ???????????????????????????????????????????????
+	});
+
     $(".btnAceptar").click(function(){
         var i = parseInt($(".skinTurnPlayer").attr('id'), 10);
         var n = parseInt($(".skinTurnIA").attr('id'), 10);
@@ -37,6 +62,7 @@ $(document).ready(function(){
                 skin = "AlienA";
                 break;
             case "4":
+                
                 break;
         }
         return skin;

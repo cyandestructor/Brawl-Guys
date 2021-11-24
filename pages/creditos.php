@@ -5,7 +5,7 @@
 		$link = "http://localhost:8080/GW/GraficasWebPIA/";
 	?>
 
-	<link rel="shortcut icon" type="image" href="<?php echo $link; ?>media/images/ICON-31.png"/>
+	<link rel="shortcut icon" type="image" href="<?php echo $link; ?>media/images/icon.png"/>
 	
 	 <link rel="stylesheet" href="<?php echo $link; ?>css/design.css"/>
 	<title>Creditos</title>
