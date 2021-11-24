@@ -287,5 +287,21 @@
 			<img id="loader" class="loader" alt="loading" src="<?php echo $link; ?>media/images/icon.png">
 		</div>
 		<div id="scene-section"></div>
+		<div id="pauseMenu" class="pausa">
+			<img src="<?php echo $link; ?>media/images/pausa/GAME UI-02.png" alt="Italian Trulli">
+
+			<a href="<?php echo $link; ?>pages/maps.php"><img src="<?php  echo $link; ?>media/images/pausa/GAME UI-38.png" alt="Italian Trulli" id="btnResume"></a>
+
+			<!--<a href="scoreboards.html"><button id="btn2">Button2</button></a>-->
+
+			<a href="<?php echo $link; ?>pages/register.php"><img src="<?php  echo $link; ?>media/images/pausa/GAME UI-39.png" alt="Italian Trulli" id="btnRestart"></a>
+
+			<a href="<?php echo $link; ?>pages/scoreboards.php"><img src="<?php  echo $link; ?>media/images/pausa/GAME UI-40.png" alt="Italian Trulli" id="btnOptions"></a>
+
+
+			<a href="<?php echo $link; ?>pages/scoreboards.php"><img src="<?php  echo $link; ?>media/images/pausa/GAME UI-41.png" alt="Italian Trulli" id="btnHelp"></a>
+
+			<a href="<?php echo $link; ?>pages/creditos.php"><img src="<?php  echo $link; ?>media/images/pausa/GAME UI-42.png" alt="Italian Trulli" id="btnExit"></a>
+		</div>
 	</body>
 </html>
