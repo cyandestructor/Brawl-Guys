@@ -1,3 +1,4 @@
+import WebServiceConnector from "../WebServiceConnector.js";
 import Character from "./Character.js";
 
 export default class GameManager {
@@ -28,8 +29,6 @@ export default class GameManager {
     }
 
     static onGameOver(winnerPlayer) {
-        if (winnerPlayer.userId) {
-            console.log(winnerPlayer.userId);
-        }
+        WebServiceConnector.onWin(winnerPlayer.userId ?? null);
     }
 }
