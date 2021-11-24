@@ -348,7 +348,7 @@ export default class Character extends SimpleRigidBody {
     }
 
     onKeyDown(key, repeat) {
-        if (key == this.controlMap.jump) {
+        if (key == this.controlMap.jump && !this.isDeath) {
             this.jump();
         }
         
@@ -381,7 +381,7 @@ export default class Character extends SimpleRigidBody {
         const knockback = damage * knockbackMultiplier;
         this.handler.position.x += knockback * dt * direction;
         this.hp -= totalDamage * dt;
-        console.log('Player ' + this.playerIndex + ' received a hit. Damage: ' + totalDamage);
+        // console.log('Player ' + this.playerIndex + ' received a hit. Damage: ' + totalDamage);
     }
 
     updateCollisions(dt) {
