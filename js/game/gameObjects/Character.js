@@ -5,7 +5,6 @@ import Item from "./Item.js";
 import AstroGun from "./AstroGun.js";
 import ComboManager from "./ComboManager.js";
 import Sword from "./Sword.js";
-import GameManager from "../gameObjects/GameManager.js";
 
 // Todos los objetos extienen la clase GameObject
 // Este diseño permite tener objetos que manejen su propia lógica
@@ -31,8 +30,6 @@ export default class Character extends SimpleRigidBody {
     controlMap;
 
     comboManager;
-
-    gameManager;
 
     hurtBox;
     hitBoxes = {};
@@ -150,7 +147,6 @@ export default class Character extends SimpleRigidBody {
         this.attackCooldown = Math.max(this.attackCooldown, 0);
 
         this.updateStateMachine(dt);
-        GameManager.onUpdate(dt);
     }
 
     controlCharacter(dt) {

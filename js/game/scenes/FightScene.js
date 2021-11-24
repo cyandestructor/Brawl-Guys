@@ -1,12 +1,10 @@
 import Scene from "../../engine/Scene.js";
 import Character from "../gameObjects/Character.js";
 import Resources from "../../engine/Resources.js";
-import AstroGun from "../gameObjects/AstroGun.js";
-import Sword from "../gameObjects/Sword.js";
-import Shield from "../gameObjects/Shield.js";
 import CharacterAi from "../gameObjects/CharacterAi.js";
 import MapFactory from "../MapFactory.js";
-
+import GameManager from "../gameObjects/GameManager.js";
+import ItemSpawner from "../ItemSpawner.js";
 
 // Todas las escenas extienden la clase base Scene
 export default class FightScene extends Scene {
@@ -18,6 +16,9 @@ export default class FightScene extends Scene {
     ia2;
     ia3;
     
+    pause = false;
+    itemSpawner;
+
     constructor(canvas) {
         const camera = new THREE.PerspectiveCamera (
             45,
@@ -35,6 +36,8 @@ export default class FightScene extends Scene {
 
         // Esto es importante para especificar la cámara y el renderer de la escena
         super(camera, renderer);
+
+        this.itemSpawner = new ItemSpawner(this);
 
         this.prepare();
     }
@@ -152,17 +155,25 @@ export default class FightScene extends Scene {
             });
             this.add(this.ia3);
         }
-                
-        this.add(new AstroGun(this, {
-            position: new THREE.Vector3(0, 0, -20)
-        }));
+    }
 
-        this.add(new Sword(this, {
-            position: new THREE.Vector3(-20, -15, -20)
-        }));
+    onKeyPressed(key, repeat) {
+        super.onKeyPressed(key, repeat);
 
-        this.add(new Shield(this, {
-            position: new THREE.Vector3(20, -10, -20)
-        }));
+        if (key.toLowerCase() === 'enter') {
+            this.pauseGame();
+        }
+    }
+
+    onUpdate(dt) {
+        if (!this.pause) {
+            this.itemSpawner.onUpdate(dt);
+            super.onUpdate(dt);
+        }
+        GameManager.onUpdate(dt);
+    }
+
+    pauseGame() {
+        this.pause = !this.pause;
     }
 }
