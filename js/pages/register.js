@@ -54,7 +54,7 @@ $(document).ready(function(){
 		var name= $(".txtUsername").val();
 		var email= $(".txtEmail").val();
 		var user=  $(".txtUser_Name").val();
-		var psswrd= $(".txtPassword").val();
+		var password= $(".txtPassword").val();
 		
 		if(name == ""){
 			alert("Favor de introducir sus datos personales");
