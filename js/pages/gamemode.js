@@ -16,6 +16,15 @@ $(document).ready(function(){
         }
     });
 
+    $("#txtItems").on('change', function(){
+        var items = $(this).find('option:selected').value();
+        if(items = "items"){
+            localStorage.setItem('items', 'true');
+        }else if (items = "noItems"){
+            localStorage.setItem('items', 'false');
+        }
+    });
+
     function testInput(){   
         var playerCount = $("#txtPlayers").val();
         var aiCount = $("#txtIA").val();
