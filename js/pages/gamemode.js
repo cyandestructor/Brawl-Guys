@@ -17,10 +17,10 @@ $(document).ready(function(){
     });
 
     $("#txtItems").on('change', function(){
-        var items = $(this).find('option:selected').value();
-        if(items = "items"){
+        var items = $(this).find('option:selected').text();
+        if(items = "Con Items"){
             localStorage.setItem('items', 'true');
-        }else if (items = "noItems"){
+        }else if (items = "Sin Items"){
             localStorage.setItem('items', 'false');
         }
     });
@@ -31,8 +31,9 @@ $(document).ready(function(){
         var flag = true;
         var map = localStorage.getItem('map');
         var session = localStorage.getItem('isLoged');
-        var sessionId = localStorage.getItem('sessionId');
+        var sessionId = localStorage.getItem('sessionId');  
         var difficulty = localStorage.getItem('difficulty');
+        var itemsFlag = localStorage.getItem('items');
 
         localStorage.clear();
         for (let index = 1; index <= playerCount; index++) {
@@ -56,6 +57,7 @@ $(document).ready(function(){
         localStorage.setItem('isLoged', session);
         localStorage.setItem('sessionId', sessionId);
         localStorage.setItem('difficulty', difficulty);
+        localStorage.setItem('items', itemsFlag);
         location.href = "http://localhost:8080/GW/GraficasWebPIA/pages/personaje.php";
     }
 });

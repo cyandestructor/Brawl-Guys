@@ -41,13 +41,15 @@
                 <option value="media">Media</option>
                 <option value="dificil">Difícil</option>
             </select>
+        </div>
+        <div class="row">
+        <p class="col-lg-6" id="iatP">Elige Si deseas items:</p>
 
-            <select name="txtItems" id="txtItems">
+        <select name="txtItems" id="txtItems">
                 <option disabled selected value> -- select an option -- </option>
                 <option value="items">Con Items</option>
                 <option value="noItems">Sin Items</option>
             </select>
-
         </div>
 
         <input type="button" value="Aceptar" id="btnGamemode">

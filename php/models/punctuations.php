@@ -1,5 +1,5 @@
 <?php
-	require_once('../php/db/db.php');
+	require_once('../db/db.php');
 
     class Punctuations{
         private $db;
