@@ -58,6 +58,6 @@ $(document).ready(function(){
         localStorage.setItem('sessionId', sessionId);
         localStorage.setItem('difficulty', difficulty);
         localStorage.setItem('items', itemsFlag);
-        location.href = "http://localhost:8080/GW/GraficasWebPIA/pages/personaje.php";
+        location.href = "/pages/personaje.html";
     }
 });

@@ -12,7 +12,7 @@ $(document).ready(function(){
 	});
 
 	$("#btnLog").click(function(){
-		window.location = "login.php";
+		window.location = "login.html";
 	});
 
 	function registerUser(username, user_name, user_email, user_password){
@@ -33,7 +33,7 @@ $(document).ready(function(){
 			dataType: 'json',
 			success: function(data){
 				alert("Usuario registrado!").then(function (result) {
-                        window.location = "login.php";
+                        window.location = "login.html";
                 })
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {

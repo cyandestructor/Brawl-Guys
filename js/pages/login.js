@@ -18,13 +18,13 @@ $(document).ready(function(){
 		console.log(userData);
 
 		$.ajax({
-			url: '../php/controllers/login.php',
+			url: '../php/controllers/login.html',
 			type: 'POST',
 			data: userData,
 			dataType: 'json',
 			success: function(data){
 				if(data) {
-                    window.location = "../index.php";
+                    window.location = "../index.html";
                 } else {
                     Swal.fire(
                       'Incorrect data or the user does not exist',
