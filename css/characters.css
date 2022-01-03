@@ -1,0 +1,79 @@
+@keyframes animatedBackground {
+	from { background-position: 0 0; }
+	to { background-position: 100% 100%; }
+}
+
+body {
+    background-color: #6b6b6b;
+    background-image: url('/media/images/icon-bg.svg');
+    background-size: 5%;
+    
+    animation: animatedBackground 240s linear infinite;
+}
+
+.menu-container {
+    position: relative;
+}
+
+.menu-image {
+    width: 100%;
+    height: auto;
+}
+
+#prev-btn {
+    position: absolute;
+    background: none;
+    border: none;
+    width: 20%;
+    top: 40%;
+    left: 0;
+}
+
+#prev-btn > img {
+    width: 100%;
+    height: auto;
+}
+
+#next-btn {
+    position: absolute;
+    background: none;
+    border: none;
+    width: 20%;
+    top: 40%;
+    left: 80%;
+}
+
+#next-btn > img {
+    width: 100%;
+    height: auto;
+}
+
+#accept-btn {
+    position: absolute;
+    background: none;
+    border: none;
+    width: 20%;
+    top: 70%;
+    left: 38%;
+}
+
+#accept-btn > img {
+    width: 100%;
+    height: auto;
+}
+
+#character-canvas {
+    position: absolute;
+    width: 55%;
+    height: 35%;
+    top: 35%;
+    left: 21%;
+}
+
+.ui-btn:hover {
+    transform: scale(1.05);
+}
+
+.ui-btn:active {
+    transform: scale(1);
+}

@@ -1,0 +1,66 @@
+@keyframes animatedBackground {
+	from { background-position: 0 0; }
+	to { background-position: 100% 100%; }
+}
+
+body {
+    background-color: #6b6b6b;
+    background-image: url('/media/images/icon-bg.svg');
+    background-size: 5%;
+    
+    animation: animatedBackground 240s linear infinite;
+}
+
+.menu-container {
+    position: relative;
+}
+
+.menu-image {
+    width: 100%;
+    height: auto;
+}
+
+.close-btn {
+    position: absolute;
+    left: 70%;
+    top: 8%;
+    width: 25%;
+    height: auto;
+}
+
+.close-btn > img {
+    width: 100%;
+    height: auto;
+}
+
+.menu-items {
+    position: absolute;
+    top: 25%;
+    left: 20%;
+}
+
+.menu-items button {
+    background: none;
+    border: none;
+    width: 60%;
+    height: auto;
+}
+
+.menu-items a {
+    display: block;
+    width: 60%;
+    height: auto;
+}
+
+.menu-items button > img, .menu-items a > img{
+    width: 100%;
+    height: auto;
+}
+
+.ui-btn:hover {
+    transform: scale(1.05);
+}
+
+.ui-btn:active {
+    transform: scale(1);
+}

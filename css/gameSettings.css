@@ -1,0 +1,86 @@
+@keyframes animatedBackground {
+	from { background-position: 0 0; }
+	to { background-position: 100% 100%; }
+}
+
+@font-face {
+    font-family: "Titan One";
+    src: url("/media/fonts/TitanOne-Regular.ttf");
+}
+
+body {
+    background-color: #6b6b6b;
+    background-image: url('/media/images/icon-bg.svg');
+    background-size: 5%;
+    
+    animation: animatedBackground 240s linear infinite;
+}
+
+.menu-container {
+    position: relative;
+}
+
+.menu-image {
+    width: 100%;
+    height: auto;
+}
+
+#accept-btn {
+    position: absolute;
+    background: none;
+    border: none;
+    width: 15%;
+    top: 70%;
+    left: 42%;
+}
+
+#accept-btn > img {
+    width: 100%;
+    height: auto;
+}
+
+#error-container {
+    position: absolute;
+}
+
+.settings-container {
+    position: absolute;
+    width: 100%;
+    top: 34%;
+    left: 0;
+}
+
+.count-widget {
+    display: inline-block;
+    width: 49%;
+}
+
+.count-widget button {
+    background: none;
+    border: none;
+    width: 17%;
+}
+
+.count-widget button > img {
+    width: 100%;
+    height: auto;
+}
+
+.ui-text {
+    font-family: 'Titan One';
+    font-size: 2vw;
+    color: white;
+    text-shadow: 3px 2px 0px #353535;
+}
+
+.error-text {
+    color: rgb(230, 72, 24);
+}
+
+.ui-btn:hover {
+    transform: scale(1.05);
+}
+
+.ui-btn:active {
+    transform: scale(1);
+}
