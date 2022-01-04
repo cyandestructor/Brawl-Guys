@@ -8,13 +8,8 @@ import ItemSpawner from "../ItemSpawner.js";
 
 // Todas las escenas extienden la clase base Scene
 export default class FightScene extends Scene {
-    player1;
-    player2;
-    player3;
-
-    ia1;
-    ia2;
-    ia3;
+    players = [];
+    cpu = [];
     
     pause = false;
     itemSpawner;
@@ -36,13 +31,6 @@ export default class FightScene extends Scene {
 
         // Esto es importante para especificar la cámara y el renderer de la escena
         super(camera, renderer);
-
-        const activeItems = localStorage.getItem('items') ?? 'false';
-        const activeItemsFlag = (activeItems.toLowerCase() === 'true');
-        
-        this.itemSpawner = new ItemSpawner(this, {
-            active: activeItemsFlag
-        });
 
         this.prepare();
     }
@@ -81,97 +69,107 @@ export default class FightScene extends Scene {
         // que envuelve un objeto nativo de Three.js y le agrega cierta lógica
         // Consulta los archivos js/game/gameObjects/Character.js y js/engine/GameObject.js
 
-        if(localStorage.getItem('Player1') != null){
-            var playerChar = JSON.parse(localStorage.getItem('Player1'));
-            this.player1 = new Character(this, {
-                position: new THREE.Vector3(0, -15, -20),
-                skin: playerChar['skin'],
-                userId: playerChar['idUser']
-            });
-            this.add(this.player1);
-        }
-
-        if(localStorage.getItem('Player2') != null){
-            var playerChar = JSON.parse(localStorage.getItem('Player2'));
-            this.player2 = new Character(this, {
-                position: new THREE.Vector3(10, -15, -20),
-                controlMap: {
-                    right: "L",
-                    left: "J",
-                    up: "I",
-                    down: "K",
-                    punch: "U",
-                    kick: "O",
-                    jump: "M",
-                    interact: "U"
-                },
-                skin: playerChar['skin'],
-                userId: playerChar['idUser']
-            });
-            this.add(this.player2);
-        }
-        
-        if(localStorage.getItem('Player3') != null){
-            var playerChar = JSON.parse(localStorage.getItem('Player3'));
-            this.player3 = new Character(this, {
-                position: new THREE.Vector3(-20, -15, -20),
-                controlMap: {
-                    right: "6",
-                    left: "4",
-                    up: "8",
-                    down: "5",
-                    punch: "7",
-                    kick: "9",
-                    jump: "0",
-                    interact: "7"
-                },
-                skin: playerChar['skin'],
-                userId: playerChar['idUser']
-            });
-            this.add(this.player3);
-        }
-
-        // Preparar las IA
-        const difficulty = localStorage.getItem('difficulty') ?? 'normal';
-        const hpLevels = {
-            'easy': 40,
-            'normal': 50,
-            'hard': 60
+        const CpuLevel = {
+            EASY: 0,
+            NORMAL: 1,
+            HARD: 2
         };
-        const aiHp = hpLevels[difficulty];
 
-        if(localStorage.getItem('IA1') != null){
-            var IAChar = JSON.parse(localStorage.getItem('IA1'));
-            this.ia1 = new CharacterAi(this,{
-                position: new THREE.Vector3(5, -15, -20),
-                skin: IAChar['skin'],
-                userId: IAChar['idIA'],
-                hp: aiHp
-            });
-            this.add(this.ia1);
+        const MAX_PLAYERS = 3;
+        const MAX_CPU = 3;
+
+        // Default settings
+        let totalPlayers = 1;
+        let totalCpu = 1;
+        let cpuLevel = CpuLevel.NORMAL;
+        let itemsOn = true;
+        
+        const gameSettingsJSON = localStorage.getItem('gameSettings');
+        if (gameSettingsJSON != null) {
+            const gameSettings = JSON.parse(gameSettingsJSON);
+
+            totalPlayers = gameSettings.players ?? 1;
+            totalCpu = gameSettings.cpu ?? 1;
+            cpuLevel = gameSettings.cpuLevel ?? CpuLevel.NORMAL;
+            itemsOn = gameSettings.items ?? true;
+
+            // Validate settings
+            totalPlayers = Math.min(totalPlayers, MAX_PLAYERS);
+            totalPlayers = Math.max(totalPlayers, 0);
+
+            totalCpu = Math.min(totalCpu, MAX_CPU);
+            totalCpu = Math.max(totalCpu, 0);
+
+            cpuLevel = Math.min(cpuLevel, CpuLevel.HARD);
+            cpuLevel = Math.max(cpuLevel, CpuLevel.EASY);
         }
 
-        if(localStorage.getItem('IA2') != null){
-            var IAChar = JSON.parse(localStorage.getItem('IA2'));
-            this.ia2 = new CharacterAi(this,{
-                position: new THREE.Vector3(-15, -15, -20),
-                skin: IAChar['skin'],
-                userId: IAChar['idIA'],
-                hp: aiHp
-            });
-            this.add(this.ia2);
+        const playersSkins = JSON.parse(localStorage.getItem('players') ?? '{}');
+        const cpuSkins = JSON.parse(localStorage.getItem('cpu') ?? '{}');
+
+        const controlMaps = [
+            {
+                right: "D",
+                left: "A",
+                up: "W",
+                down: "S",
+                punch: "Q",
+                kick: "E",
+                jump: " ",
+                interact: "Q"
+            },
+            {
+                right: "L",
+                left: "J",
+                up: "I",
+                down: "K",
+                punch: "U",
+                kick: "O",
+                jump: "M",
+                interact: "U"
+            },
+            {
+                right: "6",
+                left: "4",
+                up: "8",
+                down: "5",
+                punch: "7",
+                kick: "9",
+                jump: "0",
+                interact: "7"
+            }
+        ];
+
+        for (let i = 0; i < totalPlayers; i++) {
+            this.players.push(
+                new Character(this, {
+                    position: new THREE.Vector3(-20 + 5 * i, -15, -20),
+                    controlMap: controlMaps[i],
+                    skin: playersSkins[i] ?? 'ZombieA'
+                })
+            );
+            this.add(this.players[i]);
         }
 
-        if(localStorage.getItem('IA3') != null){
-            var IAChar = JSON.parse(localStorage.getItem('IA3'));
-            this.ia3 = new CharacterAi(this,{
-                position: new THREE.Vector3(25, -15, -20),
-                skin: IAChar['skin'],
-                userId: IAChar['idIA'],
-                hp: aiHp
-            });
-            this.add(this.ia3);
+        // Prepare CPUs
+        const hpLevels = [40, 50, 60];
+        const aiHp = hpLevels[cpuLevel];
+
+        for (let i = 0; i < totalCpu; i++) {
+            this.cpu.push(
+                new CharacterAi(this, {
+                    position: new THREE.Vector3(0 + 5 * i, -15, -20),
+                    skin: cpuSkins[i] ?? 'ZombieA',
+                    hp: aiHp
+                })
+            );
+            this.add(this.cpu[i]);
         }
+
+        // Prepare item spawner
+        this.itemSpawner = new ItemSpawner(this, {
+            active: itemsOn
+        });
     }
 
     onKeyPressed(key, repeat) {

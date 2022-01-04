@@ -36,12 +36,12 @@ document.getElementById('increase-cpu-btn').addEventListener('click', (e) => {
 
 // CPU Level Widget
 const CpuLevel = {
-    EASY: 1,
-    NORMAL: 2,
-    HARD: 3
+    EASY: 0,
+    NORMAL: 1,
+    HARD: 2
 };
 
-let gCpuLevel = 2;
+let gCpuLevel = CpuLevel.NORMAL;
 
 function displayCpuLevel() {
     let cpuLevelText = '';
