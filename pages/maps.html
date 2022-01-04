@@ -35,6 +35,41 @@
 				</div>
 			</div>
 		</div>
+
+		<script>
+			const mapImages = [
+				'/media/images/mapas/1.jpg',
+				'/media/images/mapas/2.jpg',
+				'/media/images/mapas/3.jpg',
+				'/media/images/mapas/4.jpg'
+			];
+
+			let gMapIndex = 0;
+
+			document.getElementById('prev-btn').addEventListener('click', (e) => {
+				gMapIndex--;
+				if(gMapIndex < 0) {
+					gMapIndex = mapImages.length - 1;
+				}
+
+				document.getElementById('map-image').src = mapImages[gMapIndex];
+			});
+
+			document.getElementById('next-btn').addEventListener('click', (e) => {
+				gMapIndex++;
+				if(gMapIndex > mapImages.length - 1) {
+					gMapIndex = 0;
+				}
+
+				document.getElementById('map-image').src = mapImages[gMapIndex];
+			});
+
+			document.getElementById('accept-btn').addEventListener('click', (e) => {
+				const mapNames = ['MapOne', 'MapTwo', 'MapThree', 'MapFour'];
+
+				localStorage.setItem('map', mapNames[gMapIndex]);
+			});
+		</script>
 	</body>
 
 </html>
