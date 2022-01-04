@@ -80,10 +80,15 @@ export default class Application {
             return;
         }
 
+        const canvas = this.scene.getRenderer().domElement;
+        const bcr = canvas.getBoundingClientRect();
+        const canvasWidth = bcr.width;
+        const canvasHeight = bcr.height;
+
         const camera = this.scene.getCamera();
-        camera.aspect = width / height;
+        camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
 
-        this.scene.getRenderer().setSize(width, height);
+        this.scene.getRenderer().setSize(canvasWidth, canvasHeight);
     }
 }
