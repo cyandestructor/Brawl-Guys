@@ -62,7 +62,7 @@ body {
     height: auto;
 }
 
-#character-canvas {
+.canvas-container {
     position: absolute;
     width: 55%;
     height: 35%;
