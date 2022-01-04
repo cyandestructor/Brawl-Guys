@@ -3,6 +3,11 @@
 	to { background-position: 100% 100%; }
 }
 
+@font-face {
+    font-family: "Titan One";
+    src: url("/media/fonts/TitanOne-Regular.ttf");
+}
+
 body {
     background-color: #6b6b6b;
     background-image: url('/media/images/icon-bg.svg');
@@ -62,12 +67,23 @@ body {
     height: auto;
 }
 
+#character-name-container {
+    position: absolute;
+}
+
 .canvas-container {
     position: absolute;
     width: 55%;
     height: 35%;
     top: 35%;
     left: 21%;
+}
+
+.ui-text {
+    font-family: 'Titan One';
+    font-size: 2vw;
+    color: white;
+    text-shadow: 3px 2px 0px #353535;
 }
 
 .ui-btn:hover {

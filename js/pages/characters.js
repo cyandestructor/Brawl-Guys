@@ -5,6 +5,9 @@ import Resources from "../engine/Resources.js";
 let gScene;
 
 document.addEventListener('DOMContentLoaded', () => {
+    getGameSettings();
+    showCharacterName();
+
     const resources = [
         {
             name: 'PlayerBase',
@@ -72,4 +75,61 @@ document.getElementById('next-btn').addEventListener('click', (e) => {
     }
 
     gScene.setCharacterSkin(characterSkins[gSkinIndex]);
+});
+
+let gTotalPlayers = 0;
+let gTotalCpu = 0;
+let gPlayerIndex = 0;
+let gCpuIndex = 0;
+
+function getGameSettings() {
+    const gameSettings = JSON.parse(localStorage.getItem('gameSettings') ?? '{}');
+
+    gTotalPlayers = gameSettings.players;
+    gTotalCpu = gameSettings.cpu;
+}
+
+function showCharacterName() {
+    if (gPlayerIndex < gTotalPlayers) {
+        document.getElementById('character-name-container').innerText = 'Player ' + String(gPlayerIndex + 1);
+    }
+    else if (gCpuIndex < gTotalCpu) {
+        document.getElementById('character-name-container').innerText = 'CPU ' + String(gCpuIndex + 1);
+    }
+    else {
+        document.getElementById('character-name-container').innerText = 'Character';
+    }
+}
+
+function saveCharacterInfo() {
+    if (gPlayerIndex < gTotalPlayers) {
+        const players = JSON.parse(localStorage.getItem('players') ?? '{}');
+        players[gPlayerIndex] = characterSkins[gSkinIndex];
+
+        localStorage.setItem('players', JSON.stringify(players));
+
+        gPlayerIndex++;
+    }
+    else if(gCpuIndex < gTotalCpu) {
+        const cpu = JSON.parse(localStorage.getItem('cpu') ?? '{}');
+        cpu[gCpuIndex] = characterSkins[gSkinIndex];
+
+        localStorage.setItem('cpu', JSON.stringify(cpu));
+
+        gCpuIndex++;
+    }
+    
+    showCharacterName();
+
+    gSkinIndex = 0;
+    gScene.setCharacterSkin(characterSkins[gSkinIndex]);
+}
+
+document.getElementById('accept-btn').addEventListener('click', (e) => {
+    if (gPlayerIndex < gTotalPlayers && gCpuIndex < gTotalCpu) {
+        saveCharacterInfo();
+    }
+    else {
+        alert('Finish');
+    }
 });
