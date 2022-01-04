@@ -119,17 +119,17 @@ function saveCharacterInfo() {
         gCpuIndex++;
     }
     
-    showCharacterName();
-
-    gSkinIndex = 0;
-    gScene.setCharacterSkin(characterSkins[gSkinIndex]);
+    if (gPlayerIndex >= gTotalPlayers && gCpuIndex >= gTotalCpu) {
+        location.href = '/pages/maps.html';
+    }
+    else {
+        showCharacterName();
+    
+        gSkinIndex = 0;
+        gScene.setCharacterSkin(characterSkins[gSkinIndex]);   
+    }
 }
 
 document.getElementById('accept-btn').addEventListener('click', (e) => {
-    if (gPlayerIndex < gTotalPlayers && gCpuIndex < gTotalCpu) {
-        saveCharacterInfo();
-    }
-    else {
-        alert('Finish');
-    }
+    saveCharacterInfo();
 });

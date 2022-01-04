@@ -106,6 +106,7 @@ document.getElementById('accept-btn').addEventListener('click', (e) => {
     // At least two characters
     if (gTotalPlayers + gTotalCpu >= 2) {
         saveGameSettings();
+        location.href = '/pages/characters.html';
     }
     else {
         button.disabled = true;
