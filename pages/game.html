@@ -22,7 +22,6 @@
 	</script>
 </head>
 
-<script src="/js/lib/jquery-3.6.0.min.js"></script>
 <script src="/js/lib/three.js"></script>
 <script src="/js/lib/FBXLoader.js"></script>
 <script src="/js/lib/SkeletonUtils.js"></script>
@@ -37,7 +36,7 @@
 	import FightScene from "../js/game/scenes/FightScene.js";
 	import Resources from "../js/engine/Resources.js";
 
-	$(document).ready(() => {
+	document.addEventListener('DOMContentLoaded', () => {
 		// Ahora se pueden registrar las direcciones de los recursos en un almacén
 		// de recursos y obtenerlos después a través de la llave (primer parámetro)
 		const resources = [
@@ -258,7 +257,8 @@
 		];
 
 		Resources.loadResources(resources).then(() => {
-			$('#loader').hide();
+			document.getElementById('loader').style.display = 'none';
+
 			// La clase Application controla todo el flujo de la aplicación
 			const app = new Application();
 
