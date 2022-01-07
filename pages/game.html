@@ -10,6 +10,8 @@
 		}
 	</style>
 
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="../css/game.css">
 
 	<script type="text/javascript" src="../js/pages/facebook.js"></script>
@@ -34,31 +36,30 @@
 <script type="module" src="/js/pages/game.js"></script>
 
 <body>
-	<p style="display: none;" class="userIdClassP" value="500"></p>
 	<div class="center">
 		<img id="loader" class="loader" alt="loading" src="/media/images/icon.png">
 	</div>
 	<div id="scene-section"></div>
 
-	<div id="winMenu" class="win">
-		<img src="/media/images/victory/GAME UI-04.png" alt="Italian Trulli">
-		<img src="/media/images/victory/GAME UI-49.png" alt="Italian Trulli" id="btnShare" onclick="shareFB();">
-	</div>
-
-	<div id="gameOverMenu" class="gO">
-		<img src="/media/images/game_over/GAME UI-07.png" alt="Italian Trulli">
-		<img src="/media/images/game_over/GAME UI-54.png" alt="Italian Trulli" id="btnPA">
-		<a href="/index.html"><img src="/media/images/game_over/GAME UI-55.png" alt="Italian Trulli" id="btnExit"></a>
-	</div>
-
-	<div id="pauseMenu" class="pausa">
-		<img src="/media/images/pausa/GAME UI-02.png" alt="Italian Trulli">
-		<img src="/media/images/pausa/GAME UI-38.png" alt="Italian Trulli" id="btnResume">
-		<!--<a href="scoreboards.html"><button id="btn2">Button2</button></a>-->
-		<img src="/media/images/pausa/GAME UI-39.png" alt="Italian Trulli" id="btnRestart">
-		<img src="/media/images/pausa/GAME UI-40.png" alt="Italian Trulli" id="btnOptions">
-		<img src="/media/images/pausa/GAME UI-41.png" alt="Italian Trulli" id="btnHelp">
-		<a href="/index.html"><img src="/media/images/pausa/GAME UI-42.png" alt="Italian Trulli" id="btnExit"></a>
+	<div id="victory-menu" class="container absolute-container hidden-element">
+		<div class="row">
+			<div class="col-4 mx-auto mt-4">
+				<div class="menu-container">
+					<img src="/media/images/victory/GAME UI-04.png" alt="menu">
+					<div class="menu-items">
+						<div id="victory-message" class="ui-text text-center mb-2">
+							Player 0 Wins!
+						</div>
+						<a href="" class="ui-btn mx-auto">
+							<img src="/media/images/victory/GAME UI-54.png" alt="Play Again">
+						</a>
+						<a href="/index.html" class="ui-btn mx-auto">
+							<img src="/media/images/victory/GAME UI-55.png" alt="Exit">
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 
