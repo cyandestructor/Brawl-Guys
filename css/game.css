@@ -72,7 +72,44 @@
     height: auto;
 }
 
-.menu-items button > img, .menu-items a > img{
+.menu-items button > img, .menu-items a > img, .pause-menu-items button > img, .pause-menu-items a > img{
+    width: 100%;
+    height: auto;
+}
+
+.pause-menu-items {
+    position: absolute;
+    width: 100%;
+    top: 25%;
+}
+
+.pause-menu-items button {
+    background: none;
+    border: none;
+    padding: 0;
+    width: 60%;
+    height: auto;
+    display: block;
+}
+
+.pause-menu-items a {
+    display: block;
+    width: 60%;
+    height: auto;
+}
+
+#close-btn {
+    background: none;
+    border: none;
+    position: absolute;
+    padding: 0;
+    left: 75%;
+    top: -1%;
+    width: 27%;
+    height: auto;
+}
+
+#close-btn > img {
     width: 100%;
     height: auto;
 }

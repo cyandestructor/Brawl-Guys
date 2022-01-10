@@ -192,6 +192,6 @@ export default class FightScene extends Scene {
 
     pauseGame() {
         this.pause = !this.pause;
-        document.getElementById('winMenu').style.visibility = this.pause ? 'visible' : 'hidden';
+        document.getElementById('pause-menu').style.display = this.pause ? 'block' : 'none';
     }
 }

@@ -236,6 +236,15 @@ document.addEventListener('DOMContentLoaded', () => {
             height: window.innerHeight
         });
 
+        // Resume buttons
+        document.getElementById('resume-btn').addEventListener('click', (e) => {
+            fightScene.pauseGame();
+        });
+
+        document.getElementById('close-btn').addEventListener('click', (e) => {
+            fightScene.pauseGame();
+        });
+
         // Se prepara la aplicación
         app.prepare();
 
