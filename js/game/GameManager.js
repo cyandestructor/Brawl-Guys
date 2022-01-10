@@ -1,5 +1,4 @@
-import WebServiceConnector from "../WebServiceConnector.js";
-import Character from "./Character.js";
+import Character from "./gameObjects/Character.js";
 
 export default class GameManager {
     static gameOver = false;
@@ -29,6 +28,7 @@ export default class GameManager {
     }
 
     static onGameOver(winnerPlayer) {
-        WebServiceConnector.onWin(winnerPlayer.userId ?? null);
+        document.getElementById('victory-message').innerText = winnerPlayer.name + ' Wins!';
+        document.getElementById('victory-menu').style.display = 'block';
     }
 }

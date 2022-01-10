@@ -3,7 +3,7 @@ import Character from "../gameObjects/Character.js";
 import Resources from "../../engine/Resources.js";
 import CharacterAi from "../gameObjects/CharacterAi.js";
 import MapFactory from "../MapFactory.js";
-import GameManager from "../gameObjects/GameManager.js";
+import GameManager from "../GameManager.js";
 import ItemSpawner from "../ItemSpawner.js";
 
 // Todas las escenas extienden la clase base Scene
@@ -145,7 +145,8 @@ export default class FightScene extends Scene {
                 new Character(this, {
                     position: new THREE.Vector3(-20 + 5 * i, -15, -20),
                     controlMap: controlMaps[i],
-                    skin: playersSkins[i] ?? 'ZombieA'
+                    skin: playersSkins[i] ?? 'ZombieA',
+                    name: 'Player ' + String(i + 1)
                 })
             );
             this.add(this.players[i]);
@@ -160,7 +161,8 @@ export default class FightScene extends Scene {
                 new CharacterAi(this, {
                     position: new THREE.Vector3(0 + 5 * i, -15, -20),
                     skin: cpuSkins[i] ?? 'ZombieA',
-                    hp: aiHp
+                    hp: aiHp,
+                    name: 'CPU ' + String(i + 1)
                 })
             );
             this.add(this.cpu[i]);

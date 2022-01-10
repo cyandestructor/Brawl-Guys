@@ -22,7 +22,7 @@ export default class Character extends SimpleRigidBody {
     
     punchSounds = [];
 
-    userId;
+    name;
 
     speed;
     jumpSpeed;
@@ -90,7 +90,7 @@ export default class Character extends SimpleRigidBody {
         this.direction = props.direction ?? Character.Direction.Right;
         this.killY = props.killY ?? -100;
 
-        this.userId = props.userId ?? null;
+        this.name = props.name ?? null;
 
         this.controlMap = props.controlMap ?? {
             right: "D",
