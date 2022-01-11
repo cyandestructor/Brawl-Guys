@@ -5,7 +5,7 @@
 
 body {
     background-color: #6b6b6b;
-    background-image: url('/media/images/icon-bg.svg');
+    background-image: url('/Brawl-Guys/media/images/icon-bg.svg');
     background-size: 5%;
     
     animation: animatedBackground 240s linear infinite;

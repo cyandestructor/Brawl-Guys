@@ -9,182 +9,182 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: 'MapOne',
             type: 'model',
-            path: '/models/maps/piratas-map.fbx'
+            path: '/Brawl-Guys/models/maps/piratas-map.fbx'
         },
         {
             name: 'MapTwo',
             type: 'model',
-            path: '/models/maps/navidad-map.fbx'
+            path: '/Brawl-Guys/models/maps/navidad-map.fbx'
         },
         {
             name: 'MapThree',
             type: 'model',
-            path: '/models/maps/minecraft-map.fbx'
+            path: '/Brawl-Guys/models/maps/minecraft-map.fbx'
         },
         {
             name: 'MapFour',
             type: 'model',
-            path: '/models/maps/espacio-map.fbx'
+            path: '/Brawl-Guys/models/maps/espacio-map.fbx'
         },
         {
             name: 'PlayerBase',
             type: 'model',
-            path: '/models/characters/characterMedium.fbx'
+            path: '/Brawl-Guys/models/characters/characterMedium.fbx'
         },
         {
             name: 'AstroGun',
             type: 'model',
-            path: '/models/items/astroGun.fbx'
+            path: '/Brawl-Guys/models/items/astroGun.fbx'
         },
         {
             name: 'Sword',
             type: 'model',
-            path: '/models/items/sword.fbx'
+            path: '/Brawl-Guys/models/items/sword.fbx'
         },
         {
             name: 'Shield',
             type: 'model',
-            path: '/models/items/shield.fbx'
+            path: '/Brawl-Guys/models/items/shield.fbx'
         },
         {
             name: 'ZombieA',
             type: 'texture',
-            path: '/models/characters/skins/zombieA.png'
+            path: '/Brawl-Guys/models/characters/skins/zombieA.png'
         },
         {
             name: 'RobotA',
             type: 'texture',
-            path: '/models/characters/skins/robot.png'
+            path: '/Brawl-Guys/models/characters/skins/robot.png'
         },
         {
             name: 'AlienA',
             type: 'texture',
-            path: '/models/characters/skins/alienA.png'
+            path: '/Brawl-Guys/models/characters/skins/alienA.png'
         },
         {
             name: 'CharacterIdle',
             type: 'animation',
-            path: '/models/animations/idle.fbx'
+            path: '/Brawl-Guys/models/animations/idle.fbx'
         },
         {
             name: 'CharacterWalk',
             type: 'animation',
-            path: '/models/animations/walk.fbx'
+            path: '/Brawl-Guys/models/animations/walk.fbx'
         },
         {
             name: 'CharacterPunch',
             type: 'animation',
-            path: '/models/animations/punch.fbx'
+            path: '/Brawl-Guys/models/animations/punch.fbx'
         },
         {
             name: 'CharacterKick',
             type: 'animation',
-            path: '/models/animations/kick.fbx'
+            path: '/Brawl-Guys/models/animations/kick.fbx'
         },
         {
             name: 'CharacterJump',
             type: 'animation',
-            path: '/models/animations/jump.fbx'
+            path: '/Brawl-Guys/models/animations/jump.fbx'
         },
         {
             name: 'CharacterDeath',
             type: 'animation',
-            path: '/models/animations/death.fbx'
+            path: '/Brawl-Guys/models/animations/death.fbx'
         },
         {
             name: 'CharacterBlock',
             type: 'animation',
-            path: '/models/animations/block.fbx'
+            path: '/Brawl-Guys/models/animations/block.fbx'
         },
         {
             name: 'CharacterShoot',
             type: 'animation',
-            path: '/models/animations/shoot.fbx'
+            path: '/Brawl-Guys/models/animations/shoot.fbx'
         },
         {
             name: 'CharacterAttack',
             type: 'animation',
-            path: '/models/animations/attack.fbx'
+            path: '/Brawl-Guys/models/animations/attack.fbx'
         },
         {
             name: 'CharacterShield',
             type: 'animation',
-            path: '/models/animations/shield.fbx'
+            path: '/Brawl-Guys/models/animations/shield.fbx'
         },
         {
             name: 'CharacterSpecialPunch',
             type: 'animation',
-            path: '/models/animations/special-punch.fbx'
+            path: '/Brawl-Guys/models/animations/special-punch.fbx'
         },
         {
             name: 'CharacterSpecialKick',
             type: 'animation',
-            path: '/models/animations/special-kick.fbx'
+            path: '/Brawl-Guys/models/animations/special-kick.fbx'
         },
         {
             name: 'Laser',
             type: 'audio',
-            path: '/media/sounds/laser.wav'
+            path: '/Brawl-Guys/media/sounds/laser.wav'
         },
         {
             name: 'PunchA',
             type: 'audio',
-            path: '/media/sounds/punch-a.wav'
+            path: '/Brawl-Guys/media/sounds/punch-a.wav'
         },
         {
             name: 'PunchB',
             type: 'audio',
-            path: '/media/sounds/punch-b.wav'
+            path: '/Brawl-Guys/media/sounds/punch-b.wav'
         },
         {
             name: 'SwordA',
             type: 'audio',
-            path: '/media/sounds/sword-a.wav'
+            path: '/Brawl-Guys/media/sounds/sword-a.wav'
         },
         {
             name: 'SwordB',
             type: 'audio',
-            path: '/media/sounds/sword-b.wav'
+            path: '/Brawl-Guys/media/sounds/sword-b.wav'
         },
         {
             name: 'PickUp',
             type: 'audio',
-            path: '/media/sounds/pickup.wav'
+            path: '/Brawl-Guys/media/sounds/pickup.wav'
         },
         {
             name: 'Spark',
             type: 'audio',
-            path: '/media/sounds/spark.wav'
+            path: '/Brawl-Guys/media/sounds/spark.wav'
         },
         {
             name: 'SnowMusic',
             type: 'audio',
-            path: '/media/sounds/music/snow.mp3'
+            path: '/Brawl-Guys/media/sounds/music/snow.mp3'
         },
         {
             name: 'MinecraftMusic',
             type: 'audio',
-            path: '/media/sounds/music/minecraft.mp3'
+            path: '/Brawl-Guys/media/sounds/music/minecraft.mp3'
         },
         {
             name: 'PiratesMusic',
             type: 'audio',
-            path: '/media/sounds/music/pirates.mp3'
+            path: '/Brawl-Guys/media/sounds/music/pirates.mp3'
         },
         {
             name: 'SpaceMusic',
             type: 'audio',
-            path: '/media/sounds/music/space.mp3'
+            path: '/Brawl-Guys/media/sounds/music/space.mp3'
         },
         {
             name: 'Particle',
             type: 'texture',
-            path: '/media/images/particle.png'
+            path: '/Brawl-Guys/media/images/particle.png'
         },
         {
             name: 'DaySkybox',
             type: 'cubemap',
-            path: '/models/maps/skyboxes/day/',
+            path: '/Brawl-Guys/models/maps/skyboxes/day/',
             images: [
                 'px.png',
                 'nx.png',
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: 'EveningSkybox',
             type: 'cubemap',
-            path: '/models/maps/skyboxes/evening/',
+            path: '/Brawl-Guys/models/maps/skyboxes/evening/',
             images: [
                 'px.png',
                 'nx.png',
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: 'SunsetSkybox',
             type: 'cubemap',
-            path: '/models/maps/skyboxes/sunset/',
+            path: '/Brawl-Guys/models/maps/skyboxes/sunset/',
             images: [
                 'px.png',
                 'nx.png',

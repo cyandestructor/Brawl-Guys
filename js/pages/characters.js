@@ -12,27 +12,27 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: 'PlayerBase',
             type: 'model',
-            path: '/models/characters/characterMedium.fbx'
+            path: '/Brawl-Guys/models/characters/characterMedium.fbx'
         },
         {
             name: 'ZombieA',
             type: 'texture',
-            path: '/models/characters/skins/zombieA.png'
+            path: '/Brawl-Guys/models/characters/skins/zombieA.png'
         },
         {
             name: 'RobotA',
             type: 'texture',
-            path: '/models/characters/skins/robot.png'
+            path: '/Brawl-Guys/models/characters/skins/robot.png'
         },
         {
             name: 'AlienA',
             type: 'texture',
-            path: '/models/characters/skins/alienA.png'
+            path: '/Brawl-Guys/models/characters/skins/alienA.png'
         },
         {
             name: 'CharacterIdle',
             type: 'animation',
-            path: '/models/animations/idle.fbx'
+            path: '/Brawl-Guys/models/animations/idle.fbx'
         }
     ];
 
@@ -120,7 +120,7 @@ function saveCharacterInfo() {
     }
     
     if (gPlayerIndex >= gTotalPlayers && gCpuIndex >= gTotalCpu) {
-        location.href = '/pages/maps.html';
+        location.href = '/Brawl-Guys/pages/maps.html';
     }
     else {
         showCharacterName();
